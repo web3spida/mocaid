@@ -22,7 +22,12 @@ function App() {
   const { isConnected } = useAccount()
 
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50">
         <Navbar />
         
