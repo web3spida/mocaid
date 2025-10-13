@@ -17,7 +17,7 @@ import { useDID } from '../hooks/useAirKit'
 const MyIdentity = () => {
   const { address } = useAccount()
   const { useGetIdentity, useIsRegistered, useRegisterIdentity, useUpdateIdentity, useRevokeIdentity } = useIdentityRegistry()
-  const { did, publicKey, generateDID, isLoading: isDIDLoading } = useDID()
+  const { did, publicKey, generateDID, loading: isDIDLoading } = useDID()
 
   // Contract hooks
   const { data: isRegistered, isLoading: isCheckingRegistration, refetch: refetchRegistration } = useIsRegistered(address)

@@ -6,31 +6,24 @@ const IDENTITY_REGISTRY_ADDRESS = import.meta.env.VITE_IDENTITY_REGISTRY_ADDRESS
 const CREDENTIAL_ISSUER_ADDRESS = import.meta.env.VITE_CREDENTIAL_ISSUER_ADDRESS
 const ACCESS_CONTROL_ADDRESS = import.meta.env.VITE_ACCESS_CONTROL_ADDRESS
 
-// Contract ABIs (simplified for demo - in production, import from artifacts)
+// Contract ABIs - Updated to match actual smart contracts
 const IDENTITY_REGISTRY_ABI = [
   {
-    "inputs": [{"name": "did", "type": "string"}, {"name": "publicKey", "type": "string"}, {"name": "metadata", "type": "string"}],
+    "inputs": [{"name": "user", "type": "address"}, {"name": "didURI", "type": "string"}],
     "name": "registerIdentity",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{"name": "user", "type": "address"}],
-    "name": "getIdentity",
-    "outputs": [{"name": "", "type": "tuple", "components": [{"name": "did", "type": "string"}, {"name": "publicKey", "type": "string"}, {"name": "metadata", "type": "string"}, {"name": "isActive", "type": "bool"}, {"name": "timestamp", "type": "uint256"}]}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{"name": "metadata", "type": "string"}],
+    "inputs": [{"name": "user", "type": "address"}, {"name": "newDIDURI", "type": "string"}],
     "name": "updateIdentity",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [{"name": "user", "type": "address"}],
     "name": "revokeIdentity",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -38,8 +31,36 @@ const IDENTITY_REGISTRY_ABI = [
   },
   {
     "inputs": [{"name": "user", "type": "address"}],
-    "name": "isRegistered",
+    "name": "getIdentity",
+    "outputs": [{"name": "didURI", "type": "string"}, {"name": "createdAt", "type": "uint256"}, {"name": "updatedAt", "type": "uint256"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "didURI", "type": "string"}],
+    "name": "getAddressFromDID",
+    "outputs": [{"name": "", "type": "address"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "user", "type": "address"}],
+    "name": "hasIdentity",
     "outputs": [{"name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "offset", "type": "uint256"}, {"name": "limit", "type": "uint256"}],
+    "name": "getRegisteredUsers",
+    "outputs": [{"name": "users", "type": "address[]"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalIdentities",
+    "outputs": [{"name": "", "type": "uint256"}],
     "stateMutability": "view",
     "type": "function"
   }
@@ -47,37 +68,79 @@ const IDENTITY_REGISTRY_ABI = [
 
 const CREDENTIAL_ISSUER_ABI = [
   {
-    "inputs": [{"name": "recipient", "type": "address"}, {"name": "credentialType", "type": "string"}, {"name": "data", "type": "string"}, {"name": "expirationTime", "type": "uint256"}],
+    "inputs": [{"name": "to", "type": "address"}, {"name": "credentialHash", "type": "string"}, {"name": "credentialType", "type": "string"}, {"name": "expiresAt", "type": "uint256"}],
     "name": "issueCredential",
-    "outputs": [{"name": "", "type": "bytes32"}],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{"name": "credentialId", "type": "bytes32"}],
+    "inputs": [{"name": "credentialHash", "type": "string"}],
     "name": "verifyCredential",
-    "outputs": [{"name": "", "type": "bool"}],
+    "outputs": [{"name": "isValid", "type": "bool"}],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{"name": "credentialId", "type": "bytes32"}],
+    "inputs": [{"name": "credentialHash", "type": "string"}],
     "name": "revokeCredential",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{"name": "user", "type": "address"}],
-    "name": "getUserCredentials",
-    "outputs": [{"name": "", "type": "bytes32[]"}],
+    "inputs": [{"name": "credentialHash", "type": "string"}],
+    "name": "getCredential",
+    "outputs": [
+      {"name": "issuer", "type": "address"}, 
+      {"name": "holder", "type": "address"}, 
+      {"name": "credentialType", "type": "string"}, 
+      {"name": "issuedAt", "type": "uint256"}, 
+      {"name": "expiresAt", "type": "uint256"}, 
+      {"name": "isRevoked", "type": "bool"}
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{"name": "credentialId", "type": "bytes32"}],
-    "name": "getCredential",
-    "outputs": [{"name": "", "type": "tuple", "components": [{"name": "issuer", "type": "address"}, {"name": "recipient", "type": "address"}, {"name": "credentialType", "type": "string"}, {"name": "data", "type": "string"}, {"name": "issuanceTime", "type": "uint256"}, {"name": "expirationTime", "type": "uint256"}, {"name": "isRevoked", "type": "bool"}]}],
+    "inputs": [{"name": "holder", "type": "address"}],
+    "name": "getHolderCredentials",
+    "outputs": [{"name": "credentialHashes", "type": "string[]"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "issuer", "type": "address"}],
+    "name": "getIssuerCredentials",
+    "outputs": [{"name": "credentialHashes", "type": "string[]"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "credentialHash", "type": "string"}],
+    "name": "credentialExists",
+    "outputs": [{"name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "issuer", "type": "address"}],
+    "name": "authorizeIssuer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "issuer", "type": "address"}],
+    "name": "authorizedIssuers",
+    "outputs": [{"name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalCredentials",
+    "outputs": [{"name": "", "type": "uint256"}],
     "stateMutability": "view",
     "type": "function"
   }

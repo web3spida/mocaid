@@ -22,7 +22,7 @@ import { useVerifiableCredentials } from '../hooks/useAirKit'
 const MyCredentials = () => {
   const { address } = useAccount()
   const { useGetUserCredentials } = useCredentialIssuer()
-  const { credentials, createCredential, verifyCredential, removeCredential, isLoading } = useVerifiableCredentials()
+  const { credentials, issueCredential, verifyCredential, revokeCredential, loading } = useVerifiableCredentials()
 
   // Contract data
   const { data: userCredentials, isLoading: isLoadingCredentials } = useGetUserCredentials(address)
@@ -74,56 +74,8 @@ const MyCredentials = () => {
     },
   }
 
-  // Mock credentials for demo
-  const mockCredentials = [
-    {
-      id: '1',
-      type: 'education',
-      title: 'Bachelor of Computer Science',
-      issuer: 'University of Technology',
-      issuanceDate: '2023-06-15',
-      expirationDate: '2028-06-15',
-      status: 'verified',
-      data: {
-        degree: 'Bachelor of Science',
-        major: 'Computer Science',
-        gpa: '3.8',
-        graduationDate: '2023-06-15',
-      },
-    },
-    {
-      id: '2',
-      type: 'certification',
-      title: 'Blockchain Developer Certification',
-      issuer: 'Moca Academy',
-      issuanceDate: '2023-08-20',
-      expirationDate: '2025-08-20',
-      status: 'verified',
-      data: {
-        skills: ['Solidity', 'Web3', 'Smart Contracts'],
-        level: 'Advanced',
-        score: '95%',
-      },
-    },
-    {
-      id: '3',
-      type: 'employment',
-      title: 'Senior Software Engineer',
-      issuer: 'Tech Corp Inc.',
-      issuanceDate: '2023-01-15',
-      expirationDate: null,
-      status: 'active',
-      data: {
-        position: 'Senior Software Engineer',
-        department: 'Engineering',
-        startDate: '2023-01-15',
-        skills: ['React', 'Node.js', 'TypeScript'],
-      },
-    },
-  ]
-
-  // Combine mock credentials with real ones for demo
-  const allCredentials = [...mockCredentials, ...credentials]
+  // Use only real credentials from smart contract
+  const allCredentials = credentials
 
   // Filter credentials
   const filteredCredentials = allCredentials.filter(credential => {
@@ -138,15 +90,15 @@ const MyCredentials = () => {
     e.preventDefault()
     
     try {
-      const issuerDID = `did:moca:${createForm.issuer.toLowerCase()}`
       const credentialData = {
         type: createForm.type,
         title: createForm.title,
         description: createForm.description,
+        issuer: createForm.issuer,
         ...createForm.data,
       }
 
-      await createCredential(issuerDID, credentialData)
+      await issueCredential(credentialData)
       toast.success('Credential created successfully!')
       setShowCreateModal(false)
       setCreateForm({
@@ -195,8 +147,8 @@ const MyCredentials = () => {
   // Handle delete credential
   const handleDeleteCredential = (credentialId) => {
     if (confirm('Are you sure you want to delete this credential?')) {
-      removeCredential(credentialId)
-      toast.success('Credential deleted successfully!')
+      revokeCredential(credentialId)
+      toast.success('Credential revoked successfully!')
     }
   }
 
@@ -507,10 +459,10 @@ const MyCredentials = () => {
                   <div className="flex space-x-4 pt-4">
                     <button
                       type="submit"
-                      disabled={isLoading}
+                      disabled={loading}
                       className="btn-primary flex-1"
                     >
-                      {isLoading ? (
+                      {loading ? (
                         <>
                           <div className="spinner mr-2"></div>
                           Creating...
