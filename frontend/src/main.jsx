@@ -12,7 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Chain configuration
 const mocaChain = {
-  id: parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '1328'),
+  id: parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001'),
   name: 'Moca Chain',
   network: 'moca',
   nativeCurrency: {
@@ -21,16 +21,16 @@ const mocaChain = {
     symbol: 'MOCA',
   },
   rpcUrls: {
-    public: { http: [import.meta.env.VITE_MOCA_RPC_URL || 'https://rpc.mocachain.com'] },
-    default: { http: [import.meta.env.VITE_MOCA_RPC_URL || 'https://rpc.mocachain.com'] },
+    public: { http: [import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
+    default: { http: [import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
   },
   blockExplorers: {
-    default: { name: 'Moca Explorer', url: 'https://explorer.mocachain.com' },
+    default: { name: 'Moca Explorer', url: import.meta.env.VITE_MOCA_EXPLORER || 'https://testnet-scan.mechain.tech' },
   },
 }
 
 const mocaTestnet = {
-  id: parseInt(import.meta.env.VITE_MOCA_TESTNET_CHAIN_ID || '1329'),
+  id: parseInt(import.meta.env.VITE_MOCA_TESTNET_CHAIN_ID || '7001'),
   name: 'Moca Testnet',
   network: 'moca-testnet',
   nativeCurrency: {
@@ -39,11 +39,11 @@ const mocaTestnet = {
     symbol: 'MOCA',
   },
   rpcUrls: {
-    public: { http: [import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://testnet-rpc.mocachain.com'] },
-    default: { http: [import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://testnet-rpc.mocachain.com'] },
+    public: { http: [import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
+    default: { http: [import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
   },
   blockExplorers: {
-    default: { name: 'Moca Testnet Explorer', url: 'https://testnet-explorer.mocachain.com' },
+    default: { name: 'Moca Testnet Explorer', url: 'https://testnet-scan.mechain.tech' },
   },
   testnet: true,
 }

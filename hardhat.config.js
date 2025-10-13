@@ -21,9 +21,9 @@ module.exports = {
       chainId: 1328, // Replace with actual Moca Chain ID
     },
     mocaTestnet: {
-      url: "https://testnet-rpc.mocachain.com", // Replace with actual testnet RPC URL
+      url: "https://devnet-rpc.mocachain.org", // Moca testnet RPC URL
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 1329, // Replace with actual testnet chain ID
+      chainId: 7001, // Moca testnet chain ID
     },
   },
   etherscan: {

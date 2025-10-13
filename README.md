@@ -89,10 +89,9 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
    **Root `.env`:**
    ```env
    # Moca Chain Configuration
-   MOCA_CHAIN_RPC_URL=https://rpc.moca.network
-   MOCA_TESTNET_RPC_URL=https://testnet-rpc.moca.network
-   MOCA_CHAIN_ID=7000
+   MOCA_TESTNET_RPC_URL=https://devnet-rpc.mocachain.org
    MOCA_TESTNET_CHAIN_ID=7001
+   MOCA_TESTNET_EXPLORER=https://testnet-scan.mechain.tech
 
    # Private Keys (DO NOT COMMIT TO VERSION CONTROL)
    DEPLOYER_PRIVATE_KEY=your_deployer_private_key_here
@@ -110,10 +109,11 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
    **Frontend `.env`:**
    ```env
    # Moca Chain Configuration
-   VITE_MOCA_CHAIN_ID=7000
+   VITE_MOCA_CHAIN_ID=7001
+   VITE_MOCA_RPC_URL=https://devnet-rpc.mocachain.org
    VITE_MOCA_TESTNET_CHAIN_ID=7001
-   VITE_MOCA_RPC_URL=https://rpc.moca.network
-   VITE_MOCA_TESTNET_RPC_URL=https://testnet-rpc.moca.network
+   VITE_MOCA_TESTNET_RPC_URL=https://devnet-rpc.mocachain.org
+   VITE_MOCA_EXPLORER=https://testnet-scan.mechain.tech
 
    # Smart Contract Addresses (Update after deployment)
    VITE_IDENTITY_REGISTRY_ADDRESS=0x...
