@@ -4,10 +4,11 @@ import { useContracts } from './useContracts'
 // Import JWT service
 import { getAirKitJWT } from '../services/jwtService'
 
-// AIR Kit SDK Configuration
+// Get AIR Kit configuration from environment variables
 const getAirKitConfig = () => ({
   partnerId: import.meta.env.VITE_AIRKIT_PARTNER_ID,
   issuerDid: import.meta.env.VITE_AIRKIT_ISSUER_DID,
+  verifierDid: import.meta.env.VITE_AIRKIT_VERIFIER_DID,
   apiUrl: import.meta.env.VITE_AIRKIT_API_URL || 'https://api.moca.network',
   widgetUrl: import.meta.env.VITE_AIRKIT_WIDGET_URL || 'https://widget.moca.network',
   environment: import.meta.env.VITE_AIRKIT_ENVIRONMENT || 'testnet'
