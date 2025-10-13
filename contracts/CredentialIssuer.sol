@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title CredentialIssuer
@@ -64,9 +64,9 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
         _;
     }
 
-    constructor() {
+    constructor(address initialOwner) Ownable(initialOwner) {
         // Owner is automatically an authorized issuer
-        authorizedIssuers[msg.sender] = true;
+        authorizedIssuers[initialOwner] = true;
     }
 
     /**
@@ -268,14 +268,5 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
         }
         
         return credentialHashes;
-    }
-
-    /**
-     * @dev Check if credential exists
-     * @param credentialHash The credential hash to check
-     * @return True if credential exists
-     */
-    function credentialExists(string memory credentialHash) public view returns (bool) {
-        return credentials[credentialHash].exists;
     }
 }

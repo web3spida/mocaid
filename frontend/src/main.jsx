@@ -55,7 +55,7 @@ const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: import.meta.env.VITE_APP_NAME || 'MocaID Vault',
-  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'your_project_id',
+  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '',
   chains,
 })
 

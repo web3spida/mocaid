@@ -1,9 +1,10 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    version: "0.8.19",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,
@@ -23,7 +24,7 @@ module.exports = {
     mocaTestnet: {
       url: "https://devnet-rpc.mocachain.org", // Moca testnet RPC URL
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 7001, // Moca testnet chain ID
+      chainId: 5151, // Moca testnet chain ID (corrected)
     },
   },
   etherscan: {

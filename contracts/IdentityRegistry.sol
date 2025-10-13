@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title IdentityRegistry
@@ -34,6 +34,10 @@ contract IdentityRegistry is Ownable, ReentrancyGuard {
     modifier identityExists(address user) {
         require(identities[user].exists, "Identity does not exist");
         _;
+    }
+
+    constructor(address initialOwner) Ownable(initialOwner) {
+        // Initialize the contract with the initial owner
     }
 
     /**

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title AccessControl
@@ -100,6 +100,10 @@ contract AccessControl is Ownable, ReentrancyGuard {
         _;
     }
 
+    constructor(address initialOwner) Ownable(initialOwner) {
+        // Initialize the contract with the initial owner
+    }
+
     /**
      * @dev Generate permission ID from grantor, grantee, and resource
      * @param grantor The address granting access
@@ -126,7 +130,7 @@ contract AccessControl is Ownable, ReentrancyGuard {
         address requester,
         address resourceOwner,
         string memory resourceId
-    ) public pure returns (bytes32) {
+    ) public view returns (bytes32) {
         return keccak256(abi.encodePacked(requester, resourceOwner, resourceId, block.timestamp));
     }
 

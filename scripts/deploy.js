@@ -4,29 +4,34 @@ async function main() {
   console.log("🚀 Starting deployment to Moca Chain...");
   
   const [deployer] = await hre.ethers.getSigners();
+  
+  if (!deployer) {
+    throw new Error("No deployer account found. Please check your PRIVATE_KEY in .env file");
+  }
+  
   console.log("Deploying contracts with account:", deployer.address);
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  console.log("Account balance:", (await hre.ethers.provider.getBalance(deployer.address)).toString());
 
   // Deploy IdentityRegistry
   console.log("\n📋 Deploying IdentityRegistry...");
   const IdentityRegistry = await hre.ethers.getContractFactory("IdentityRegistry");
-  const identityRegistry = await IdentityRegistry.deploy();
-  await identityRegistry.deployed();
-  console.log("✅ IdentityRegistry deployed to:", identityRegistry.address);
+  const identityRegistry = await IdentityRegistry.deploy(deployer.address);
+  await identityRegistry.waitForDeployment();
+  console.log("✅ IdentityRegistry deployed to:", await identityRegistry.getAddress());
 
   // Deploy CredentialIssuer
   console.log("\n🎫 Deploying CredentialIssuer...");
   const CredentialIssuer = await hre.ethers.getContractFactory("CredentialIssuer");
-  const credentialIssuer = await CredentialIssuer.deploy();
-  await credentialIssuer.deployed();
-  console.log("✅ CredentialIssuer deployed to:", credentialIssuer.address);
+  const credentialIssuer = await CredentialIssuer.deploy(deployer.address);
+  await credentialIssuer.waitForDeployment();
+  console.log("✅ CredentialIssuer deployed to:", await credentialIssuer.getAddress());
 
   // Deploy AccessControl
   console.log("\n🔐 Deploying AccessControl...");
   const AccessControl = await hre.ethers.getContractFactory("AccessControl");
-  const accessControl = await AccessControl.deploy();
-  await accessControl.deployed();
-  console.log("✅ AccessControl deployed to:", accessControl.address);
+  const accessControl = await AccessControl.deploy(deployer.address);
+  await accessControl.waitForDeployment();
+  console.log("✅ AccessControl deployed to:", await accessControl.getAddress());
 
   // Verify contracts on Moca Chain (if API key is available)
   if (process.env.MOCA_API_KEY) {
@@ -34,8 +39,8 @@ async function main() {
     
     try {
       await hre.run("verify:verify", {
-        address: identityRegistry.address,
-        constructorArguments: [],
+        address: await identityRegistry.getAddress(),
+        constructorArguments: [deployer.address],
       });
       console.log("✅ IdentityRegistry verified");
     } catch (error) {
@@ -44,8 +49,8 @@ async function main() {
 
     try {
       await hre.run("verify:verify", {
-        address: credentialIssuer.address,
-        constructorArguments: [],
+        address: await credentialIssuer.getAddress(),
+        constructorArguments: [deployer.address],
       });
       console.log("✅ CredentialIssuer verified");
     } catch (error) {
@@ -54,8 +59,8 @@ async function main() {
 
     try {
       await hre.run("verify:verify", {
-        address: accessControl.address,
-        constructorArguments: [],
+        address: await accessControl.getAddress(),
+        constructorArguments: [deployer.address],
       });
       console.log("✅ AccessControl verified");
     } catch (error) {
@@ -69,9 +74,9 @@ async function main() {
     chainId: hre.network.config.chainId,
     deployer: deployer.address,
     contracts: {
-      IdentityRegistry: identityRegistry.address,
-      CredentialIssuer: credentialIssuer.address,
-      AccessControl: accessControl.address,
+      IdentityRegistry: await identityRegistry.getAddress(),
+      CredentialIssuer: await credentialIssuer.getAddress(),
+      AccessControl: await accessControl.getAddress(),
     },
     deployedAt: new Date().toISOString(),
   };
@@ -96,9 +101,9 @@ async function main() {
   console.log(`Network: ${hre.network.name}`);
   console.log(`Chain ID: ${hre.network.config.chainId}`);
   console.log(`Deployer: ${deployer.address}`);
-  console.log(`IdentityRegistry: ${identityRegistry.address}`);
-  console.log(`CredentialIssuer: ${credentialIssuer.address}`);
-  console.log(`AccessControl: ${accessControl.address}`);
+  console.log(`IdentityRegistry: ${await identityRegistry.getAddress()}`);
+  console.log(`CredentialIssuer: ${await credentialIssuer.getAddress()}`);
+  console.log(`AccessControl: ${await accessControl.getAddress()}`);
   console.log("=".repeat(50));
 
   console.log("\n🎉 Deployment completed successfully!");

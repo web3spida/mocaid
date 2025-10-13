@@ -585,11 +585,4 @@ export const useSchemas = () => {
 }
 
 // Remove the AIR Service class and related functions since we're using smart contracts directly
-// Export a simplified service for any remaining AIR Kit specific functionality
-export const getAirKitConfig = () => ({
-  partnerId: import.meta.env.VITE_AIRKIT_PARTNER_ID,
-  issuerDid: import.meta.env.VITE_AIRKIT_ISSUER_DID,
-  apiUrl: import.meta.env.VITE_AIRKIT_API_URL || 'https://api.moca.network',
-  widgetUrl: import.meta.env.VITE_AIRKIT_WIDGET_URL || 'https://widget.moca.network',
-  environment: import.meta.env.VITE_AIRKIT_ENVIRONMENT || 'testnet'
-})
+// The getAirKitConfig function is already defined at the top of the file

@@ -446,3 +446,12 @@ export const useAccessControl = () => {
     useRequestAccess,
   }
 }
+
+// Combined hook that provides access to all contract hooks
+export const useContracts = () => {
+  return {
+    identityRegistry: useIdentityRegistry(),
+    credentialIssuer: useCredentialIssuer(),
+    accessControl: useAccessControl(),
+  }
+}

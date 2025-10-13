@@ -13,6 +13,9 @@ export default defineConfig({
   define: {
     global: 'globalThis',
   },
+  optimizeDeps: {
+    include: ['buffer', 'util']
+  },
   server: {
     port: 3000,
     open: true,
@@ -20,5 +23,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    rollupOptions: {
+      external: [],
+      output: {
+        globals: {}
+      }
+    }
   },
 })
