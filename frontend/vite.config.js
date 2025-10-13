@@ -35,7 +35,10 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: process.env.NODE_ENV !== 'production',
+    minify: 'terser',
+    target: 'es2015',
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       plugins: [
         NodeGlobalsPolyfillPlugin({
@@ -44,6 +47,13 @@ export default defineConfig({
         }),
         NodeModulesPolyfillPlugin(),
       ],
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          wagmi: ['wagmi', 'viem', '@rainbow-me/rainbowkit'],
+          ui: ['framer-motion', 'react-hot-toast'],
+        },
+      },
     },
   },
 })
