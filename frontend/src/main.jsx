@@ -5,7 +5,7 @@ import './index.css'
 
 // Wagmi and RainbowKit imports
 import '@rainbow-me/rainbowkit/styles.css'
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -71,7 +71,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider chains={chains} theme="light">
+        <RainbowKitProvider chains={chains} theme={lightTheme()}>
           <App />
         </RainbowKitProvider>
       </WagmiConfig>
