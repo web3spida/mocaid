@@ -12,6 +12,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       buffer: 'buffer',
       util: 'util',
+      '@safe-globalThis/safe-apps-provider': path.resolve(__dirname, './src/safe-polyfill.js'),
+      '@safe-globalThis/safe-apps-sdk': path.resolve(__dirname, './src/safe-polyfill.js'),
     },
   },
   define: {
