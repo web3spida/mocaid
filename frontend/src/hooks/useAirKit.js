@@ -84,7 +84,7 @@ export const useVerifiableCredentials = () => {
   const [credentials, setCredentials] = useState([])
 
   // Env + chain config
-  const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001')
+  const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
   const RPC_URL = import.meta.env.VITE_MOCA_TESTNET_RPC_URL || import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'
   const CREDENTIAL_ISSUER_ADDRESS = import.meta.env.VITE_CREDENTIAL_ISSUER_ADDRESS
 
@@ -230,9 +230,26 @@ export const useVerifiableCredentials = () => {
     try {
       // Ensure wallet is on the expected chain before sending tx
       try {
-        await walletClient.switchChain({ id: CHAIN_ID })
+        const currentChainId = typeof walletClient.getChainId === 'function'
+          ? await walletClient.getChainId()
+          : null
+        if (currentChainId && currentChainId !== CHAIN_ID) {
+          try {
+            await walletClient.switchChain({ id: CHAIN_ID })
+          } catch (e) {
+            // Fallback to Wallet RPC if viem switch fails
+            if (typeof window !== 'undefined' && window.ethereum?.request) {
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: `0x${CHAIN_ID.toString(16)}` }]
+              })
+            } else {
+              throw e
+            }
+          }
+        }
       } catch (switchErr) {
-        throw new Error('Please switch to Moca Testnet before issuing credentials')
+        throw new Error('Please switch to Moca Testnet (chainId 5151) before issuing credentials')
       }
 
       // Create a simple credential hash (replace with cryptographic hash in production)
@@ -398,7 +415,7 @@ export const useVerifiablePresentations = () => {
   const [presentations, setPresentations] = useState([])
 
   // Env + chain config (mirror credentials hook setup)
-  const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001')
+  const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
   const RPC_URL = import.meta.env.VITE_MOCA_TESTNET_RPC_URL || import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'
   const CREDENTIAL_ISSUER_ADDRESS = import.meta.env.VITE_CREDENTIAL_ISSUER_ADDRESS
 

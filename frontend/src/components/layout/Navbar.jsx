@@ -38,7 +38,7 @@ const Navbar = () => {
   const isActive = (href) => location.pathname === href
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-3 items-center h-16">
           {/* Logo and brand (far left) */}
@@ -70,7 +70,7 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Desktop wallet connection (far right) */}
+          {/* Desktop wallet connection (far right within grid) */}
           <div className="hidden md:flex items-center justify-self-end">
             <ConnectButton />
           </div>
@@ -90,6 +90,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Removed absolute Connect Button to prevent overlaying page headers */}
 
       {/* Mobile menu */}
       <AnimatePresence>

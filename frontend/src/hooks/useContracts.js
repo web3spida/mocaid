@@ -7,7 +7,7 @@ const CREDENTIAL_ISSUER_ADDRESS = import.meta.env.VITE_CREDENTIAL_ISSUER_ADDRESS
 const ACCESS_CONTROL_ADDRESS = import.meta.env.VITE_ACCESS_CONTROL_ADDRESS
 
 // Chain configuration
-const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001')
+const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
 const RPC_URL = import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'
 
 // Contract ABIs - Updated to match actual smart contracts
