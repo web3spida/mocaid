@@ -243,6 +243,7 @@ export const useIdentityRegistry = () => {
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
       functionName: 'registerIdentity',
+      chainId: parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151'),
       mode: 'recklesslyUnprepared',
     })
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
@@ -263,6 +264,7 @@ export const useIdentityRegistry = () => {
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
       functionName: 'updateIdentity',
+      chainId: parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151'),
       mode: 'recklesslyUnprepared',
     })
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
@@ -283,6 +285,7 @@ export const useIdentityRegistry = () => {
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
       functionName: 'revokeIdentity',
+      chainId: parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151'),
       mode: 'recklesslyUnprepared',
     })
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({

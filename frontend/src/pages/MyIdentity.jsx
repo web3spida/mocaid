@@ -19,7 +19,7 @@ const MyIdentity = () => {
   const { useGetIdentity, useIsRegistered, useRegisterIdentity, useUpdateIdentity, useRevokeIdentity } = useIdentityRegistry()
   const { did, publicKey, generateDID, loading: isDIDLoading } = useDID()
   const { chain } = useNetwork()
-  const { switchNetwork } = useSwitchNetwork()
+  const { switchNetworkAsync } = useSwitchNetwork()
   const expectedChainId = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
 
   // Contract hooks
@@ -66,7 +66,7 @@ const MyIdentity = () => {
       // Ensure correct network before sending transaction
       if (!chain || chain.id !== expectedChainId) {
         try {
-          await switchNetwork?.(expectedChainId)
+          await switchNetworkAsync?.(expectedChainId)
         } catch (e) {
           toast.error('Please switch to Moca Testnet (chainId 5151)')
           return
@@ -96,7 +96,7 @@ const MyIdentity = () => {
       // Ensure correct network before sending transaction
       if (!chain || chain.id !== expectedChainId) {
         try {
-          await switchNetwork?.(expectedChainId)
+          await switchNetworkAsync?.(expectedChainId)
         } catch (e) {
           toast.error('Please switch to Moca Testnet (chainId 5151)')
           return
