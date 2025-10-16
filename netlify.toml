@@ -1,19 +1,16 @@
 [build]
   # Directory to change to before starting a build
-  base = "frontend/"
+  base = "frontend"
   
-  # Directory that contains the deploy-ready HTML files and assets
-  publish = "frontend/dist/"
+  # Directory that contains the deploy-ready HTML files and assets (relative to base)
+  publish = "dist"
   
-  # Default build command
-  command = "npm run build"
+  # Ensure dependencies (including devDependencies) are installed, then build
+  command = "npm ci && npm run build"
 
 [build.environment]
   # Node.js version for build
   NODE_VERSION = "18"
-  
-  # NPM version
-  NPM_VERSION = "9"
 
 # Redirect rules for Single Page Application (SPA)
 [[redirects]]
@@ -46,12 +43,4 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Environment-specific settings
-[context.production.environment]
-  NODE_ENV = "production"
-
-[context.deploy-preview.environment]
-  NODE_ENV = "development"
-
-[context.branch-deploy.environment]
-  NODE_ENV = "development"
+# Avoid setting NODE_ENV here to prevent skipping devDependencies during install
