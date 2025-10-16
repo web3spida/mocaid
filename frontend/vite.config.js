@@ -37,7 +37,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: process.env.NODE_ENV !== 'production',
     minify: 'terser',
-    target: 'es2015',
+    target: 'es2020',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       external: ['@safe-globalThis/safe-apps-provider', '@safe-globalThis/safe-apps-sdk'],
