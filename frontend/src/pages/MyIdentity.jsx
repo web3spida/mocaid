@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import toast from 'react-hot-toast'
 import {
   IdentificationIcon,
@@ -18,6 +18,9 @@ const MyIdentity = () => {
   const { address } = useAccount()
   const { useGetIdentity, useIsRegistered, useRegisterIdentity, useUpdateIdentity, useRevokeIdentity } = useIdentityRegistry()
   const { did, publicKey, generateDID, loading: isDIDLoading } = useDID()
+  const { chain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
+  const expectedChainId = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
 
   // Contract hooks
   const { data: isRegistered, isLoading: isCheckingRegistration, refetch: refetchRegistration } = useIsRegistered(address)
@@ -60,6 +63,15 @@ const MyIdentity = () => {
     }
 
     try {
+      // Ensure correct network before sending transaction
+      if (!chain || chain.id !== expectedChainId) {
+        try {
+          await switchNetwork?.(expectedChainId)
+        } catch (e) {
+          toast.error('Please switch to Moca Testnet (chainId 5151)')
+          return
+        }
+      }
       await registerIdentity({ args: [address, did] })
     } catch (error) {
       toast.error('Failed to register identity: ' + (error?.message || error))
@@ -81,6 +93,15 @@ const MyIdentity = () => {
     }
 
     try {
+      // Ensure correct network before sending transaction
+      if (!chain || chain.id !== expectedChainId) {
+        try {
+          await switchNetwork?.(expectedChainId)
+        } catch (e) {
+          toast.error('Please switch to Moca Testnet (chainId 5151)')
+          return
+        }
+      }
       await updateIdentity({ args: [address, did] })
     } catch (error) {
       toast.error('Failed to update identity: ' + (error?.message || error))

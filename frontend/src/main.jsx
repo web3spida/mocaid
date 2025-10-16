@@ -11,27 +11,12 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// Chain configuration
-const mocaChain = {
-  id: parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001'),
-  name: 'Moca Chain',
-  network: 'moca',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'MOCA',
-    symbol: 'MOCA',
-  },
-  rpcUrls: {
-    public: { http: [import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
-    default: { http: [import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
-  },
-  blockExplorers: {
-    default: { name: 'Moca Explorer', url: import.meta.env.VITE_MOCA_EXPLORER || 'https://testnet-scan.mechain.tech' },
-  },
-}
+// Chain configuration (single devnet chain)
+const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
+const RPC_URL = import.meta.env.VITE_MOCA_RPC_URL || import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://devnet-rpc.mocachain.org'
 
-const mocaTestnet = {
-  id: parseInt(import.meta.env.VITE_MOCA_TESTNET_CHAIN_ID || '7001'),
+const mocaDevnet = {
+  id: CHAIN_ID,
   name: 'Moca Testnet',
   network: 'moca-testnet',
   nativeCurrency: {
@@ -40,19 +25,16 @@ const mocaTestnet = {
     symbol: 'MOCA',
   },
   rpcUrls: {
-    public: { http: [import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
-    default: { http: [import.meta.env.VITE_MOCA_TESTNET_RPC_URL || 'https://devnet-rpc.mocachain.org'] },
+    public: { http: [RPC_URL] },
+    default: { http: [RPC_URL] },
   },
   blockExplorers: {
-    default: { name: 'Moca Testnet Explorer', url: 'https://testnet-scan.mechain.tech' },
+    default: { name: 'Moca Testnet Explorer', url: import.meta.env.VITE_MOCA_EXPLORER || 'https://devnet-scan.mocachain.org' },
   },
   testnet: true,
 }
 
-const { chains, publicClient } = configureChains(
-  [mocaChain, mocaTestnet],
-  [publicProvider()]
-)
+const { chains, publicClient } = configureChains([mocaDevnet], [publicProvider()])
 
 const connectors = connectorsForWallets([
   {
