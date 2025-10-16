@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useAccount } from 'wagmi'
-import { useContracts } from './useContracts'
+import { createPublicClient, createWalletClient, http, custom } from 'viem'
 // Import JWT service
 import { getAirKitJWT } from '../services/jwtService'
 
@@ -17,184 +17,141 @@ const getAirKitConfig = () => ({
 // Hook for DID Management
 export const useDID = () => {
   const { address, isConnected } = useAccount()
-  const { identityRegistry } = useContracts()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [did, setDid] = useState(null)
+  const [publicKey, setPublicKey] = useState(null)
 
-  // Load DID from smart contract on mount
-  useEffect(() => {
-    const loadDID = async () => {
-      if (isConnected && address && identityRegistry) {
-        try {
-          setLoading(true)
-          const hasIdentity = await identityRegistry.read.hasIdentity([address])
-          
-          if (hasIdentity) {
-            const [didURI, createdAt, updatedAt] = await identityRegistry.read.getIdentity([address])
-            setDid({
-              did: didURI,
-              document: {
-                '@context': ['https://www.w3.org/ns/did/v1'],
-                id: didURI,
-                verificationMethod: [{
-                  id: `${didURI}#keys-1`,
-                  type: 'EcdsaSecp256k1VerificationKey2019',
-                  controller: didURI,
-                  publicKeyHex: address
-                }],
-                authentication: [`${didURI}#keys-1`]
-              },
-              metadata: {
-                created: new Date(Number(createdAt) * 1000).toISOString(),
-                updated: new Date(Number(updatedAt) * 1000).toISOString(),
-                owner: address
-              }
-            })
-          }
-        } catch (err) {
-          console.error('Failed to load DID from contract:', err)
-          setError(err.message)
-        } finally {
-          setLoading(false)
-        }
-      }
-    }
-
-    loadDID()
-  }, [address, isConnected, identityRegistry])
-
-  const generateDID = useCallback(async (options = {}) => {
-    if (!isConnected || !identityRegistry) {
-      setError('Wallet not connected or contract not available')
-      return null
-    }
-
+  const generateDID = useCallback(() => {
     setLoading(true)
     setError(null)
 
     try {
+      if (!address) {
+        throw new Error('Wallet not connected')
+      }
+
       // Generate DID URI
       const randomId = Math.random().toString(36).substr(2, 9)
       const didURI = `did:moca:${randomId}`
-      
-      // Register identity on smart contract
-      const tx = await identityRegistry.write.registerIdentity([address, didURI])
-      
-      // Wait for transaction confirmation
-      // Note: In a real app, you'd wait for the transaction to be mined
-      
-      const newDid = {
-        did: didURI,
-        document: {
-          '@context': ['https://www.w3.org/ns/did/v1'],
-          id: didURI,
-          verificationMethod: [{
-            id: `${didURI}#keys-1`,
-            type: 'EcdsaSecp256k1VerificationKey2019',
-            controller: didURI,
-            publicKeyHex: address
-          }],
-          authentication: [`${didURI}#keys-1`]
-        },
-        metadata: {
-          created: new Date().toISOString(),
-          owner: address,
-          transactionHash: tx,
-          ...options
-        }
-      }
+      const newPublicKey = address // Use address as public key
 
-      setDid(newDid)
-      return newDid
+      setDid(didURI)
+      setPublicKey(newPublicKey)
+      
+      return { did: didURI, publicKey: newPublicKey }
     } catch (err) {
       console.error('DID generation failed:', err)
       setError(err.message)
-      return null
+      return { did: null, publicKey: null }
     } finally {
       setLoading(false)
     }
-  }, [address, isConnected, identityRegistry])
-
-  const resolveDID = useCallback(async (didURI) => {
-    if (!identityRegistry) {
-      setError('Contract not available')
-      return null
-    }
-
-    setLoading(true)
-    setError(null)
-
-    try {
-      const ownerAddress = await identityRegistry.read.getAddressFromDID([didURI])
-      
-      if (ownerAddress === '0x0000000000000000000000000000000000000000') {
-        throw new Error('DID not found')
-      }
-
-      const [, createdAt, updatedAt] = await identityRegistry.read.getIdentity([ownerAddress])
-      
-      const resolvedDid = {
-        did: didURI,
-        document: {
-          '@context': ['https://www.w3.org/ns/did/v1'],
-          id: didURI,
-          verificationMethod: [{
-            id: `${didURI}#keys-1`,
-            type: 'EcdsaSecp256k1VerificationKey2019',
-            controller: didURI,
-            publicKeyHex: ownerAddress
-          }],
-          authentication: [`${didURI}#keys-1`]
-        },
-        metadata: {
-          created: new Date(Number(createdAt) * 1000).toISOString(),
-          updated: new Date(Number(updatedAt) * 1000).toISOString(),
-          owner: ownerAddress,
-          resolved: new Date().toISOString()
-        }
-      }
-      
-      return resolvedDid
-    } catch (err) {
-      console.error('DID resolution failed:', err)
-      setError(err.message)
-      return null
-    } finally {
-      setLoading(false)
-    }
-  }, [identityRegistry])
+  }, [address])
 
   return {
     did,
+    publicKey,
     loading,
     error,
     generateDID,
-    resolveDID,
-    isConnected
   }
 }
 
 // Hook for Verifiable Credentials
 export const useVerifiableCredentials = () => {
   const { address, isConnected } = useAccount()
-  const { credentialIssuer } = useContracts()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [credentials, setCredentials] = useState([])
 
+  // Env + chain config
+  const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001')
+  const RPC_URL = import.meta.env.VITE_MOCA_TESTNET_RPC_URL || import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'
+  const CREDENTIAL_ISSUER_ADDRESS = import.meta.env.VITE_CREDENTIAL_ISSUER_ADDRESS
+
+  const chain = {
+    id: CHAIN_ID,
+    name: 'Moca Testnet',
+    nativeCurrency: { name: 'MOCA', symbol: 'MOCA', decimals: 18 },
+    rpcUrls: { default: { http: [RPC_URL] }, public: { http: [RPC_URL] } }
+  }
+
+  const publicClient = createPublicClient({ chain, transport: http(RPC_URL) })
+  const walletClient = typeof window !== 'undefined' ? createWalletClient({ chain, transport: custom(window.ethereum) }) : null
+
+  // Minimal ABI for credential issuer interactions
+  const CREDENTIAL_ISSUER_ABI = [
+    {
+      inputs: [
+        { name: 'to', type: 'address' },
+        { name: 'credentialHash', type: 'string' },
+        { name: 'credentialType', type: 'string' },
+        { name: 'expiresAt', type: 'uint256' }
+      ],
+      name: 'issueCredential',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function'
+    },
+    {
+      inputs: [{ name: 'credentialHash', type: 'string' }],
+      name: 'verifyCredential',
+      outputs: [{ name: 'isValid', type: 'bool' }],
+      stateMutability: 'view',
+      type: 'function'
+    },
+    {
+      inputs: [{ name: 'credentialHash', type: 'string' }],
+      name: 'revokeCredential',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function'
+    },
+    {
+      inputs: [{ name: 'holder', type: 'address' }],
+      name: 'getHolderCredentials',
+      outputs: [{ name: 'credentialHashes', type: 'string[]' }],
+      stateMutability: 'view',
+      type: 'function'
+    },
+    {
+      inputs: [{ name: 'credentialHash', type: 'string' }],
+      name: 'getCredential',
+      outputs: [
+        { name: 'issuer', type: 'address' },
+        { name: 'holder', type: 'address' },
+        { name: 'credentialType', type: 'string' },
+        { name: 'issuedAt', type: 'uint256' },
+        { name: 'expiresAt', type: 'uint256' },
+        { name: 'isRevoked', type: 'bool' }
+      ],
+      stateMutability: 'view',
+      type: 'function'
+    }
+  ]
+
   // Load credentials from smart contract
   useEffect(() => {
     const loadCredentials = async () => {
-      if (isConnected && address && credentialIssuer) {
+      if (isConnected && address && CREDENTIAL_ISSUER_ADDRESS) {
         try {
           setLoading(true)
-          const credentialHashes = await credentialIssuer.read.getHolderCredentials([address])
+          const credentialHashes = await publicClient.readContract({
+            address: CREDENTIAL_ISSUER_ADDRESS,
+            abi: CREDENTIAL_ISSUER_ABI,
+            functionName: 'getHolderCredentials',
+            args: [address]
+          })
           
           const credentialPromises = credentialHashes.map(async (hash) => {
             try {
-              const [issuer, holder, credentialType, issuedAt, expiresAt, isRevoked] = 
-                await credentialIssuer.read.getCredential([hash])
+              const [issuer, holder, credentialType, issuedAt, expiresAt, isRevoked] = await publicClient.readContract({
+                address: CREDENTIAL_ISSUER_ADDRESS,
+                abi: CREDENTIAL_ISSUER_ABI,
+                functionName: 'getCredential',
+                args: [hash]
+              })
               
               return {
                 id: hash,
@@ -241,10 +198,10 @@ export const useVerifiableCredentials = () => {
     }
 
     loadCredentials()
-  }, [address, isConnected, credentialIssuer])
+  }, [address, isConnected, CREDENTIAL_ISSUER_ADDRESS])
 
   const issueCredential = useCallback(async (credentialData) => {
-    if (!isConnected || !credentialIssuer) {
+    if (!isConnected || !walletClient || !CREDENTIAL_ISSUER_ADDRESS) {
       setError('Wallet not connected or contract not available')
       return null
     }
@@ -253,28 +210,25 @@ export const useVerifiableCredentials = () => {
     setError(null)
 
     try {
-      // Create credential hash from the data
-      const credentialString = JSON.stringify({
-        type: credentialData.type,
-        subject: credentialData.subject,
-        issuer: credentialData.issuer,
-        timestamp: Date.now()
-      })
-      
-      // Simple hash function (in production, use proper cryptographic hash)
+      // Create a simple credential hash (replace with cryptographic hash in production)
       const credentialHash = `cred_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      
+
       // Set expiration (default to 1 year if not specified)
-      const expiresAt = credentialData.expiresAt || 
-        Math.floor(Date.now() / 1000) + (365 * 24 * 60 * 60) // 1 year from now
-      
+      const expiresAt = credentialData.expiresAt || Math.floor(Date.now() / 1000) + (365 * 24 * 60 * 60)
+
       // Issue credential on smart contract
-      const tx = await credentialIssuer.write.issueCredential([
-        credentialData.holder || address,
-        credentialHash,
-        credentialData.type,
-        expiresAt
-      ])
+      const txHash = await walletClient.writeContract({
+        address: CREDENTIAL_ISSUER_ADDRESS,
+        abi: CREDENTIAL_ISSUER_ABI,
+        functionName: 'issueCredential',
+        account: address,
+        args: [
+          credentialData.holder || address,
+          credentialHash,
+          credentialData.type,
+          expiresAt
+        ]
+      })
 
       // Create the credential object
       const newCredential = {
@@ -284,7 +238,7 @@ export const useVerifiableCredentials = () => {
           'https://w3id.org/security/suites/secp256k1-2019/v1'
         ],
         type: ['VerifiableCredential', credentialData.type],
-        issuer: address, // Current user is the issuer
+        issuer: address,
         holder: credentialData.holder || address,
         issuanceDate: new Date().toISOString(),
         expirationDate: new Date(expiresAt * 1000).toISOString(),
@@ -302,7 +256,7 @@ export const useVerifiableCredentials = () => {
           created: new Date().toISOString(),
           proofPurpose: 'assertionMethod',
           verificationMethod: `${address}#keys-1`,
-          transactionHash: tx
+          transactionHash: txHash
         }
       }
 
@@ -318,10 +272,10 @@ export const useVerifiableCredentials = () => {
     } finally {
       setLoading(false)
     }
-  }, [address, isConnected, credentialIssuer, credentials])
+  }, [address, isConnected, walletClient, CREDENTIAL_ISSUER_ADDRESS, credentials])
 
   const verifyCredential = useCallback(async (credential) => {
-    if (!credentialIssuer) {
+    if (!CREDENTIAL_ISSUER_ADDRESS) {
       setError('Contract not available')
       return null
     }
@@ -330,7 +284,12 @@ export const useVerifiableCredentials = () => {
     setError(null)
 
     try {
-      const isValid = await credentialIssuer.read.verifyCredential([credential.id])
+      const isValid = await publicClient.readContract({
+        address: CREDENTIAL_ISSUER_ADDRESS,
+        abi: CREDENTIAL_ISSUER_ABI,
+        functionName: 'verifyCredential',
+        args: [credential.id]
+      })
       
       return {
         verified: isValid,
@@ -350,10 +309,10 @@ export const useVerifiableCredentials = () => {
     } finally {
       setLoading(false)
     }
-  }, [credentialIssuer])
+  }, [CREDENTIAL_ISSUER_ADDRESS])
 
   const revokeCredential = useCallback(async (credentialId) => {
-    if (!isConnected || !credentialIssuer) {
+    if (!isConnected || !walletClient || !CREDENTIAL_ISSUER_ADDRESS) {
       setError('Wallet not connected or contract not available')
       return false
     }
@@ -363,7 +322,13 @@ export const useVerifiableCredentials = () => {
 
     try {
       // Revoke credential on smart contract
-      const tx = await credentialIssuer.write.revokeCredential([credentialId])
+      await walletClient.writeContract({
+        address: CREDENTIAL_ISSUER_ADDRESS,
+        abi: CREDENTIAL_ISSUER_ABI,
+        functionName: 'revokeCredential',
+        account: address,
+        args: [credentialId]
+      })
       
       // Update local state
       const updatedCredentials = credentials.map(cred => 
@@ -381,7 +346,7 @@ export const useVerifiableCredentials = () => {
     } finally {
       setLoading(false)
     }
-  }, [address, isConnected, credentialIssuer, credentials])
+  }, [address, isConnected, walletClient, CREDENTIAL_ISSUER_ADDRESS, credentials])
 
   return {
     credentials,
@@ -397,10 +362,34 @@ export const useVerifiableCredentials = () => {
 // Hook for Verifiable Presentations
 export const useVerifiablePresentations = () => {
   const { address, isConnected } = useAccount()
-  const { credentialIssuer } = useContracts()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [presentations, setPresentations] = useState([])
+
+  // Env + chain config (mirror credentials hook setup)
+  const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '7001')
+  const RPC_URL = import.meta.env.VITE_MOCA_TESTNET_RPC_URL || import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'
+  const CREDENTIAL_ISSUER_ADDRESS = import.meta.env.VITE_CREDENTIAL_ISSUER_ADDRESS
+
+  const chain = {
+    id: CHAIN_ID,
+    name: 'Moca Testnet',
+    nativeCurrency: { name: 'MOCA', symbol: 'MOCA', decimals: 18 },
+    rpcUrls: { default: { http: [RPC_URL] }, public: { http: [RPC_URL] } }
+  }
+
+  const publicClient = createPublicClient({ chain, transport: http(RPC_URL) })
+
+  // Minimal ABI for credential issuer interactions used in presentation verification
+  const CREDENTIAL_ISSUER_ABI = [
+    {
+      inputs: [{ name: 'credentialHash', type: 'string' }],
+      name: 'verifyCredential',
+      outputs: [{ name: 'isValid', type: 'bool' }],
+      stateMutability: 'view',
+      type: 'function'
+    }
+  ]
 
   // Remove localStorage for presentations - use smart contracts for verification
   useEffect(() => {
@@ -410,7 +399,7 @@ export const useVerifiablePresentations = () => {
   }, [])
 
   const createPresentation = useCallback(async (credentials, options = {}) => {
-    if (!isConnected || !credentialIssuer) {
+    if (!isConnected || !CREDENTIAL_ISSUER_ADDRESS) {
       setError('Wallet not connected or contract not available')
       return null
     }
@@ -422,7 +411,12 @@ export const useVerifiablePresentations = () => {
       // Verify all credentials are valid before creating presentation
       const verificationPromises = credentials.map(async (credential) => {
         try {
-          const isValid = await credentialIssuer.read.verifyCredential([credential.id])
+          const isValid = await publicClient.readContract({
+            address: CREDENTIAL_ISSUER_ADDRESS,
+            abi: CREDENTIAL_ISSUER_ABI,
+            functionName: 'verifyCredential',
+            args: [credential.id]
+          })
           return { credential, isValid }
         } catch (err) {
           console.error(`Failed to verify credential ${credential.id}:`, err)
@@ -470,10 +464,10 @@ export const useVerifiablePresentations = () => {
     } finally {
       setLoading(false)
     }
-  }, [address, isConnected, credentialIssuer, presentations])
+  }, [address, isConnected, CREDENTIAL_ISSUER_ADDRESS, presentations])
 
   const verifyPresentation = useCallback(async (presentation) => {
-    if (!credentialIssuer) {
+    if (!CREDENTIAL_ISSUER_ADDRESS) {
       setError('Contract not available')
       return null
     }
@@ -486,7 +480,12 @@ export const useVerifiablePresentations = () => {
       const credentialVerifications = await Promise.all(
         presentation.verifiableCredential.map(async (credential) => {
           try {
-            const isValid = await credentialIssuer.read.verifyCredential([credential.id])
+            const isValid = await publicClient.readContract({
+              address: CREDENTIAL_ISSUER_ADDRESS,
+              abi: CREDENTIAL_ISSUER_ABI,
+              functionName: 'verifyCredential',
+              args: [credential.id]
+            })
             return isValid
           } catch (err) {
             console.error(`Failed to verify credential ${credential.id}:`, err)
@@ -520,7 +519,7 @@ export const useVerifiablePresentations = () => {
     } finally {
       setLoading(false)
     }
-  }, [credentialIssuer])
+  }, [CREDENTIAL_ISSUER_ADDRESS])
 
   return {
     presentations,

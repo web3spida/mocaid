@@ -1,0 +1,59 @@
+index-82cee0e2.js:33 Failed to load DID from contract: TypeError: Cannot read properties of undefined (reading 'hasIdentity')
+    at index-82cee0e2.js:33:45040
+    at index-82cee0e2.js:33:45515
+    at qi (vendor-3b0d1976.js:20:93019)
+    at dc (vendor-3b0d1976.js:20:112977)
+    at vendor-3b0d1976.js:20:111754
+    at fc (vendor-3b0d1976.js:20:111814)
+    at Zs (vendor-3b0d1976.js:20:105632)
+    at Ma (vendor-3b0d1976.js:20:46573)
+    at vendor-3b0d1976.js:20:103053
+index-82cee0e2.js:33 Failed to load DID from contract: TypeError: Cannot read properties of undefined (reading 'hasIdentity')
+    at index-82cee0e2.js:33:45040
+    at index-82cee0e2.js:33:45515
+    at qi (vendor-3b0d1976.js:20:93019)
+    at dc (vendor-3b0d1976.js:20:112977)
+    at vendor-3b0d1976.js:20:109637
+    at w (vendor-3b0d1976.js:11:1374)
+    at MessagePort.z (vendor-3b0d1976.js:11:1906)
+index-82cee0e2.js:33 Failed to load DID from contract: TypeError: Cannot read properties of undefined (reading 'hasIdentity')
+    at index-82cee0e2.js:33:45040
+    at index-82cee0e2.js:33:45515
+    at qi (vendor-3b0d1976.js:20:93019)
+    at dc (vendor-3b0d1976.js:20:112977)
+    at vendor-3b0d1976.js:20:111754
+    at fc (vendor-3b0d1976.js:20:111814)
+    at Zs (vendor-3b0d1976.js:20:105632)
+    at Ma (vendor-3b0d1976.js:20:46573)
+    at vendor-3b0d1976.js:20:103053
+index-82cee0e2.js:33 DID generation failed: TypeError: Cannot read properties of undefined (reading 'registerIdentity')
+    at index-82cee0e2.js:33:45768
+    at onClick (index-82cee0e2.js:33:62687)
+    at Object._n (vendor-3b0d1976.js:20:16599)
+    at Mn (vendor-3b0d1976.js:20:16753)
+    at vendor-3b0d1976.js:20:36642
+    at Pl (vendor-3b0d1976.js:20:36736)
+    at Nl (vendor-3b0d1976.js:20:37149)
+    at vendor-3b0d1976.js:20:42574
+    at Js (vendor-3b0d1976.js:20:105703)
+    at Sn (vendor-3b0d1976.js:20:15731)
+index-82cee0e2.js:33 Failed to load DID from contract: TypeError: Cannot read properties of undefined (reading 'hasIdentity')
+    at index-82cee0e2.js:33:45040
+    at index-82cee0e2.js:33:45515
+    at qi (vendor-3b0d1976.js:20:93019)
+    at dc (vendor-3b0d1976.js:20:112977)
+    at vendor-3b0d1976.js:20:111754
+    at fc (vendor-3b0d1976.js:20:111814)
+    at Zs (vendor-3b0d1976.js:20:105632)
+    at Ma (vendor-3b0d1976.js:20:46573)
+    at vendor-3b0d1976.js:20:103053
+index-82cee0e2.js:33 Failed to load DID from contract: TypeError: Cannot read properties of undefined (reading 'hasIdentity')
+    at index-82cee0e2.js:33:45040
+    at index-82cee0e2.js:33:45515
+    at qi (vendor-3b0d1976.js:20:93019)
+    at dc (vendor-3b0d1976.js:20:112977)
+    at vendor-3b0d1976.js:20:109637
+    at w (vendor-3b0d1976.js:11:1374)
+    at MessagePort.z (vendor-3b0d1976.js:11:1906)
+﻿
+

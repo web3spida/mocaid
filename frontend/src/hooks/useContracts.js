@@ -152,28 +152,50 @@ const CREDENTIAL_ISSUER_ABI = [
 
 const ACCESS_CONTROL_ABI = [
   {
-    "inputs": [{"name": "user", "type": "address"}, {"name": "resource", "type": "string"}, {"name": "permission", "type": "string"}, {"name": "expirationTime", "type": "uint256"}],
+    // grantAccess(address grantee, string resourceId, string permissionType, uint256 expiresAt)
+    "inputs": [
+      { "name": "grantee", "type": "address" },
+      { "name": "resourceId", "type": "string" },
+      { "name": "permissionType", "type": "string" },
+      { "name": "expiresAt", "type": "uint256" }
+    ],
     "name": "grantAccess",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{"name": "user", "type": "address"}, {"name": "resource", "type": "string"}],
+    // revokeAccess(address grantee, string resourceId)
+    "inputs": [
+      { "name": "grantee", "type": "address" },
+      { "name": "resourceId", "type": "string" }
+    ],
     "name": "revokeAccess",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{"name": "user", "type": "address"}, {"name": "resource", "type": "string"}],
+    // checkAccess(address grantor, address grantee, string resourceId)
+    "inputs": [
+      { "name": "grantor", "type": "address" },
+      { "name": "grantee", "type": "address" },
+      { "name": "resourceId", "type": "string" }
+    ],
     "name": "checkAccess",
-    "outputs": [{"name": "", "type": "bool"}],
+    "outputs": [{ "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{"name": "resource", "type": "string"}, {"name": "reason", "type": "string"}],
+    // requestAccess(address resourceOwner, string resourceId, string permissionType, string reason, uint256 expiresAt)
+    "inputs": [
+      { "name": "resourceOwner", "type": "address" },
+      { "name": "resourceId", "type": "string" },
+      { "name": "permissionType", "type": "string" },
+      { "name": "reason", "type": "string" },
+      { "name": "expiresAt", "type": "uint256" }
+    ],
     "name": "requestAccess",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -198,9 +220,20 @@ export const useIdentityRegistry = () => {
     return useContractRead({
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
-      functionName: 'isRegistered',
+      functionName: 'hasIdentity',
       args: [userAddress],
       enabled: !!userAddress && !!IDENTITY_REGISTRY_ADDRESS,
+    })
+  }
+
+  // Additional read hook: get address from DID
+  const useGetAddressFromDID = (didURI) => {
+    return useContractRead({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'getAddressFromDID',
+      args: [didURI],
+      enabled: !!didURI && !!IDENTITY_REGISTRY_ADDRESS,
     })
   }
 
@@ -271,6 +304,7 @@ export const useIdentityRegistry = () => {
   return {
     useGetIdentity,
     useIsRegistered,
+    useGetAddressFromDID,
     useRegisterIdentity,
     useUpdateIdentity,
     useRevokeIdentity,
@@ -300,11 +334,12 @@ export const useCredentialIssuer = () => {
     })
   }
 
+  // Holder credentials (keep exported name for existing usage)
   const useGetUserCredentials = (userAddress) => {
     return useContractRead({
       address: CREDENTIAL_ISSUER_ADDRESS,
       abi: CREDENTIAL_ISSUER_ABI,
-      functionName: 'getUserCredentials',
+      functionName: 'getHolderCredentials',
       args: [userAddress],
       enabled: !!userAddress && !!CREDENTIAL_ISSUER_ADDRESS,
     })
@@ -365,13 +400,13 @@ export const useCredentialIssuer = () => {
 // Access Control Hooks
 export const useAccessControl = () => {
   // Read hooks
-  const useCheckAccess = (userAddress, resource) => {
+  const useCheckAccess = (grantorAddress, granteeAddress, resource) => {
     return useContractRead({
       address: ACCESS_CONTROL_ADDRESS,
       abi: ACCESS_CONTROL_ABI,
       functionName: 'checkAccess',
-      args: [userAddress, resource],
-      enabled: !!userAddress && !!resource && !!ACCESS_CONTROL_ADDRESS,
+      args: [grantorAddress, granteeAddress, resource],
+      enabled: !!grantorAddress && !!granteeAddress && !!resource && !!ACCESS_CONTROL_ADDRESS,
     })
   }
 

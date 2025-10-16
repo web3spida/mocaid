@@ -54,30 +54,36 @@ const MyIdentity = () => {
 
   // Register identity on blockchain
   const handleRegisterIdentity = async () => {
-    if (!did || !publicKey) {
-      toast.error('Please generate a DID first')
+    if (!address || !did) {
+      toast.error('Connect wallet and generate a DID first')
       return
     }
 
     try {
-      const metadata = JSON.stringify(formData)
-      await registerIdentity({
-        args: [did, publicKey, metadata]
-      })
+      await registerIdentity({ args: [address, did] })
     } catch (error) {
-      toast.error('Failed to register identity: ' + error.message)
+      toast.error('Failed to register identity: ' + (error?.message || error))
     }
   }
 
-  // Update identity metadata
+  // Update identity DID on-chain (only when DID changed)
   const handleUpdateIdentity = async () => {
+    if (!address || !did) {
+      toast.error('Connect wallet and generate a new DID first')
+      return
+    }
+
+    const currentDid = identity?.[0] || identity?.didURI
+    if (currentDid && currentDid === did) {
+      toast('No DID change detected', { icon: 'ℹ️' })
+      setIsEditing(false)
+      return
+    }
+
     try {
-      const metadata = JSON.stringify(formData)
-      await updateIdentity({
-        args: [metadata]
-      })
+      await updateIdentity({ args: [address, did] })
     } catch (error) {
-      toast.error('Failed to update identity: ' + error.message)
+      toast.error('Failed to update identity: ' + (error?.message || error))
     }
   }
 
@@ -88,7 +94,7 @@ const MyIdentity = () => {
     }
 
     try {
-      await revokeIdentity()
+      await revokeIdentity({ args: [address] })
     } catch (error) {
       toast.error('Failed to revoke identity: ' + error.message)
     }
@@ -100,16 +106,9 @@ const MyIdentity = () => {
     toast.success(`${label} copied to clipboard!`)
   }
 
-  // Load identity metadata
+  // Remove metadata parsing – IdentityRegistry does not store identity metadata
   useEffect(() => {
-    if (identity && identity.metadata) {
-      try {
-        const metadata = JSON.parse(identity.metadata)
-        setFormData(metadata)
-      } catch (error) {
-        console.error('Failed to parse identity metadata:', error)
-      }
-    }
+    // Optionally, could load metadata from an off-chain store in future
   }, [identity])
 
   // Handle success states
@@ -293,14 +292,24 @@ const MyIdentity = () => {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Status:</span>
-                    <span className={identity.isActive ? 'text-green-600' : 'text-red-600'}>
-                      {identity.isActive ? 'Active' : 'Inactive'}
+                    <span className={isRegistered ? 'text-green-600' : 'text-red-600'}>
+                      {isRegistered ? 'Active' : 'Inactive'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Registered:</span>
+                    <span className="text-gray-600">DID:</span>
+                    <span className="text-gray-900 break-all">{identity?.[0] || identity?.didURI || '—'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Created At:</span>
                     <span className="text-gray-900">
-                      {new Date(Number(identity.timestamp) * 1000).toLocaleDateString()}
+                      {identity?.[1] ? new Date(Number(identity[1]) * 1000).toLocaleDateString() : '—'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Updated At:</span>
+                    <span className="text-gray-900">
+                      {identity?.[2] ? new Date(Number(identity[2]) * 1000).toLocaleDateString() : '—'}
                     </span>
                   </div>
                 </div>
