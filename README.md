@@ -88,10 +88,10 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
 
    **Root `.env`:**
    ```env
-   # Moca Chain Configuration
+   # Moca Devnet Configuration (for development & testing)
    MOCA_TESTNET_RPC_URL=https://devnet-rpc.mocachain.org
-   MOCA_TESTNET_CHAIN_ID=7001
-   MOCA_TESTNET_EXPLORER=https://testnet-scan.mechain.tech
+   MOCA_TESTNET_CHAIN_ID=5151
+   MOCA_TESTNET_EXPLORER=https://devnet-scan.mocachain.org
 
    # Private Keys (DO NOT COMMIT TO VERSION CONTROL)
    DEPLOYER_PRIVATE_KEY=your_deployer_private_key_here
@@ -100,30 +100,34 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
    # Moca Chain API
    MOCA_API_KEY=your_moca_api_key_here
 
-   # AIR Kit SDK Configuration
-   AIRKIT_API_KEY=your_airkit_api_key_here
-   AIRKIT_ENDPOINT=https://api.mocaverse.xyz/airkit
-   AIRKIT_NETWORK=moca-testnet
+   # AIR Kit SDK Configuration (Backend)
+   AIRKIT_PARTNER_ID=your_partner_id_here
+   AIRKIT_ISSUER_DID=your_issuer_did_here
+   AIRKIT_VERIFIER_DID=your_verifier_did_here
+   AIRKIT_PRIVATE_KEY=your_jwt_private_key_here
+   AIRKIT_API_URL=https://developers.sandbox.air3.com
+   AIRKIT_WIDGET_URL=https://widget.moca.network
    ```
 
    **Frontend `.env`:**
    ```env
-   # Moca Chain Configuration
-   VITE_MOCA_CHAIN_ID=7001
+   # Moca Chain Configuration (Devnet)
+   VITE_MOCA_CHAIN_ID=5151
    VITE_MOCA_RPC_URL=https://devnet-rpc.mocachain.org
-   VITE_MOCA_TESTNET_CHAIN_ID=7001
-   VITE_MOCA_TESTNET_RPC_URL=https://devnet-rpc.mocachain.org
-   VITE_MOCA_EXPLORER=https://testnet-scan.mechain.tech
+   VITE_MOCA_EXPLORER=https://devnet-scan.mocachain.org
 
    # Smart Contract Addresses (Update after deployment)
    VITE_IDENTITY_REGISTRY_ADDRESS=0x...
    VITE_CREDENTIAL_ISSUER_ADDRESS=0x...
    VITE_ACCESS_CONTROL_ADDRESS=0x...
 
-   # AIR Kit SDK Configuration
-   VITE_AIRKIT_API_KEY=your_airkit_api_key_here
-   VITE_AIRKIT_ENDPOINT=https://api.mocaverse.xyz/airkit
-   VITE_AIRKIT_NETWORK=moca-testnet
+   # AIR Kit SDK Configuration (Frontend)
+   VITE_AIRKIT_PARTNER_ID=your_partner_id_here
+   VITE_AIRKIT_ISSUER_DID=your_issuer_did_here
+   VITE_AIRKIT_VERIFIER_DID=your_verifier_did_here
+   VITE_AIRKIT_API_URL=https://developers.sandbox.air3.com
+   VITE_AIRKIT_WIDGET_URL=https://widget.moca.network
+   VITE_AIRKIT_ENVIRONMENT=sandbox
 
    # Application Configuration
    VITE_APP_NAME=MocaID Vault

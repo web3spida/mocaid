@@ -39,7 +39,7 @@ In your Netlify site dashboard, go to **Site settings > Environment variables** 
 
 #### Required Variables
 ```bash
-# Moca Chain Configuration
+# Moca Chain Configuration - Devnet (Development & Testing)
 VITE_MOCA_CHAIN_ID=5151
 VITE_MOCA_RPC_URL=https://devnet-rpc.mocachain.org
 
@@ -48,11 +48,11 @@ VITE_IDENTITY_REGISTRY_ADDRESS=0xB6EE67F0c15f949433d0e484F60f70f1828458e3
 VITE_CREDENTIAL_ISSUER_ADDRESS=0x72CA2541A705468368F9474fB419Defd002EC8af
 VITE_ACCESS_CONTROL_ADDRESS=0xF565086417Bf8ba76e4FaFC9F0088818eA027539
 
-# AIR Kit SDK Configuration
+# AIR Kit SDK Configuration - Sandbox Environment (for development & testing)
 VITE_AIRKIT_PARTNER_ID=your_airkit_partner_id
 VITE_AIRKIT_ISSUER_DID=your_airkit_issuer_did
 VITE_AIRKIT_VERIFIER_DID=your_airkit_verifier_did
-VITE_AIRKIT_API_URL=https://api.moca.network
+VITE_AIRKIT_API_URL=https://developers.sandbox.air3.com
 VITE_AIRKIT_WIDGET_URL=https://widget.moca.network
 
 # App Configuration
