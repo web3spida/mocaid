@@ -230,12 +230,20 @@ export const useVerifiableCredentials = () => {
     try {
       // Ensure wallet is on the expected chain before sending tx
       try {
-        const currentChainId = typeof walletClient.getChainId === 'function'
-          ? await walletClient.getChainId()
-          : null
-        if (currentChainId && currentChainId !== CHAIN_ID) {
+        const viemChainId = typeof walletClient.getChainId === 'function' ? await walletClient.getChainId() : null
+        const providerHexChainId = typeof window !== 'undefined' && window.ethereum?.chainId ? window.ethereum.chainId : null
+        const providerChainId = providerHexChainId ? parseInt(providerHexChainId, 16) : null
+
+        // If either viem or provider reports the expected chain, skip switching
+        const isOnExpectedChain = (viemChainId === CHAIN_ID) || (providerChainId === CHAIN_ID)
+        if (!isOnExpectedChain) {
           try {
-            await walletClient.switchChain({ id: CHAIN_ID })
+            // Try viem switch first
+            if (typeof walletClient.switchChain === 'function') {
+              await walletClient.switchChain({ id: CHAIN_ID })
+            } else {
+              throw new Error('Switch via viem not available')
+            }
           } catch (e) {
             // Fallback to Wallet RPC if viem switch fails
             if (typeof window !== 'undefined' && window.ethereum?.request) {
@@ -249,7 +257,7 @@ export const useVerifiableCredentials = () => {
           }
         }
       } catch (switchErr) {
-        throw new Error('Please switch to Moca Testnet (chainId 5151) before issuing credentials')
+        throw new Error(`Please switch to the configured Moca chain (chainId ${CHAIN_ID}) before issuing credentials`)
       }
 
       // Create a simple credential hash (replace with cryptographic hash in production)

@@ -45,7 +45,7 @@ const Navbar = () => {
           <div className="flex items-center justify-self-start">
             <Link to="/" className="inline-flex items-center space-x-2 whitespace-nowrap">
               <Logo />
-              <span className="text-xl leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle">MocaID Vault</span>
+              <span className="text-lg leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle">MocaID Vault</span>
             </Link>
           </div>
 
@@ -57,21 +57,21 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-200 ${
                     isActive(item.href)
                       ? 'bg-primary-100 text-primary-700'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3 h-3" />
                   <span>{item.name}</span>
                 </Link>
               )
             })}
           </div>
 
-          {/* Desktop wallet connection (far right within grid) */}
-          <div className="hidden md:flex items-center justify-self-end">
+          {/* Desktop wallet connection (far right within third column) */}
+          <div className="hidden md:flex items-center w-full justify-end">
             <ConnectButton />
           </div>
 
@@ -82,9 +82,9 @@ const Navbar = () => {
               className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
             >
               {isOpen ? (
-                <XMarkIcon className="w-6 h-6" />
+                <XMarkIcon className="w-5 h-5" />
               ) : (
-                <Bars3Icon className="w-6 h-6" />
+                <Bars3Icon className="w-5 h-5" />
               )}
             </button>
           </div>
@@ -103,34 +103,34 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="md:hidden bg-white border-t border-gray-200"
           >
-            <div className="px-4 py-2 space-y-1">
-              {filteredNavigation.map((item) => {
-                const Icon = item.icon
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center space-x-3 px-3 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+          <div className="px-4 py-2 space-y-1">
+            {filteredNavigation.map((item) => {
+              const Icon = item.icon
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center space-x-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
                       isActive(item.href)
                         ? 'bg-primary-100 text-primary-700'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                     }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span>{item.name}</span>
-                  </Link>
-                )
-              })}
-              
-              {/* Mobile wallet connection */}
-              <div className="pt-4 pb-2 sm:hidden">
-                <ConnectButton />
-              </div>
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{item.name}</span>
+                </Link>
+              )
+            })}
+
+            {/* Mobile wallet connection */}
+            <div className="pt-4 pb-2 sm:hidden">
+              <ConnectButton />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
     </nav>
   )
 }
