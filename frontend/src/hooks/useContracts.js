@@ -239,13 +239,12 @@ export const useIdentityRegistry = () => {
 
   // Write hooks
   const useRegisterIdentity = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
       functionName: 'registerIdentity',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -260,13 +259,12 @@ export const useIdentityRegistry = () => {
   }
 
   const useUpdateIdentity = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
       functionName: 'updateIdentity',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -281,13 +279,12 @@ export const useIdentityRegistry = () => {
   }
 
   const useRevokeIdentity = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: IDENTITY_REGISTRY_ADDRESS,
       abi: IDENTITY_REGISTRY_ABI,
       functionName: 'revokeIdentity',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -347,13 +344,12 @@ export const useCredentialIssuer = () => {
 
   // Write hooks
   const useIssueCredential = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: CREDENTIAL_ISSUER_ADDRESS,
       abi: CREDENTIAL_ISSUER_ABI,
       functionName: 'issueCredential',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -368,13 +364,12 @@ export const useCredentialIssuer = () => {
   }
 
   const useRevokeCredential = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: CREDENTIAL_ISSUER_ADDRESS,
       abi: CREDENTIAL_ISSUER_ABI,
       functionName: 'revokeCredential',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -412,13 +407,12 @@ export const useAccessControl = () => {
 
   // Write hooks
   const useGrantAccess = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: ACCESS_CONTROL_ADDRESS,
       abi: ACCESS_CONTROL_ABI,
       functionName: 'grantAccess',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -433,13 +427,12 @@ export const useAccessControl = () => {
   }
 
   const useRevokeAccess = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: ACCESS_CONTROL_ADDRESS,
       abi: ACCESS_CONTROL_ABI,
       functionName: 'revokeAccess',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
@@ -454,13 +447,12 @@ export const useAccessControl = () => {
   }
 
   const useRequestAccess = () => {
-    const { config } = usePrepareContractWrite({
+    const { data, write, isLoading, error } = useContractWrite({
       address: ACCESS_CONTROL_ADDRESS,
       abi: ACCESS_CONTROL_ABI,
       functionName: 'requestAccess',
+      mode: 'recklesslyUnprepared',
     })
-
-    const { data, write, isLoading, error } = useContractWrite(config)
     const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
       hash: data?.hash,
     })
