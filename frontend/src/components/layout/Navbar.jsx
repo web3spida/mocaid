@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { motion, AnimatePresence } from 'framer-motion'
+import Logo from './Logo'
 import {
   Bars3Icon,
   XMarkIcon,
@@ -43,10 +44,8 @@ const Navbar = () => {
           {/* Logo and brand */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-moca-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
-              <span className="text-xl font-bold text-gradient">MocaID Vault</span>
+              <Logo />
+              <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent">MocaID Vault</span>
             </Link>
           </div>
 
@@ -71,25 +70,23 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Wallet connection and mobile menu button */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden sm:block">
-              <ConnectButton />
-            </div>
-            
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
-              >
-                {isOpen ? (
-                  <XMarkIcon className="w-6 h-6" />
-                ) : (
-                  <Bars3Icon className="w-6 h-6" />
-                )}
-              </button>
-            </div>
+          {/* Desktop wallet connection (right-aligned) */}
+          <div className="hidden md:flex items-center">
+            <ConnectButton />
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+            >
+              {isOpen ? (
+                <XMarkIcon className="w-6 h-6" />
+              ) : (
+                <Bars3Icon className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
       </div>
