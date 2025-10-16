@@ -40,17 +40,17 @@ const Navbar = () => {
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Logo and brand */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+        <div className="grid grid-cols-3 items-center h-16">
+          {/* Logo and brand (far left) */}
+          <div className="flex items-center justify-self-start">
+            <Link to="/" className="inline-flex items-center space-x-2 whitespace-nowrap">
               <Logo />
-              <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent">MocaID Vault</span>
+              <span className="text-xl leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle">MocaID Vault</span>
             </Link>
           </div>
 
-          {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          {/* Desktop navigation (centered) */}
+          <div className="hidden md:flex items-center justify-center justify-self-center space-x-1">
             {filteredNavigation.map((item) => {
               const Icon = item.icon
               return (
@@ -70,13 +70,13 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Desktop wallet connection (right-aligned) */}
-          <div className="hidden md:flex items-center">
+          {/* Desktop wallet connection (far right) */}
+          <div className="hidden md:flex items-center justify-self-end">
             <ConnectButton />
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button (right) */}
+          <div className="md:hidden justify-self-end">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"

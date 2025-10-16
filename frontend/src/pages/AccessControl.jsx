@@ -13,8 +13,8 @@ import {
 
 const AccessControl = () => {
   const { address, isConnected } = useAccount()
-  const { useAccessControl } = useContracts()
-  const { useCheckAccess, useGrantAccess, useRevokeAccess, useRequestAccess } = useAccessControl()
+  const { accessControl } = useContracts()
+  const { useCheckAccess, useGrantAccess, useRevokeAccess, useRequestAccess } = accessControl
   
   // State for managing access permissions
   const [permissions, setPermissions] = useState([])

@@ -12,12 +12,13 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline'
 import { useIdentityRegistry } from '../hooks/useContracts'
-import { useDID } from '../hooks/useAirKit'
+import { useDID, useVerifiableCredentials } from '../hooks/useAirKit'
 
 const MyIdentity = () => {
   const { address } = useAccount()
   const { useGetIdentity, useIsRegistered, useRegisterIdentity, useUpdateIdentity, useRevokeIdentity } = useIdentityRegistry()
   const { did, publicKey, generateDID, loading: isDIDLoading } = useDID()
+  const { issueCredential } = useVerifiableCredentials()
   const { chain } = useNetwork()
   const { switchNetworkAsync } = useSwitchNetwork()
   const expectedChainId = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
@@ -59,6 +60,12 @@ const MyIdentity = () => {
   const handleRegisterIdentity = async () => {
     if (!address || !did) {
       toast.error('Connect wallet and generate a DID first')
+      return
+    }
+
+    // Require user details before creating identity
+    if (!formData.name || !formData.email) {
+      toast.error('Please fill in your name and email before registering')
       return
     }
 
@@ -138,6 +145,16 @@ const MyIdentity = () => {
       toast.success('Identity registered successfully!')
       refetchRegistration()
       refetchIdentity()
+
+      // Attach a profile credential with the provided user details
+      const subject = { ...formData, did, address }
+      issueCredential({ type: 'identity', holder: address, subject })
+        .then(() => {
+          toast.success('Profile credential attached to your identity')
+        })
+        .catch((err) => {
+          toast.error('Failed to attach profile credential: ' + (err?.message || err))
+        })
     }
   }, [isRegisterSuccess, refetchRegistration, refetchIdentity])
 

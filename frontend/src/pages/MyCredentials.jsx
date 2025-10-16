@@ -77,11 +77,21 @@ const MyCredentials = () => {
   // Use only real credentials from smart contract
   const allCredentials = credentials
 
-  // Filter credentials
-  const filteredCredentials = allCredentials.filter(credential => {
-    const matchesFilter = filter === 'all' || credential.type === filter
-    const matchesSearch = credential.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         credential.issuer.toLowerCase().includes(searchTerm.toLowerCase())
+  // Normalize type key for filters
+  const getTypeKey = (credential) => {
+    if (!credential) return ''
+    return Array.isArray(credential.type)
+      ? (credential.type[1] || '').toLowerCase()
+      : (credential.type || '').toLowerCase()
+  }
+
+  // Filter credentials (defensive)
+  const filteredCredentials = allCredentials.filter((credential) => {
+    const typeKey = getTypeKey(credential)
+    const matchesFilter = filter === 'all' || typeKey === filter
+    const searchLower = (searchTerm || '').toLowerCase().trim()
+    const fields = [credential?.title, credential?.issuer, credential?.id, typeKey]
+    const matchesSearch = !searchLower || fields.some((f) => (f ? String(f).toLowerCase() : '').includes(searchLower))
     return matchesFilter && matchesSearch
   })
 
@@ -92,10 +102,13 @@ const MyCredentials = () => {
     try {
       const credentialData = {
         type: createForm.type,
-        title: createForm.title,
-        description: createForm.description,
-        issuer: createForm.issuer,
-        ...createForm.data,
+        holder: address,
+        subject: {
+          title: createForm.title,
+          description: createForm.description,
+          issuerName: createForm.issuer,
+          ...createForm.data,
+        },
       }
 
       await issueCredential(credentialData)
@@ -109,7 +122,7 @@ const MyCredentials = () => {
         data: {},
       })
     } catch (error) {
-      toast.error('Failed to create credential: ' + error.message)
+      toast.error('Failed to create credential: ' + (error?.message || 'Unknown error'))
     }
   }
 
@@ -129,9 +142,12 @@ const MyCredentials = () => {
 
   // Handle share credential
   const handleShareCredential = (credential) => {
+    const typeKey = getTypeKey(credential)
+    const displayTitle = credential.title || (typeKey ? `${typeKey} credential` : credential.id)
+    const displayIssuer = credential.issuer || 'Unknown Issuer'
     const shareData = {
-      title: credential.title,
-      text: `Verifiable Credential: ${credential.title} issued by ${credential.issuer}`,
+      title: displayTitle,
+      text: `Verifiable Credential: ${displayTitle} issued by ${displayIssuer}`,
       url: window.location.href,
     }
 
@@ -279,9 +295,11 @@ const MyCredentials = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {filteredCredentials.map((credential) => {
-            const typeConfig = credentialTypes[credential.type] || credentialTypes.identity
+            const typeKey = getTypeKey(credential)
+            const typeConfig = credentialTypes[typeKey] || credentialTypes.identity
             const Icon = typeConfig.icon
             const isExpired = credential.expirationDate && new Date(credential.expirationDate) < new Date()
+            const headerTitle = credential.title || (typeKey ? `${typeConfig.label} Credential` : credential.id)
 
             return (
               <motion.div
@@ -317,10 +335,10 @@ const MyCredentials = () => {
                 {/* Content */}
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {credential.title}
+                    {headerTitle}
                   </h3>
                   <p className="text-gray-600 text-sm mb-2">
-                    Issued by {credential.issuer}
+                    Issued by {credential.issuer || 'Unknown Issuer'}
                   </p>
                   <div className="text-xs text-gray-500 space-y-1">
                     <div>Issued: {new Date(credential.issuanceDate).toLocaleDateString()}</div>
@@ -516,14 +534,14 @@ const MyCredentials = () => {
 
                 <div className="space-y-6">
                   <div>
-                    <h4 className="font-medium text-gray-900 mb-2">{selectedCredential.title}</h4>
-                    <p className="text-gray-600">Issued by {selectedCredential.issuer}</p>
+                    <h4 className="font-medium text-gray-900 mb-2">{selectedCredential.title || (Array.isArray(selectedCredential.type) ? selectedCredential.type[1] : selectedCredential.type) || selectedCredential.id}</h4>
+                    <p className="text-gray-600">Issued by {selectedCredential.issuer || 'Unknown Issuer'}</p>
                   </div>
 
                   <div className="bg-gray-50 rounded-xl p-4">
                     <h5 className="font-medium text-gray-900 mb-3">Credential Data</h5>
                     <pre className="text-sm text-gray-700 whitespace-pre-wrap">
-                      {JSON.stringify(selectedCredential.data, null, 2)}
+                      {JSON.stringify(selectedCredential.credentialSubject ?? selectedCredential.data ?? {}, null, 2)}
                     </pre>
                   </div>
 
