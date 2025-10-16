@@ -22,6 +22,18 @@ export const useDID = () => {
   const [did, setDid] = useState(null)
   const [publicKey, setPublicKey] = useState(null)
 
+  // Load persisted DID on mount
+  useEffect(() => {
+    try {
+      const savedDid = typeof window !== 'undefined' ? localStorage.getItem('mocaid-did') : null
+      const savedKey = typeof window !== 'undefined' ? localStorage.getItem('mocaid-public-key') : null
+      if (savedDid) setDid(savedDid)
+      if (savedKey) setPublicKey(savedKey)
+    } catch (_) {
+      // ignore storage errors
+    }
+  }, [])
+
   const generateDID = useCallback(() => {
     setLoading(true)
     setError(null)
@@ -38,6 +50,12 @@ export const useDID = () => {
 
       setDid(didURI)
       setPublicKey(newPublicKey)
+      try {
+        localStorage.setItem('mocaid-did', didURI)
+        localStorage.setItem('mocaid-public-key', newPublicKey)
+      } catch (_) {
+        // ignore storage errors
+      }
       
       return { did: didURI, publicKey: newPublicKey }
     } catch (err) {
@@ -210,6 +228,13 @@ export const useVerifiableCredentials = () => {
     setError(null)
 
     try {
+      // Ensure wallet is on the expected chain before sending tx
+      try {
+        await walletClient.switchChain({ id: CHAIN_ID })
+      } catch (switchErr) {
+        throw new Error('Please switch to Moca Testnet before issuing credentials')
+      }
+
       // Create a simple credential hash (replace with cryptographic hash in production)
       const credentialHash = `cred_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
@@ -229,6 +254,12 @@ export const useVerifiableCredentials = () => {
           expiresAt
         ]
       })
+
+      // Wait for transaction to be mined to ensure persistence
+      const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash })
+      if (!receipt || receipt.status !== 'success') {
+        throw new Error('Transaction failed or was reverted')
+      }
 
       // Create the credential object
       const newCredential = {

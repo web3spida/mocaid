@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useAccount, useDisconnect } from 'wagmi'
+import { useAccount, useDisconnect, useBalance } from 'wagmi'
 import toast from 'react-hot-toast'
 import {
   CogIcon,
@@ -21,6 +21,8 @@ import {
 const Settings = () => {
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
+  const expectedChainId = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
+  const { data: balanceData } = useBalance({ address, chainId: expectedChainId, watch: true })
 
   // State for settings
   const [settings, setSettings] = useState({
@@ -161,13 +163,29 @@ const Settings = () => {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-            <CogIcon className="w-8 h-8 mr-3 text-gray-600" />
-            Settings
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Manage your account preferences and application settings.
-          </p>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+                <CogIcon className="w-8 h-8 mr-3 text-gray-600" />
+                Settings
+              </h1>
+              <p className="text-gray-600 mt-2">
+                Manage your account preferences and application settings.
+              </p>
+            </div>
+            <div className="hidden sm:flex items-center space-x-3">
+              {address && (
+                <>
+                  <div className="text-sm text-gray-600">
+                    {address.slice(0, 6)}...{address.slice(-4)}
+                  </div>
+                  <div className="text-sm px-2 py-1 rounded-lg bg-gray-100 text-gray-800">
+                    {balanceData?.formatted ? `${balanceData.formatted} ${balanceData.symbol}` : '—'}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

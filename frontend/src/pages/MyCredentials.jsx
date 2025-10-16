@@ -110,8 +110,11 @@ const MyCredentials = () => {
           ...createForm.data,
         },
       }
-
-      await issueCredential(credentialData)
+      const result = await issueCredential(credentialData)
+      if (!result) {
+        toast.error('Transaction failed. Please ensure you are on Moca Testnet and try again.')
+        return
+      }
       toast.success('Credential created successfully!')
       setShowCreateModal(false)
       setCreateForm({
