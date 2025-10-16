@@ -5,7 +5,8 @@ import './index.css'
 
 // Wagmi and RainbowKit imports
 import '@rainbow-me/rainbowkit/styles.css'
-import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
+import { connectorsForWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
+import { metaMaskWallet, walletConnectWallet, coinbaseWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -53,11 +54,17 @@ const { chains, publicClient } = configureChains(
   [publicProvider()]
 )
 
-const { connectors } = getDefaultWallets({
-  appName: import.meta.env.VITE_APP_NAME || 'MocaID Vault',
-  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'demo-project-id-for-development',
-  chains,
-})
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'demo-project-id-for-development', chains }),
+      walletConnectWallet({ projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'demo-project-id-for-development', chains }),
+      coinbaseWallet({ appName: import.meta.env.VITE_APP_NAME || 'MocaID Vault', chains }),
+    ],
+  },
+])
 
 const wagmiConfig = createConfig({
   autoConnect: true,
