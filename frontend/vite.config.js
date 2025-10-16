@@ -12,6 +12,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       buffer: 'buffer',
       util: 'util',
+      // Map Safe packages to local polyfill to avoid bundling issues in prod
+      '@safe-global/safe-apps-provider': path.resolve(__dirname, './src/safe-polyfill.js'),
+      '@safe-global/safe-apps-sdk': path.resolve(__dirname, './src/safe-polyfill.js'),
+      // Backward compatibility: some builds referenced a custom specifier
       '@safe-globalThis/safe-apps-provider': path.resolve(__dirname, './src/safe-polyfill.js'),
       '@safe-globalThis/safe-apps-sdk': path.resolve(__dirname, './src/safe-polyfill.js'),
     },
@@ -42,7 +46,7 @@ export default defineConfig({
     target: 'es2020',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      external: ['@safe-globalThis/safe-apps-provider', '@safe-globalThis/safe-apps-sdk'],
+      // Do not externalize Safe packages so alias resolution applies and code is bundled
       plugins: [
         NodeGlobalsPolyfillPlugin({
           buffer: true,
