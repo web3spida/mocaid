@@ -355,6 +355,22 @@ If you encounter any issues, please:
 
 ## 🔮 Roadmap
 
+### Next Up (Short-Term Enhancements)
+
+- On-chain DID persistence in UI: wire `MyIdentity` to `IdentityRegistry` register/update/revoke and display on-chain state/history.
+- Issuer authorization UX: surface `authorizeIssuer`, check `authorizedIssuers` before issuing, and improve error messaging.
+- Deterministic credential IDs & signing: use a cryptographic hash of credential payload and sign with the connected wallet; store proof metadata accordingly.
+- Indexed credential loading: paginate `getHolderCredentials`/`getIssuerCredentials`, listen to events, and add live watchers with optimistic updates.
+- Robust multi-network handling: single source of truth from `.env`, automatic add/switch with graceful fallbacks and helpful toasts.
+- Access Control upgrades: implement request flows on-chain (request/grant/revoke), show event-driven history, expiry warnings, and renewals.
+- Verifiable Presentations: generate VP with challenge/domain, sign (JWS) via wallet, and add a verification pipeline and UI.
+- QR sharing & deep links: generate/scan QR for VCs/VPs and add shareable deep-link routes.
+- Notifications: in-app feed for actions and optional push/email integrations (configurable in Settings).
+- Privacy and storage hardening: encrypt sensitive local storage and add selective disclosure UX for subjects.
+- Testing & CI: vitest for hooks, MSW for RPC, contract unit tests, E2E (Playwright/Cypress), and a GitHub Actions pipeline.
+- UX polish: compact header sizing, skeleton loaders, better empty/error states, and accessibility improvements.
+- Documentation: ABI/contract references, API shapes for hooks, environment setup matrix, and troubleshooting.
+
 ### Phase 1 (Current)
 - ✅ Core identity management
 - ✅ Verifiable credentials
