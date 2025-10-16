@@ -40,7 +40,7 @@ export default defineConfig({
     target: 'es2015',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      external: ['@safe-global/safe-apps-provider'],
+      external: ['@safe-globalThis/safe-apps-provider'],
       plugins: [
         NodeGlobalsPolyfillPlugin({
           buffer: true,
