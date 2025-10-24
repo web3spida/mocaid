@@ -14,6 +14,13 @@ import MyCredentials from './pages/MyCredentials'
 import Verification from './pages/Verification'
 import AccessControl from './pages/AccessControl'
 import Settings from './pages/Settings'
+import About from './pages/About'
+import Careers from './pages/Careers'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
+import Credentials from './pages/Credentials'
+import Verifiers from './pages/Verifiers'
+import Rewards from './pages/Rewards'
 
 // Hooks
 import { useAccount } from 'wagmi'
@@ -42,13 +49,20 @@ function App() {
             {isConnected && (
               <>
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/identity" element={<MyIdentity />} />
-                <Route path="/credentials" element={<MyCredentials />} />
+                <Route path="/my-identity" element={<MyIdentity />} />
+                <Route path="/my-credentials" element={<MyCredentials />} />
                 <Route path="/verification" element={<Verification />} />
                 <Route path="/access-control" element={<AccessControl />} />
                 <Route path="/settings" element={<Settings />} />
               </>
             )}
+            <Route path="/about" element={<About />} />
+             <Route path="/careers" element={<Careers />} />
+             <Route path="/privacy" element={<Privacy />} />
+             <Route path="/terms" element={<Terms />} />
+             <Route path="/credentials" element={<Credentials />} />
+             <Route path="/verifiers" element={<Verifiers />} />
+             <Route path="/rewards" element={<Rewards />} />
             {/* Redirect to home if not connected and trying to access protected routes */}
             <Route path="*" element={<Home />} />
           </Routes>
