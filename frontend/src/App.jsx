@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard'
 import MyIdentity from './pages/MyIdentity'
 import MyCredentials from './pages/MyCredentials'
 import Verification from './pages/Verification'
+import VerifyAndEarn from './pages/VerifyAndEarn'
 import AccessControl from './pages/AccessControl'
 import Settings from './pages/Settings'
 import About from './pages/About'
@@ -21,6 +22,7 @@ import Terms from './pages/Terms'
 import Credentials from './pages/Credentials'
 import Verifiers from './pages/Verifiers'
 import Rewards from './pages/Rewards'
+import Leaderboard from './pages/Leaderboard'
 
 // Hooks
 import { useAccount } from 'wagmi'
@@ -52,6 +54,7 @@ function App() {
                 <Route path="/my-identity" element={<MyIdentity />} />
                 <Route path="/my-credentials" element={<MyCredentials />} />
                 <Route path="/verification" element={<Verification />} />
+                <Route path="/verify-and-earn" element={<VerifyAndEarn />} />
                 <Route path="/access-control" element={<AccessControl />} />
                 <Route path="/settings" element={<Settings />} />
               </>
@@ -63,6 +66,7 @@ function App() {
              <Route path="/credentials" element={<Credentials />} />
              <Route path="/verifiers" element={<Verifiers />} />
              <Route path="/rewards" element={<Rewards />} />
+             <Route path="/leaderboard" element={<Leaderboard />} />
             {/* Redirect to home if not connected and trying to access protected routes */}
             <Route path="*" element={<Home />} />
           </Routes>
