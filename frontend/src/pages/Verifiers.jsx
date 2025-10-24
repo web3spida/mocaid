@@ -1,4 +1,6 @@
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { 
   ShieldCheckIcon,
   UserGroupIcon,
@@ -13,10 +15,48 @@ import {
   BanknotesIcon,
   TrophyIcon,
   ArrowTrendingUpIcon,
-  HandRaisedIcon
+  HandRaisedIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline'
 
 const Verifiers = () => {
+  const [showApplicationModal, setShowApplicationModal] = useState(false)
+  const [applicationForm, setApplicationForm] = useState({
+    organizationName: '',
+    organizationType: '',
+    contactEmail: '',
+    website: '',
+    description: '',
+    verificationTypes: []
+  })
+  
+  const handleApplicationSubmit = (e) => {
+    e.preventDefault()
+    
+    // Basic form validation
+    if (!applicationForm.organizationName || !applicationForm.contactEmail || !applicationForm.organizationType) {
+      alert('Please fill in all required fields')
+      return
+    }
+    
+    // Here you would typically send the application to your backend
+    console.log('Verifier application submitted:', applicationForm)
+    
+    // Show success message
+    alert('Application submitted successfully! We will review your application and contact you within 5-7 business days.')
+    
+    // Reset form and close modal
+    setApplicationForm({
+      organizationName: '',
+      organizationType: '',
+      contactEmail: '',
+      website: '',
+      description: '',
+      verificationTypes: []
+    })
+    setShowApplicationModal(false)
+  }
+
   const verifierTypes = [
     {
       icon: BuildingOfficeIcon,
@@ -176,10 +216,16 @@ const Verifiers = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+            <button 
+              onClick={() => setShowApplicationModal(true)}
+              className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
+            >
               Become a Verifier
             </button>
-            <button className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300">
+            <button 
+              onClick={() => document.getElementById('verifier-types').scrollIntoView({ behavior: 'smooth' })}
+              className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
+            >
               Learn More
             </button>
           </div>
@@ -221,6 +267,7 @@ const Verifiers = () => {
 
       {/* Verifier Types */}
       <motion.section 
+        id="verifier-types"
         className="py-20 px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
         initial="hidden"
@@ -402,12 +449,19 @@ const Verifiers = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <button className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+              <button 
+                onClick={() => setShowApplicationModal(true)}
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
+              >
                 Apply to Become a Verifier
               </button>
-              <button className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300">
+              <a 
+                href="/verifier-guide.pdf" 
+                download
+                className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 text-center"
+              >
                 Download Verifier Guide
-              </button>
+              </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -432,6 +486,105 @@ const Verifiers = () => {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Application Modal */}
+      {showApplicationModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-gray-800 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold">Verifier Application</h3>
+              <button
+                onClick={() => setShowApplicationModal(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
+
+            <form onSubmit={handleApplicationSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Organization Name</label>
+                <input
+                  type="text"
+                  value={applicationForm.organizationName}
+                  onChange={(e) => setApplicationForm({...applicationForm, organizationName: e.target.value})}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary-500 focus:outline-none"
+                  placeholder="Enter your organization name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Organization Type</label>
+                <select
+                  value={applicationForm.organizationType}
+                  onChange={(e) => setApplicationForm({...applicationForm, organizationType: e.target.value})}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary-500 focus:outline-none"
+                >
+                  <option value="">Select organization type</option>
+                  <option value="corporate">Corporate</option>
+                  <option value="educational">Educational Institution</option>
+                  <option value="professional">Professional Body</option>
+                  <option value="government">Government Entity</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Contact Email</label>
+                <input
+                  type="email"
+                  value={applicationForm.contactEmail}
+                  onChange={(e) => setApplicationForm({...applicationForm, contactEmail: e.target.value})}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary-500 focus:outline-none"
+                  placeholder="contact@organization.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Website</label>
+                <input
+                  type="url"
+                  value={applicationForm.website}
+                  onChange={(e) => setApplicationForm({...applicationForm, website: e.target.value})}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary-500 focus:outline-none"
+                  placeholder="https://www.organization.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <textarea
+                  value={applicationForm.description}
+                  onChange={(e) => setApplicationForm({...applicationForm, description: e.target.value})}
+                  rows={4}
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary-500 focus:outline-none"
+                  placeholder="Describe your organization and verification capabilities..."
+                />
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-6">
+                <button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                >
+                  Submit Application
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowApplicationModal(false)}
+                  className="flex-1 border border-gray-600 text-gray-300 hover:bg-gray-700 font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { 
   IdentificationIcon,
   ShieldCheckIcon,
@@ -12,10 +13,13 @@ import {
   CheckBadgeIcon,
   ArrowRightIcon,
   LockClosedIcon,
-  CloudArrowUpIcon
+  CloudArrowUpIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline'
 
 const Credentials = () => {
+  const [showLearnMore, setShowLearnMore] = useState(false)
+  const [showContactSales, setShowContactSales] = useState(false)
   const credentialTypes = [
     {
       icon: IdentificationIcon,
@@ -140,7 +144,10 @@ const Credentials = () => {
             <Link to="/dashboard" className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
               Get Your Credentials
             </Link>
-            <button className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300">
+            <button 
+              onClick={() => setShowLearnMore(true)}
+              className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
+            >
               Learn More
             </button>
           </div>
@@ -329,7 +336,10 @@ const Credentials = () => {
               <Link to="/dashboard" className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
                 Start Verification Process
               </Link>
-              <button className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300">
+              <button 
+                onClick={() => setShowContactSales(true)}
+                className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
+              >
                 Contact Sales Team
               </button>
             </div>
@@ -356,6 +366,149 @@ const Credentials = () => {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Learn More Modal */}
+      {showLearnMore && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-gray-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-white">About Digital Credentials</h3>
+              <button
+                onClick={() => setShowLearnMore(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="space-y-6 text-gray-300">
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">What are Digital Credentials?</h4>
+                <p>
+                  Digital credentials are cryptographically secured, verifiable digital certificates that prove your identity, 
+                  qualifications, achievements, or other attributes. Unlike traditional paper certificates, digital credentials 
+                  can be instantly verified and are tamper-proof.
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">Benefits of Blockchain-Based Credentials</h4>
+                <ul className="space-y-2 list-disc list-inside">
+                  <li>Instant verification without contacting issuing institutions</li>
+                  <li>Tamper-proof and cryptographically secure</li>
+                  <li>Portable across platforms and organizations</li>
+                  <li>Reduced fraud and identity theft</li>
+                  <li>Lower verification costs for employers and institutions</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">How It Works</h4>
+                <ol className="space-y-2 list-decimal list-inside">
+                  <li>Register your identity on the blockchain</li>
+                  <li>Authorized issuers create credentials for you</li>
+                  <li>Credentials are stored securely on the blockchain</li>
+                  <li>Share credentials instantly with verifiers</li>
+                  <li>Verifiers can instantly confirm authenticity</li>
+                </ol>
+              </div>
+            </div>
+            
+            <div className="mt-8 flex gap-4">
+              <Link
+                to="/dashboard"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex-1 text-center"
+                onClick={() => setShowLearnMore(false)}
+              >
+                Get Started
+              </Link>
+              <button
+                onClick={() => setShowLearnMore(false)}
+                className="border border-gray-600 text-gray-300 hover:bg-gray-800 font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Contact Sales Modal */}
+      {showContactSales && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-gray-900 rounded-2xl p-8 max-w-lg w-full border border-gray-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-white">Contact Sales</h3>
+              <button
+                onClick={() => setShowContactSales(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary-500"
+                  placeholder="Your full name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <input
+                  type="email"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary-500"
+                  placeholder="your.email@company.com"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Company</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary-500"
+                  placeholder="Your company name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                <textarea
+                  rows={4}
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 resize-none"
+                  placeholder="Tell us about your credential verification needs..."
+                />
+              </div>
+            </div>
+            
+            <div className="mt-6 flex gap-4">
+              <button className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex-1">
+                Send Message
+              </button>
+              <button
+                onClick={() => setShowContactSales(false)}
+                className="border border-gray-600 text-gray-300 hover:bg-gray-800 font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+              >
+                Cancel
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }

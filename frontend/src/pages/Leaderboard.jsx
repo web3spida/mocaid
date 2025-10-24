@@ -5,10 +5,11 @@ import {
   ChartBarIcon,
   UserGroupIcon,
   FireIcon,
-  CrownIcon,
+  BoltIcon,
   ShieldCheckIcon,
   BanknotesIcon,
   ClockIcon,
+  GiftIcon,
   ArrowTrendingUpIcon
 } from '@heroicons/react/24/outline'
 import { 

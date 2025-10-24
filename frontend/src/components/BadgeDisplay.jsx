@@ -5,7 +5,6 @@ import {
   ShieldCheckIcon,
   FireIcon,
   BoltIcon,
-  CrownIcon,
 } from '@heroicons/react/24/outline'
 import {
   TrophyIcon as TrophyIconSolid,
@@ -66,8 +65,8 @@ const BadgeDisplay = ({ badges = [], size = 'medium', showTooltip = true }) => {
       'verification-king': {
         name: 'Verification King',
         description: 'Completed over 1000 verifications',
-        icon: CrownIcon,
-        solidIcon: CrownIcon,
+        icon: TrophyIcon,
+        solidIcon: TrophyIconSolid,
         color: 'text-amber-500',
         bgColor: 'bg-amber-100',
         borderColor: 'border-amber-200',

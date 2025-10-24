@@ -2,6 +2,7 @@ import { useContractRead, useContractWrite, usePrepareContractWrite, useWaitForT
 import { parseEther, formatEther } from 'viem'
 
 // Contract addresses from environment variables - Updated for Credora Protocol
+const IDENTITY_REGISTRY_ADDRESS = import.meta.env.VITE_IDENTITY_REGISTRY_ADDRESS
 const CREDENTIAL_REGISTRY_ADDRESS = import.meta.env.VITE_CREDENTIAL_REGISTRY_ADDRESS
 const REWARD_MANAGER_ADDRESS = import.meta.env.VITE_REWARD_MANAGER_ADDRESS
 const VERIFIER_REGISTRY_ADDRESS = import.meta.env.VITE_VERIFIER_REGISTRY_ADDRESS
@@ -14,6 +15,78 @@ const CHAIN_ID = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
 const RPC_URL = import.meta.env.VITE_MOCA_RPC_URL || 'https://devnet-rpc.mocachain.org'
 
 // Contract ABIs - Updated for Credora Protocol
+const IDENTITY_REGISTRY_ABI = [
+  {
+    "inputs": [
+      {"name": "user", "type": "address"},
+      {"name": "didURI", "type": "string"}
+    ],
+    "name": "registerIdentity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "user", "type": "address"},
+      {"name": "newDIDURI", "type": "string"}
+    ],
+    "name": "updateIdentity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "user", "type": "address"}],
+    "name": "revokeIdentity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "user", "type": "address"}],
+    "name": "getIdentity",
+    "outputs": [
+      {"name": "didURI", "type": "string"},
+      {"name": "createdAt", "type": "uint256"},
+      {"name": "updatedAt", "type": "uint256"}
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "user", "type": "address"}],
+    "name": "hasIdentity",
+    "outputs": [{"name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"name": "didURI", "type": "string"}],
+    "name": "getAddressFromDID",
+    "outputs": [{"name": "", "type": "address"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalIdentities",
+    "outputs": [{"name": "", "type": "uint256"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "offset", "type": "uint256"},
+      {"name": "limit", "type": "uint256"}
+    ],
+    "name": "getRegisteredUsers",
+    "outputs": [{"name": "users", "type": "address[]"}],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
+
 const CREDENTIAL_REGISTRY_ABI = [
   {
     "inputs": [
@@ -837,8 +910,125 @@ export const useAccessControl = () => {
   }
 }
 
-// Legacy Identity Registry Hook (for backward compatibility)
+// Identity Registry Hooks
 export const useIdentityRegistry = () => {
+  // Read hooks
+  const useGetIdentity = (userAddress) => {
+    return useContractRead({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'getIdentity',
+      args: [userAddress],
+      enabled: !!userAddress && !!IDENTITY_REGISTRY_ADDRESS,
+    })
+  }
+
+  const useIsRegistered = (userAddress) => {
+    return useContractRead({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'hasIdentity',
+      args: [userAddress],
+      enabled: !!userAddress && !!IDENTITY_REGISTRY_ADDRESS,
+    })
+  }
+
+  const useTotalIdentities = () => {
+    return useContractRead({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'totalIdentities',
+      enabled: !!IDENTITY_REGISTRY_ADDRESS,
+    })
+  }
+
+  const useGetRegisteredUsers = (offset = 0, limit = 10) => {
+    return useContractRead({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'getRegisteredUsers',
+      args: [offset, limit],
+      enabled: !!IDENTITY_REGISTRY_ADDRESS,
+    })
+  }
+
+  // Write hooks
+  const useRegisterIdentity = () => {
+    const { data, write, isLoading, error } = useContractWrite({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'registerIdentity',
+      chainId: CHAIN_ID,
+      mode: 'recklesslyUnprepared',
+    })
+    const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
+      hash: data?.hash,
+    })
+
+    return {
+      registerIdentity: write,
+      data,
+      isLoading: isLoading || isWaiting,
+      isSuccess,
+      error,
+    }
+  }
+
+  const useUpdateIdentity = () => {
+    const { data, write, isLoading, error } = useContractWrite({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'updateIdentity',
+      chainId: CHAIN_ID,
+      mode: 'recklesslyUnprepared',
+    })
+    const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
+      hash: data?.hash,
+    })
+
+    return {
+      updateIdentity: write,
+      data,
+      isLoading: isLoading || isWaiting,
+      isSuccess,
+      error,
+    }
+  }
+
+  const useRevokeIdentity = () => {
+    const { data, write, isLoading, error } = useContractWrite({
+      address: IDENTITY_REGISTRY_ADDRESS,
+      abi: IDENTITY_REGISTRY_ABI,
+      functionName: 'revokeIdentity',
+      chainId: CHAIN_ID,
+      mode: 'recklesslyUnprepared',
+    })
+    const { isLoading: isWaiting, isSuccess } = useWaitForTransaction({
+      hash: data?.hash,
+    })
+
+    return {
+      revokeIdentity: write,
+      data,
+      isLoading: isLoading || isWaiting,
+      isSuccess,
+      error,
+    }
+  }
+
+  return {
+    useGetIdentity,
+    useIsRegistered,
+    useTotalIdentities,
+    useGetRegisteredUsers,
+    useRegisterIdentity,
+    useUpdateIdentity,
+    useRevokeIdentity,
+  }
+}
+
+// Legacy Identity Registry Hook (for backward compatibility)
+export const useIdentityRegistryLegacy = () => {
   // Redirect to CredentialRegistry for now
   const credentialRegistry = useCredentialRegistry()
   

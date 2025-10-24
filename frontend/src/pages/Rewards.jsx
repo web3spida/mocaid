@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { 
   CurrencyDollarIcon,
   TrophyIcon,
@@ -15,10 +16,13 @@ import {
   LockClosedIcon,
   CheckBadgeIcon,
   CubeIcon,
-  SparklesIcon
+  SparklesIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline'
 
 const Rewards = () => {
+  const [showTokenDetails, setShowTokenDetails] = useState(false)
+  const [showTokenomics, setShowTokenomics] = useState(false)
   const rewardCategories = [
     {
       icon: CheckBadgeIcon,
@@ -189,7 +193,10 @@ const Rewards = () => {
             <Link to="/verify-and-earn" className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
               Start Earning VYR
             </Link>
-            <button className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300">
+            <button 
+              onClick={() => setShowTokenDetails(true)}
+              className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
+            >
               View Token Details
             </button>
           </div>
@@ -422,10 +429,16 @@ const Rewards = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <button className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105">
+              <Link
+                to="/verify-and-earn"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
+              >
                 Get Started Now
-              </button>
-              <button className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300">
+              </Link>
+              <button 
+                onClick={() => setShowTokenomics(true)}
+                className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300"
+              >
                 View Tokenomics
               </button>
             </div>
@@ -452,6 +465,241 @@ const Rewards = () => {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Token Details Modal */}
+      {showTokenDetails && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-gray-900 rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-gray-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-white">VYR Token Details</h3>
+              <button
+                onClick={() => setShowTokenDetails(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="space-y-6 text-gray-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700/50">
+                  <h4 className="text-lg font-semibold text-white mb-3">Token Information</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Name:</span>
+                      <span className="text-white">Veyra Token</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Symbol:</span>
+                      <span className="text-white">VYR</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Decimals:</span>
+                      <span className="text-white">18</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Network:</span>
+                      <span className="text-white">Moca Chain</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700/50">
+                  <h4 className="text-lg font-semibold text-white mb-3">Current Stats</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Total Supply:</span>
+                      <span className="text-white">1,000,000,000 VYR</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Circulating:</span>
+                      <span className="text-white">250,000,000 VYR</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Market Cap:</span>
+                      <span className="text-white">$12.5M</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Price:</span>
+                      <span className="text-white">$0.05</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">Utility & Use Cases</h4>
+                <ul className="space-y-2 list-disc list-inside">
+                  <li>Earn rewards for credential verification activities</li>
+                  <li>Stake tokens to become a network verifier</li>
+                  <li>Pay for premium verification services</li>
+                  <li>Governance voting on protocol upgrades</li>
+                  <li>Access exclusive features and benefits</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">How to Earn VYR</h4>
+                <ul className="space-y-2 list-disc list-inside">
+                  <li>Complete identity verification processes</li>
+                  <li>Refer new users to the platform</li>
+                  <li>Participate in verification activities</li>
+                  <li>Stake tokens as a verifier</li>
+                  <li>Contribute to protocol governance</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-8 flex gap-4">
+              <Link
+                to="/verify-and-earn"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex-1 text-center"
+                onClick={() => setShowTokenDetails(false)}
+              >
+                Start Earning
+              </Link>
+              <button
+                onClick={() => setShowTokenDetails(false)}
+                className="border border-gray-600 text-gray-300 hover:bg-gray-800 font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Tokenomics Modal */}
+      {showTokenomics && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-gray-900 rounded-2xl p-8 max-w-3xl w-full max-h-[80vh] overflow-y-auto border border-gray-700"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-white">VYR Tokenomics</h3>
+              <button
+                onClick={() => setShowTokenomics(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="space-y-6 text-gray-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700/50">
+                  <h4 className="text-lg font-semibold text-white mb-4">Token Distribution</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span>Community Rewards</span>
+                      <span className="text-white font-semibold">40%</span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2">
+                      <div className="bg-primary-500 h-2 rounded-full" style={{width: '40%'}}></div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span>Team & Advisors</span>
+                      <span className="text-white font-semibold">20%</span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2">
+                      <div className="bg-secondary-500 h-2 rounded-full" style={{width: '20%'}}></div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span>Development Fund</span>
+                      <span className="text-white font-semibold">15%</span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2">
+                      <div className="bg-green-500 h-2 rounded-full" style={{width: '15%'}}></div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span>Public Sale</span>
+                      <span className="text-white font-semibold">15%</span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2">
+                      <div className="bg-blue-500 h-2 rounded-full" style={{width: '15%'}}></div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span>Ecosystem Fund</span>
+                      <span className="text-white font-semibold">10%</span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2">
+                      <div className="bg-purple-500 h-2 rounded-full" style={{width: '10%'}}></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700/50">
+                  <h4 className="text-lg font-semibold text-white mb-4">Reward Mechanisms</h4>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-semibold text-white mb-2">Verification Rewards</h5>
+                      <p className="text-sm">Earn 10-50 VYR per successful credential verification</p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-white mb-2">Staking Rewards</h5>
+                      <p className="text-sm">12% APY for verifier staking, 8% APY for general staking</p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-white mb-2">Referral Bonuses</h5>
+                      <p className="text-sm">100 VYR for each successful referral</p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-white mb-2">Governance Participation</h5>
+                      <p className="text-sm">Bonus rewards for active governance participation</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700/50">
+                <h4 className="text-lg font-semibold text-white mb-4">Vesting Schedule</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary-400 mb-2">25%</div>
+                    <div className="text-sm">At TGE</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-secondary-400 mb-2">50%</div>
+                    <div className="text-sm">6 Months</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-400 mb-2">25%</div>
+                    <div className="text-sm">12 Months</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8 flex gap-4">
+              <Link
+                to="/verify-and-earn"
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex-1 text-center"
+                onClick={() => setShowTokenomics(false)}
+              >
+                Start Earning VYR
+              </Link>
+              <button
+                onClick={() => setShowTokenomics(false)}
+                className="border border-gray-600 text-gray-300 hover:bg-gray-800 font-semibold py-3 px-6 rounded-xl transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }
