@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAccount, useDisconnect, useBalance } from 'wagmi'
+import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import {
   CogIcon,
@@ -16,13 +17,23 @@ import {
   CheckCircleIcon,
   ArrowRightOnRectangleIcon,
   DocumentDuplicateIcon,
+  WalletIcon,
 } from '@heroicons/react/24/outline'
 
 const Settings = () => {
   const { address, isConnected } = useAccount()
   const { disconnect } = useDisconnect()
+  const navigate = useNavigate()
   const expectedChainId = parseInt(import.meta.env.VITE_MOCA_CHAIN_ID || '5151')
   const { data: balanceData } = useBalance({ address, chainId: expectedChainId, watch: true })
+
+  // Redirect to home if not connected
+  useEffect(() => {
+    if (!isConnected) {
+      toast.error('Please connect your wallet to access settings')
+      navigate('/')
+    }
+  }, [isConnected, navigate])
 
   // State for settings
   const [settings, setSettings] = useState({
@@ -59,7 +70,7 @@ const Settings = () => {
 
   // Load settings from localStorage on mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem(' Veyra-settings')
+    const savedSettings = localStorage.getItem('Veyra-settings')
     if (savedSettings) {
       setSettings(prev => ({ ...prev, ...JSON.parse(savedSettings) }))
     }
@@ -68,7 +79,7 @@ const Settings = () => {
   // Save settings to localStorage
   const saveSettings = (newSettings) => {
     setSettings(newSettings)
-    localStorage.setItem(' Veyra-settings', JSON.stringify(newSettings))
+    localStorage.setItem('Veyra-settings', JSON.stringify(newSettings))
     toast.success('Settings saved successfully!')
   }
 
@@ -102,7 +113,7 @@ const Settings = () => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = ` Veyra-data-${address?.slice(0, 8)}.json`
+    a.download = `Veyra-data-${address?.slice(0, 8)}.json`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

@@ -25,33 +25,33 @@ const Navbar = () => {
   const { isConnected } = useAccount()
   const location = useLocation()
 
-  // Restructured navigation with cascading dropdowns
+  // Simplified navigation with fewer menu items
   const navigation = [
     { name: 'Home', href: '/', icon: HomeIcon, public: true },
     { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon, public: false },
     {
-      name: 'Credentials',
-      icon: DocumentCheckIcon,
+      name: 'Identity',
+      icon: ShieldCheckIcon,
       public: false,
       dropdown: [
-        { name: 'Browse Credentials', href: '/credentials', icon: DocumentCheckIcon },
-        { name: 'My Credentials', href: '/my-credentials', icon: StarIcon },
         { name: 'My Identity', href: '/my-identity', icon: ShieldCheckIcon },
+        { name: 'My Credentials', href: '/my-credentials', icon: StarIcon },
+        { name: 'Browse Credentials', href: '/credentials', icon: DocumentCheckIcon },
       ]
     },
     {
       name: 'Verification',
-      icon: ShieldCheckIcon,
+      icon: UserGroupIcon,
       public: false,
       dropdown: [
         { name: 'Verify & Earn', href: '/verify-and-earn', icon: CurrencyDollarIcon },
-        { name: 'Credential Verification', href: '/verification', icon: ShieldCheckIcon },
         { name: 'Verifiers Network', href: '/verifiers', icon: UserGroupIcon },
+        { name: 'Credential Verification', href: '/verification', icon: ShieldCheckIcon },
       ]
     },
     {
       name: 'Rewards',
-      icon: CurrencyDollarIcon,
+      icon: TrophyIcon,
       public: false,
       dropdown: [
         { name: 'Earn Rewards', href: '/rewards', icon: CurrencyDollarIcon },

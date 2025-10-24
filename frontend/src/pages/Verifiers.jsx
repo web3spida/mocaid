@@ -16,7 +16,8 @@ import {
   TrophyIcon,
   ArrowTrendingUpIcon,
   HandRaisedIcon,
-  XMarkIcon
+  XMarkIcon,
+  ArrowRightIcon
 } from '@heroicons/react/24/outline'
 
 const Verifiers = () => {
@@ -63,37 +64,37 @@ const Verifiers = () => {
       title: "Corporate Verifiers",
       description: "Large enterprises and corporations that verify employee credentials and professional qualifications.",
       examples: ["Fortune 500 Companies", "Multinational Corporations", "Government Agencies", "Healthcare Systems"],
-      rewards: "Up to 0.5 VYR per verification"
+      rewards: "Up to 0.5 MOCA per verification"
     },
     {
       icon: AcademicCapIcon,
       title: "Educational Institutions",
       description: "Universities, colleges, and educational organizations that verify academic credentials and degrees.",
       examples: ["Universities", "Community Colleges", "Certification Bodies", "Training Institutes"],
-      rewards: "Up to 0.3 VYR per verification"
+      rewards: "Up to 0.3 MOCA per verification"
     },
     {
       icon: ShieldCheckIcon,
       title: "Professional Bodies",
       description: "Industry associations and professional organizations that verify licenses and certifications.",
       examples: ["Medical Boards", "Legal Associations", "Engineering Bodies", "Financial Institutions"],
-      rewards: "Up to 0.4 VYR per verification"
+      rewards: "Up to 0.4 MOCA per verification"
     },
     {
       icon: GlobeAltIcon,
       title: "Government Entities",
       description: "Government departments and agencies that verify official documents and identity credentials.",
       examples: ["Immigration Services", "Tax Authorities", "Licensing Departments", "Registry Offices"],
-      rewards: "Up to 0.6 VYR per verification"
+      rewards: "Up to 0.6 MOCA per verification"
     }
   ]
 
   const benefits = [
     {
       icon: CurrencyDollarIcon,
-      title: "Earn VYR Tokens",
-      description: "Receive VYR tokens for each successful verification you perform on the network.",
-      value: "0.1 - 0.6 VYR per verification"
+      title: "Earn MOCA Tokens",
+      description: "Receive MOCA tokens for each successful verification you perform on the network.",
+      value: "0.1 - 0.6 MOCA per verification"
     },
     {
       icon: ChartBarIcon,
@@ -207,15 +208,15 @@ const Verifiers = () => {
           </motion.div>
           
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
-            Verifier Network
+            Professional Verifier Network
           </h1>
           
           <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
-            Join our global network of trusted verifiers and earn rewards while helping to build 
-            the future of decentralized identity verification.
+            Join our global network of trusted verifiers and earn MOCA rewards while helping to build 
+            the future of decentralized identity verification on Moca Chain.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <button 
               onClick={() => setShowApplicationModal(true)}
               className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
@@ -228,6 +229,26 @@ const Verifiers = () => {
             >
               Learn More
             </button>
+          </div>
+
+          {/* Quick Navigation Links */}
+          <div className="flex flex-wrap justify-center gap-4 mt-8">
+            <Link 
+              to="/verify-and-earn" 
+              className="flex items-center space-x-2 bg-gray-800/50 hover:bg-gray-700/50 px-4 py-2 rounded-lg transition-colors"
+            >
+              <BanknotesIcon className="w-4 h-4" />
+              <span>Start Verifying</span>
+              <ArrowRightIcon className="w-4 h-4" />
+            </Link>
+            <Link 
+              to="/rewards" 
+              className="flex items-center space-x-2 bg-gray-800/50 hover:bg-gray-700/50 px-4 py-2 rounded-lg transition-colors"
+            >
+              <TrophyIcon className="w-4 h-4" />
+              <span>View Rewards</span>
+              <ArrowRightIcon className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </motion.section>
