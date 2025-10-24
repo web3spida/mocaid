@@ -43,8 +43,8 @@ const Verifiers = () => {
     // Here you would typically send the application to your backend
     console.log('Verifier application submitted:', applicationForm)
     
-    // Show success message
-    alert('Application submitted successfully! We will review your application and contact you within 5-7 business days.')
+    // Show success message and redirect to pending status
+    alert('Application submitted successfully! We will review your application and contact you within 5-7 business days. You can check your application status in your dashboard.')
     
     // Reset form and close modal
     setApplicationForm({
@@ -56,6 +56,9 @@ const Verifiers = () => {
       verificationTypes: []
     })
     setShowApplicationModal(false)
+    
+    // Redirect to a pending status page or show pending status
+    // For now, we'll just show an alert, but in a real app you'd redirect to a status page
   }
 
   const verifierTypes = [

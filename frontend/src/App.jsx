@@ -23,6 +23,10 @@ import Credentials from './pages/Credentials'
 import Verifiers from './pages/Verifiers'
 import Rewards from './pages/Rewards'
 import Leaderboard from './pages/Leaderboard'
+import AdminLogin from './pages/AdminLogin'
+import AdminDashboard from './pages/AdminDashboard'
+import VerifierDashboard from './pages/VerifierDashboard'
+import VerificationRequest from './pages/VerificationRequest'
 
 // Hooks
 import { useAccount } from 'wagmi'
@@ -60,13 +64,17 @@ function App() {
               </>
             )}
             <Route path="/about" element={<About />} />
-             <Route path="/careers" element={<Careers />} />
-             <Route path="/privacy" element={<Privacy />} />
-             <Route path="/terms" element={<Terms />} />
-             <Route path="/credentials" element={<Credentials />} />
-             <Route path="/verifiers" element={<Verifiers />} />
-             <Route path="/rewards" element={<Rewards />} />
-             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/credentials" element={<Credentials />} />
+            <Route path="/verifiers" element={<Verifiers />} />
+            <Route path="/rewards" element={<Rewards />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/verifier/dashboard" element={<VerifierDashboard />} />
+            <Route path="/verification/request" element={<VerificationRequest />} />
             {/* Redirect to home if not connected and trying to access protected routes */}
             <Route path="*" element={<Home />} />
           </Routes>
