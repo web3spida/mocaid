@@ -73,7 +73,7 @@ const VerifyAndEarn = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <motion.section 
         className="py-20 px-4 sm:px-6 lg:px-8 text-center"
@@ -91,7 +91,7 @@ const VerifyAndEarn = () => {
             <ShieldCheckIcon className="h-16 w-16 text-primary-400 mx-auto mb-6" />
           </motion.div>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-primary-400">
             Verify & Earn VYR
           </h1>
           
@@ -101,10 +101,10 @@ const VerifyAndEarn = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/verification/request" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
+            <Link to="/verification/request" className="bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
               Request Verification
             </Link>
-            <Link to="/verifiers" className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
+            <Link to="/verifiers" className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 text-center">
               Become a Verifier
             </Link>
             <Link to="/rewards" className="border border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 text-center">
@@ -191,7 +191,7 @@ const VerifyAndEarn = () => {
 
                 <Link 
                   to="/verifiers"
-                  className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center group"
+                  className="w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center group"
                 >
                   Start Verifying
                   <ArrowRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />

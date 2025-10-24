@@ -184,7 +184,7 @@ const Privacy = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <motion.section 
         className="relative py-20 px-4 sm:px-6 lg:px-8"

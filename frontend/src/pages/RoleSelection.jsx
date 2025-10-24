@@ -53,10 +53,10 @@ const RoleSelection = () => {
         'Access control management',
         'Earn rewards for participation'
       ],
-      color: 'from-blue-500 to-cyan-500',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200',
-      hoverColor: 'hover:border-blue-400'
+      primaryColor: 'blue-600',
+      hoverColor: 'blue-700',
+      bgColor: 'blue-50',
+      borderColor: 'blue-200'
     },
     {
       id: 'verifier',
@@ -70,10 +70,10 @@ const RoleSelection = () => {
         'Access verifier dashboard',
         'Participate in verification network'
       ],
-      color: 'from-emerald-500 to-teal-500',
-      bgColor: 'bg-emerald-50',
-      borderColor: 'border-emerald-200',
-      hoverColor: 'hover:border-emerald-400'
+      primaryColor: 'emerald-600',
+      hoverColor: 'emerald-700',
+      bgColor: 'emerald-50',
+      borderColor: 'emerald-200'
     }
   ]
 
@@ -135,8 +135,8 @@ const RoleSelection = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -144,28 +144,28 @@ const RoleSelection = () => {
           className="max-w-6xl mx-auto"
         >
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <h1 className="text-5xl font-bold text-gray-900 mb-6">
               Choose Your Role
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Connect your wallet and select your role to access the Veyra Protocol ecosystem
             </p>
           </motion.div>
 
           {/* Wallet Connection Status */}
-          <motion.div variants={itemVariants} className="mb-12">
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+          <motion.div variants={itemVariants} className="mb-16">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className={`p-3 rounded-full ${isConnected ? 'bg-green-100' : 'bg-gray-100'}`}>
-                    <WalletIcon className={`h-6 w-6 ${isConnected ? 'text-green-600' : 'text-gray-400'}`} />
+                <div className="flex items-center space-x-6">
+                  <div className={`p-4 rounded-xl ${isConnected ? 'bg-green-100' : 'bg-gray-100'}`}>
+                    <WalletIcon className={`h-8 w-8 ${isConnected ? 'text-green-600' : 'text-gray-500'}`} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">
                       Wallet Connection
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-lg">
                       {isConnected 
                         ? `Connected: ${address?.slice(0, 6)}...${address?.slice(-4)}`
                         : 'Connect your wallet to continue'
@@ -175,7 +175,7 @@ const RoleSelection = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   {isConnected && (
-                    <CheckCircleIcon className="h-6 w-6 text-green-500" />
+                    <CheckCircleIcon className="h-8 w-8 text-green-500" />
                   )}
                   <ConnectButton />
                 </div>
@@ -195,68 +195,69 @@ const RoleSelection = () => {
                   <motion.div
                     key={role.id}
                     variants={itemVariants}
-                    whileHover={!isDisabled ? { scale: 1.02 } : {}}
-                    whileTap={!isDisabled ? { scale: 0.98 } : {}}
+                    whileHover={!isDisabled ? { y: -4 } : {}}
                     className={`
-                      relative bg-white rounded-2xl shadow-lg border-2 transition-all duration-300 cursor-pointer
-                      ${role.borderColor} ${role.hoverColor}
-                      ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
-                      ${isSelected ? 'ring-4 ring-blue-200' : ''}
+                      relative bg-white rounded-xl shadow-sm border-2 transition-all duration-300 cursor-pointer
+                      ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'}
+                      ${isSelected ? `border-${role.primaryColor} shadow-lg` : `border-${role.borderColor} hover:border-${role.primaryColor}`}
                     `}
                     onClick={() => !isDisabled && handleRoleSelection(role.id)}
                   >
                     {/* Loading Overlay */}
                     {isSelected && isLoading && (
-                      <div className="absolute inset-0 bg-white bg-opacity-90 rounded-2xl flex items-center justify-center z-10">
-                        <div className="flex items-center space-x-3">
-                          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                          <span className="text-gray-700 font-medium">Setting up your dashboard...</span>
+                      <div className="absolute inset-0 bg-white bg-opacity-95 rounded-xl flex items-center justify-center z-10">
+                        <div className="flex items-center space-x-4">
+                          <div className={`animate-spin rounded-full h-8 w-8 border-b-2 border-${role.primaryColor}`}></div>
+                          <span className="text-gray-700 font-semibold text-lg">Setting up your dashboard...</span>
                         </div>
                       </div>
                     )}
 
-                    <div className="p-8">
+                    <div className="p-10">
                       {/* Role Header */}
-                      <div className="flex items-center space-x-4 mb-6">
-                        <div className={`p-4 rounded-2xl bg-gradient-to-r ${role.color}`}>
-                          <Icon className="h-8 w-8 text-white" />
+                      <div className="flex items-start space-x-6 mb-8">
+                        <div className={`p-5 rounded-xl bg-${role.bgColor} border border-${role.borderColor}`}>
+                          <Icon className={`h-10 w-10 text-${role.primaryColor}`} />
                         </div>
-                        <div>
-                          <h3 className="text-2xl font-bold text-gray-900">{role.title}</h3>
-                          <p className="text-gray-600 mt-1">{role.description}</p>
+                        <div className="flex-1">
+                          <h3 className="text-2xl font-bold text-gray-900 mb-2">{role.title}</h3>
+                          <p className="text-gray-600 text-lg leading-relaxed">{role.description}</p>
                         </div>
                       </div>
 
                       {/* Features */}
-                      <div className="space-y-3 mb-8">
+                      <div className="space-y-4 mb-10">
                         {role.features.map((feature, index) => (
-                          <div key={index} className="flex items-center space-x-3">
-                            <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
-                            <span className="text-gray-700">{feature}</span>
+                          <div key={index} className="flex items-start space-x-4">
+                            <CheckCircleIcon className={`h-6 w-6 text-${role.primaryColor} flex-shrink-0 mt-0.5`} />
+                            <span className="text-gray-700 text-lg leading-relaxed">{feature}</span>
                           </div>
                         ))}
                       </div>
 
-                      {/* Action Button */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
+                      {/* Action Section */}
+                      <div className="flex items-center justify-between pt-6 border-t border-gray-100">
+                        <div className="flex items-center space-x-3">
                           {!isConnected && (
                             <>
-                              <ExclamationTriangleIcon className="h-5 w-5 text-amber-500" />
-                              <span className="text-sm text-amber-600">Connect wallet first</span>
+                              <ExclamationTriangleIcon className="h-6 w-6 text-amber-500" />
+                              <span className="text-amber-600 font-medium">Connect wallet first</span>
                             </>
                           )}
                         </div>
-                        <div className={`
-                          flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-colors
-                          ${isDisabled 
-                            ? 'bg-gray-100 text-gray-400' 
-                            : `bg-gradient-to-r ${role.color} text-white hover:shadow-lg`
-                          }
-                        `}>
+                        <button
+                          disabled={isDisabled}
+                          className={`
+                            flex items-center space-x-3 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200
+                            ${isDisabled 
+                              ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                              : `bg-${role.primaryColor} hover:bg-${role.hoverColor} text-white shadow-sm hover:shadow-md`
+                            }
+                          `}
+                        >
                           <span>Select Role</span>
-                          <ArrowRightIcon className="h-4 w-4" />
-                        </div>
+                          <ArrowRightIcon className="h-5 w-5" />
+                        </button>
                       </div>
                     </div>
                   </motion.div>
@@ -266,8 +267,8 @@ const RoleSelection = () => {
           </motion.div>
 
           {/* Help Text */}
-          <motion.div variants={itemVariants} className="text-center mt-12">
-            <p className="text-gray-500">
+          <motion.div variants={itemVariants} className="text-center mt-16">
+            <p className="text-gray-500 text-lg">
               Need help choosing? You can always change your role later in your account settings.
             </p>
           </motion.div>

@@ -87,7 +87,8 @@ const Dashboard = () => {
       description: 'Manage your decentralized identity',
       href: '/my-identity',
       icon: IdentificationIcon,
-      color: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800',
+      color: 'bg-blue-600 hover:bg-blue-700',
+      textColor: 'text-white',
       disabled: false,
     },
     {
@@ -95,21 +96,24 @@ const Dashboard = () => {
       description: 'View and manage your credentials',
       href: '/my-credentials',
       icon: DocumentCheckIcon,
-      color: 'bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800',
+      color: 'bg-emerald-600 hover:bg-emerald-700',
+      textColor: 'text-white',
     },
     {
       name: 'Verify & Earn',
       description: 'Verify credentials and earn VYR',
       href: '/verify-earn',
       icon: ShieldCheckIcon,
-      color: 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800',
+      color: 'bg-purple-600 hover:bg-purple-700',
+      textColor: 'text-white',
     },
     {
       name: 'Rewards',
       description: 'Track your VYR rewards',
       href: '/rewards',
       icon: TrophyIcon,
-      color: 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800',
+      color: 'bg-amber-600 hover:bg-amber-700',
+      textColor: 'text-white',
     },
   ]
 

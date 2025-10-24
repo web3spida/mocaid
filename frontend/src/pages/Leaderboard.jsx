@@ -150,7 +150,7 @@ const Leaderboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -161,7 +161,7 @@ const Leaderboard = () => {
         >
           <div className="flex items-center justify-center mb-4">
             <TrophyIcon className="w-12 h-12 text-primary-600 mr-3" />
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary-600">
               Verifier Leaderboard
             </h1>
           </div>

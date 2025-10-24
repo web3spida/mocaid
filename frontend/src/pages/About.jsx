@@ -75,7 +75,7 @@ const About = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <motion.section 
         className="relative py-20 px-4 sm:px-6 lg:px-8"
@@ -162,7 +162,7 @@ const About = () => {
                 variants={itemVariants}
                 className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-primary-500/50 transition-all duration-300 text-center"
               >
-                <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden bg-gradient-to-br from-primary-400 to-secondary-400 p-1">
+                <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden bg-primary-400 p-1">
                   <img 
                     src={member.image} 
                     alt={member.name}

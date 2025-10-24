@@ -24,37 +24,43 @@ const Home = () => {
       icon: IdentificationIcon,
       title: 'Self-Sovereign Identity',
       description: 'Complete control over your digital identity with cryptographic ownership and zero-knowledge proofs.',
-      color: 'from-blue-500 to-blue-600',
+      color: 'blue-600',
+      bgColor: 'blue-50',
     },
     {
       icon: DocumentCheckIcon,
       title: 'Verifiable Credentials',
       description: 'Issue, manage, and verify tamper-proof credentials with instant verification and global interoperability.',
-      color: 'from-green-500 to-green-600',
+      color: 'emerald-600',
+      bgColor: 'emerald-50',
     },
     {
       icon: KeyIcon,
       title: 'Advanced Access Control',
       description: 'Granular permission management with role-based access and dynamic authorization protocols.',
-      color: 'from-purple-500 to-purple-600',
+      color: 'purple-600',
+      bgColor: 'purple-50',
     },
     {
       icon: ShieldCheckIcon,
       title: 'Privacy-First Architecture',
       description: 'Zero-knowledge proofs, selective disclosure, and end-to-end encryption protect your sensitive data.',
-      color: 'from-red-500 to-red-600',
+      color: 'red-600',
+      bgColor: 'red-50',
     },
     {
       icon: CubeTransparentIcon,
       title: 'Cross-Chain Compatibility',
       description: 'Seamless integration across multiple blockchain networks with universal identity portability.',
-      color: 'from-yellow-500 to-yellow-600',
+      color: 'amber-600',
+      bgColor: 'amber-50',
     },
     {
       icon: BoltIcon,
       title: 'Lightning Fast',
       description: 'Optimized for speed with instant verification, low-latency responses, and efficient gas usage.',
-      color: 'from-indigo-500 to-indigo-600',
+      color: 'indigo-600',
+      bgColor: 'indigo-50',
     },
   ]
 
@@ -114,7 +120,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-moca-50 py-20 sm:py-32">
+      <section className="relative overflow-hidden bg-gray-50 py-20 sm:py-32">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -127,7 +133,7 @@ const Home = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary-100 to-moca-100 text-primary-700 text-sm font-medium mb-6"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-6"
             >
               <BoltIcon className="w-4 h-4 mr-2" />
               Introducing Veyra Protocol - The Future of Digital Identity
@@ -135,7 +141,7 @@ const Home = () => {
             
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6">
               Sovereign Identity for the{' '}
-              <span className="text-gradient">Digital Age</span>
+              <span className="text-blue-600">Digital Age</span>
             </h1>
             <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
               Veyra Protocol empowers individuals and organizations with self-sovereign identity solutions. 
@@ -223,8 +229,8 @@ const Home = () => {
                   variants={itemVariants}
                   className="card-hover group p-8 rounded-2xl bg-white border border-gray-200 hover:border-primary-200 hover:shadow-xl transition-all duration-300"
                 >
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
-                    <Icon className="w-7 h-7 text-white" />
+                  <div className={`w-14 h-14 rounded-2xl bg-${feature.bgColor} border border-${feature.color}/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
+                    <Icon className={`w-7 h-7 text-${feature.color}`} />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
                     {feature.title}
@@ -240,7 +246,7 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 to-primary-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -266,7 +272,7 @@ const Home = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center space-x-4 p-3 rounded-xl hover:bg-white/50 transition-colors duration-200"
+                    className="flex items-center space-x-4 p-3 rounded-xl hover:bg-gray-50 transition-colors duration-200"
                   >
                     <CheckCircleIcon className="w-7 h-7 text-green-500 flex-shrink-0" />
                     <span className="text-lg text-gray-700 font-medium">{benefit}</span>
@@ -282,10 +288,10 @@ const Home = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="bg-gradient-to-br from-primary-500 via-primary-600 to-moca-500 rounded-3xl p-10 text-white shadow-2xl">
-                <UserGroupIcon className="w-12 h-12 text-primary-100 mb-6" />
+              <div className="bg-blue-600 rounded-3xl p-10 text-white shadow-2xl">
+                <UserGroupIcon className="w-12 h-12 text-blue-100 mb-6" />
                 <h3 className="text-3xl font-bold mb-6">Ready to Transform Your Digital Identity?</h3>
-                <p className="text-primary-100 mb-8 text-lg leading-relaxed">
+                <p className="text-blue-100 mb-8 text-lg leading-relaxed">
                   Join thousands of users who trust Veyra Protocol for secure, 
                   private, and sovereign identity management.
                 </p>
@@ -297,7 +303,7 @@ const Home = () => {
                 {isConnected && (
                   <Link
                     to="/role-selection"
-                    className="inline-flex items-center space-x-3 bg-white text-primary-600 font-bold px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    className="inline-flex items-center space-x-3 bg-white text-blue-600 font-bold px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     <span>Choose Your Role</span>
                     <ArrowRightIcon className="w-6 h-6" />
@@ -306,9 +312,9 @@ const Home = () => {
               </div>
               
               {/* Enhanced floating elements */}
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-moca-200 rounded-full opacity-20 animate-float"></div>
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-primary-200 rounded-full opacity-20 animate-float" style={{ animationDelay: '2s' }}></div>
-              <div className="absolute top-1/2 -right-4 w-16 h-16 bg-yellow-200 rounded-full opacity-15 animate-float" style={{ animationDelay: '4s' }}></div>
+              <div className="absolute -top-6 -right-6 w-32 h-32 bg-blue-200 rounded-full opacity-20 animate-float"></div>
+              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-blue-300 rounded-full opacity-20 animate-float" style={{ animationDelay: '2s' }}></div>
+              <div className="absolute top-1/2 -right-4 w-16 h-16 bg-blue-100 rounded-full opacity-15 animate-float" style={{ animationDelay: '4s' }}></div>
             </motion.div>
           </div>
         </div>

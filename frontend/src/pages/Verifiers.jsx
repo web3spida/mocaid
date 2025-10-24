@@ -192,7 +192,7 @@ const Verifiers = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
       <motion.section 
         className="relative py-20 px-4 sm:px-6 lg:px-8"
@@ -210,7 +210,7 @@ const Verifiers = () => {
             <UserGroupIcon className="h-16 w-16 text-primary-400 mx-auto mb-6" />
           </motion.div>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-primary-400">
             Professional Verifier Network
           </h1>
           
@@ -222,7 +222,7 @@ const Verifiers = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <button 
               onClick={() => setShowApplicationModal(true)}
-              className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
+              className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
             >
               Become a Verifier
             </button>
@@ -345,7 +345,7 @@ const Verifiers = () => {
 
       {/* Benefits */}
       <motion.section 
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary-500/10 to-secondary-500/10"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-primary-500/10"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -440,7 +440,7 @@ const Verifiers = () => {
                 className="text-center"
               >
                 <div className="relative mb-6">
-                  <div className="bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full p-4 w-20 h-20 mx-auto flex items-center justify-center">
+                  <div className="bg-primary-500 rounded-full p-4 w-20 h-20 mx-auto flex items-center justify-center">
                     <step.icon className="h-8 w-8 text-white" />
                   </div>
                   <div className="absolute -top-2 -right-2 bg-primary-400 text-black rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
@@ -475,7 +475,7 @@ const Verifiers = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <button 
                 onClick={() => setShowApplicationModal(true)}
-                className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105"
               >
                 Apply to Become a Verifier
               </button>

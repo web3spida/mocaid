@@ -58,7 +58,7 @@ const UserDashboardLayout = ({
   const actions = quickActions.length > 0 ? quickActions : defaultQuickActions
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header Section */}
         <motion.div
@@ -236,7 +236,7 @@ const UserDashboardLayout = ({
             </div>
 
             {/* Tips & Recommendations */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+            <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Tips for You</h3>
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
