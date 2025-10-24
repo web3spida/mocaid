@@ -2,7 +2,29 @@
   "name": "credora-protocol-frontend",
   "private": true,
   "version": "1.0.0",
+  "description": "Frontend for Credora Protocol - Incentivized credential verification on Moca Chain",
   "type": "module",
+  "homepage": "https://credora.network",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/credora-protocol/credora-protocol"
+  },
+  "keywords": [
+    "credora",
+    "protocol",
+    "moca",
+    "blockchain",
+    "credentials",
+    "verification",
+    "incentives",
+    "rewards",
+    "staking",
+    "defi",
+    "react",
+    "vite"
+  ],
+  "author": "Credora Protocol Team",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
