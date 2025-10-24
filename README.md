@@ -1,51 +1,57 @@
-# Veyra Protocol
+# 🏆 Veyra Protocol
 
-*"Earn. Verify. Trust. On-Chain."*
+**Incentivized Credential Verification Protocol on Moca Chain**
 
-A decentralized, incentive-driven credential verification protocol built on Moca Chain. Veyra rewards users for acquiring verified credentials and compensates verifiers for validating them, creating a trustless, gamified ecosystem for credential management.
+Veyra Protocol is a fully functional decentralized identity and credential verification system that incentivizes users to verify their credentials while rewarding verifiers for their services. Built on Moca Chain with AIR Kit SDK integration, it creates a sustainable economy around digital identity verification.
 
-## 🌟 Features
+## ✨ Features
 
-### 🎯 User Incentives
-- **Earn Rewards**: Get on-chain rewards and reputation points for verified credentials
-- **Gamified Experience**: Unlock badges, levels, and milestones through credential accumulation
-- **Access Tiers**: Unlock dApp features and premium access based on credential achievements
-- **Leaderboards**: Compete with other users and showcase your credential portfolio
+### 🎯 User Incentives ✅ **IMPLEMENTED**
+- **Earn MOCA Tokens**: Get rewarded for verifying your credentials (2.5 MOCA per verification)
+- **Build Reputation**: Increase your credibility score through verified credentials
+- **Unlock Benefits**: Access exclusive features and higher rewards with better reputation
+- **Gamified Experience**: Earn badges, climb leaderboards, and compete with other users
+- **Professional Dashboard**: Track your credential portfolio, earnings, and achievements
 
-### 💰 Verifier Economy
-- **Stake & Earn**: Verifiers stake tokens to validate credentials and earn fees
-- **Reputation System**: Build verifier reputation through reliable validation
-- **Slashing Protection**: Fraud detection with automatic slashing for malicious behavior
-- **Fee Distribution**: Transparent fee structure for each credential validation
+### 💼 Verifier Economy ✅ **IMPLEMENTED**
+- **Stake to Verify**: Verifiers stake MOCA tokens to participate in the verification process
+- **Earn Fees**: Collect verification fees (0.5 MOCA per verification) for providing services
+- **Reputation System**: Build verifier reputation through accurate and timely verifications
+- **Slashing Protection**: Maintain honest behavior to avoid stake slashing penalties
+- **Verifier Dashboard**: Complete interface for managing stakes, earnings, and reputation
 
-### 🔐 Credential Management
-- **AIR Kit Integration**: Seamless verifiable credential issuance and presentation
-- **Smart Contract Automation**: Trustless, auditable, and on-chain credential operations
-- **Multi-format Support**: Support for various credential types and schemas
-- **Verifiable Presentations**: Generate VPs with JWS signatures and challenge verification
+### 📋 Credential Management ✅ **IMPLEMENTED**
+- **Decentralized Storage**: Credentials stored on-chain with privacy-preserving hashes
+- **Multiple Types**: Support for various credential types (education, employment, skills, etc.)
+- **Expiration Handling**: Automatic credential expiration and renewal notifications
+- **Verification Status**: Real-time tracking of credential verification status
+- **AIR Kit Integration**: Full integration with Moca's identity management SDK
 
-### 📊 Protocol Analytics
+### 📊 Protocol Analytics ✅ **IMPLEMENTED**
 - **User Dashboard**: Track earned credentials, badges, reputation, and rewards
 - **Verifier Dashboard**: Monitor staked tokens, verified credentials, fees, and reputation
 - **Privacy-First Analytics**: Aggregate statistics without exposing personal information
 - **Real-time Updates**: Live tracking of protocol activity and user progress
+- **Leaderboards**: Competitive rankings for users and verifiers
 
-### 🔗 Modern Integration
-- **QR & Deep Links**: Easy sharing and verification through QR codes and deep links
-- **Responsive Design**: Mobile-first design with TailwindCSS
+### 🔗 Modern Integration ✅ **IMPLEMENTED**
+- **Professional UI/UX**: Modern, responsive design with custom logo and branding
 - **Smooth Animations**: Framer Motion animations for enhanced user experience
 - **Wallet Integration**: Seamless connection with RainbowKit and Wagmi
+- **Mobile-First Design**: Fully responsive interface optimized for all devices
+- **Interactive Modals**: Professional forms and dialogs for all user interactions
 
 ## Architecture
 
-### Smart Contracts
+### Smart Contracts ✅ **DEPLOYED ON MOCA TESTNET**
 - **CredentialRegistry**: Stores credential hashes, owners, and verification status
 - **RewardManager**: Calculates and distributes rewards for users and fees for verifiers
 - **VerifierRegistry**: Manages verifier staking, reputation, and slashing logic
 - **AnalyticsModule**: Aggregates credential statistics for dashboards and leaderboards
-- **AccessControl**: Permission management and access control (legacy support)
+- **CredentialIssuer**: Handles credential issuance and verification workflows
+- **AccessControl**: Permission management and access control for protocol operations
 
-### Frontend Stack
+### Frontend Stack ✅ **FULLY IMPLEMENTED**
 - **React 18**: Modern React with hooks and context for state management
 - **Vite**: Fast build tool and development server
 - **TailwindCSS**: Utility-first CSS framework for responsive design
@@ -53,85 +59,156 @@ A decentralized, incentive-driven credential verification protocol built on Moca
 - **Wagmi**: React hooks for Ethereum and Moca Chain integration
 - **RainbowKit**: Wallet connection interface with multi-wallet support
 
-### Integration
+### Integration ✅ **PRODUCTION READY**
 - **AIR Kit SDK**: Moca's identity and credential management SDK for issuance and verification
-- **Moca Chain**: Layer 1 blockchain optimized for identity and credential operations
+- **Moca Chain**: Layer 1 blockchain optimized for identity and credential operations (Testnet: Chain ID 5151)
 - **Incentive Layer**: On-chain reward distribution and reputation tracking system
 
-## Quick Start
+## 🚀 Moca Chain Integration
+
+### Network Configuration
+- **Moca Testnet (Development)**: Chain ID 5151
+  - RPC URL: `https://devnet-rpc.mocachain.org`
+  - Explorer: `https://devnet-scan.mocachain.org`
+  - Native Token: MOCA
+  - Status: ✅ **ACTIVE & DEPLOYED**
+
+### Smart Contract Deployment Status
+**✅ Successfully Deployed on Moca Testnet (October 24, 2025)**
+
+| Contract | Address | Status |
+|----------|---------|---------|
+| CredentialRegistry | `0x634b3cD5db670b9f104D4242621c4E200c6aDb4F` | ✅ Verified |
+| RewardManager | `0x4212f573e7F456974e018001B2311f4402d2711B` | ✅ Verified |
+| VerifierRegistry | `0x62f4eDAA371B5895ADA5fA2e5733f0447433b4C3` | ✅ Verified |
+| AnalyticsModule | `0x9CC47525a6C2f3e915D44cA785c7B11dE164AF07` | ✅ Verified |
+| CredentialIssuer | `0x4bC5D734A7BfDF126A9C076E7Ac5633173Cb3C92` | ✅ Verified |
+| AccessControl | `0x2BAC3b9AAFdcEde12F7a7601E2A87FdE72CAdfF1` | ✅ Verified |
+
+### Token Economics (MOCA)
+- **Verification Reward**: 2.5 MOCA per verified credential
+- **Verifier Fee**: 0.5 MOCA per verification (20% of reward)
+- **Minimum Stake**: 100 MOCA for verifier registration
+- **Slashing Rate**: 10% of stake for malicious behavior
+
+## 🔧 AIR Kit SDK Integration
+
+### Implementation Status ✅ **FULLY INTEGRATED**
+Veyra Protocol leverages Moca Network's AIR Kit SDK for comprehensive identity and credential management:
+
+### Core Features Implemented
+- **DID Management**: Decentralized identifier generation and persistence
+- **Verifiable Credentials**: Full VC lifecycle (issuance, storage, verification)
+- **Verifiable Presentations**: VP creation with cryptographic proofs
+- **Schema Management**: Support for multiple credential types and formats
+- **JWT Authentication**: Secure API communication with AIR Kit services
+
+### Technical Implementation
+```javascript
+// DID Generation and Management
+const { did, publicKey, generateDID } = useDID()
+
+// Verifiable Credential Operations
+const { 
+  credentials, 
+  issueCredential, 
+  verifyCredential, 
+  revokeCredential 
+} = useVerifiableCredentials()
+
+// Verifiable Presentation Creation
+const { 
+  presentations, 
+  createPresentation, 
+  verifyPresentation 
+} = useVerifiablePresentations()
+```
+
+### AIR Kit Configuration
+- **Environment**: Sandbox (Development) / Production Ready
+- **API Endpoint**: `https://developers.sandbox.air3.com`
+- **Widget URL**: `https://widget.moca.network`
+- **Authentication**: JWT-based secure communication
+- **Storage**: Local persistence with blockchain verification
+
+### Credential Types Supported
+- **Education**: Academic degrees, certifications, courses
+- **Employment**: Work history, professional certifications
+- **Skills**: Technical skills, competencies, achievements
+- **Identity**: KYC, government IDs, personal verification
+- **Custom**: Extensible schema support for any credential type
+
+### Integration Benefits
+- **Seamless UX**: Native integration with Moca Network ecosystem
+- **Interoperability**: Standards-compliant W3C Verifiable Credentials
+- **Security**: Cryptographic proofs and blockchain anchoring
+- **Scalability**: Optimized for high-volume credential operations
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- **Node.js** (v18 or higher)
-- **npm** or **yarn**
-- **Git**
+- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
+- **npm** or **yarn** package manager
+- **Git** for version control
 - **MetaMask** or compatible Web3 wallet
+- **Moca Chain Testnet** configuration in wallet
 
-### Installation
+### Installation & Setup
 
-1. **Clone the repository**
+1. **Clone the Repository**
    ```bash
-   git clone https://github.com/Fmsticks2/mocaid-vault.git
-   cd mocaid-vault
+   git clone https://github.com/your-org/veyra-protocol.git
+   cd veyra-protocol
    ```
 
-2. **Install dependencies**
+2. **Install Dependencies**
    ```bash
    # Install root dependencies
    npm install
-
-   # Install frontend dependencies
-   cd frontend
+   
+   # Install smart contract dependencies
+   cd contracts
    npm install
-   cd ..
+   
+   # Install frontend dependencies
+   cd ../frontend
+   npm install
    ```
 
-3. **Environment Setup**
-   ```bash
-   # Copy environment templates
-   cp .env.example .env
-   cp frontend/.env.example frontend/.env
-   ```
-
-4. **Configure Environment Variables**
-
-   **Root `.env`:**
+3. **Configure Environment Variables**
+   
+   **Backend `.env` (in `/contracts` directory):**
    ```env
-   # Moca Devnet Configuration (for development & testing)
+   # Moca Chain Configuration
    MOCA_TESTNET_RPC_URL=https://devnet-rpc.mocachain.org
+   MOCA_TESTNET_PRIVATE_KEY=your_private_key_here
    MOCA_TESTNET_CHAIN_ID=5151
-   MOCA_TESTNET_EXPLORER=https://devnet-scan.mocachain.org
-
-   # Private Keys (DO NOT COMMIT TO VERSION CONTROL)
-   DEPLOYER_PRIVATE_KEY=your_deployer_private_key_here
-   ISSUER_PRIVATE_KEY=your_issuer_private_key_here
-
-   # Moca Chain API
-   MOCA_API_KEY=your_moca_api_key_here
-
+   
    # AIR Kit SDK Configuration (Backend)
    AIRKIT_PARTNER_ID=your_partner_id_here
    AIRKIT_ISSUER_DID=your_issuer_did_here
    AIRKIT_VERIFIER_DID=your_verifier_did_here
-   AIRKIT_PRIVATE_KEY=your_jwt_private_key_here
    AIRKIT_API_URL=https://developers.sandbox.air3.com
-   AIRKIT_WIDGET_URL=https://widget.moca.network
+   AIRKIT_ENVIRONMENT=sandbox
+   
+   # Etherscan API (for contract verification)
+   ETHERSCAN_API_KEY=your_etherscan_api_key_here
    ```
 
-   **Frontend `.env`:**
+   **Frontend `.env` (in `/frontend` directory):**
    ```env
-   # Moca Chain Configuration (Devnet)
+   # Moca Chain Configuration (Testnet)
    VITE_MOCA_CHAIN_ID=5151
    VITE_MOCA_RPC_URL=https://devnet-rpc.mocachain.org
    VITE_MOCA_EXPLORER=https://devnet-scan.mocachain.org
 
-   # Smart Contract Addresses (Deployed on Moca Testnet)
-   VITE_CREDENTIAL_ISSUER_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
-   VITE_CREDENTIAL_REGISTRY_ADDRESS=0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-   VITE_REWARD_MANAGER_ADDRESS=0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
-   VITE_VERIFIER_REGISTRY_ADDRESS=0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
-   VITE_ANALYTICS_MODULE_ADDRESS=0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
-   VITE_ACCESS_CONTROL_ADDRESS=0x5FC8d32690cc91D4c39d9d3abcBD16989F875707
+   # Smart Contract Addresses (✅ DEPLOYED ON MOCA TESTNET)
+   VITE_CREDENTIAL_REGISTRY_ADDRESS=0x634b3cD5db670b9f104D4242621c4E200c6aDb4F
+   VITE_REWARD_MANAGER_ADDRESS=0x4212f573e7F456974e018001B2311f4402d2711B
+   VITE_VERIFIER_REGISTRY_ADDRESS=0x62f4eDAA371B5895ADA5fA2e5733f0447433b4C3
+   VITE_ANALYTICS_MODULE_ADDRESS=0x9CC47525a6C2f3e915D44cA785c7B11dE164AF07
+   VITE_CREDENTIAL_ISSUER_ADDRESS=0x4bC5D734A7BfDF126A9C076E7Ac5633173Cb3C92
+   VITE_ACCESS_CONTROL_ADDRESS=0x2BAC3b9AAFdcEde12F7a7601E2A87FdE72CAdfF1
 
    # AIR Kit SDK Configuration (Frontend)
    VITE_AIRKIT_PARTNER_ID=your_partner_id_here
@@ -149,6 +226,26 @@ A decentralized, incentive-driven credential verification protocol built on Moca
    # WalletConnect Project ID
    VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id_here
    ```
+
+4. **Add Moca Chain Testnet to Your Wallet**
+   - **Network Name**: Moca Testnet
+   - **RPC URL**: `https://devnet-rpc.mocachain.org`
+   - **Chain ID**: `5151`
+   - **Currency Symbol**: `MOCA`
+   - **Block Explorer**: `https://devnet-scan.mocachain.org`
+
+5. **Start the Development Environment**
+   ```bash
+   # Start the frontend development server
+   cd frontend
+   npm run dev
+   ```
+
+6. **Access the Application**
+   - Open [http://localhost:5173](http://localhost:5173) in your browser
+   - Connect your wallet (MetaMask recommended)
+   - Switch to Moca Testnet
+   - Start exploring the Veyra Protocol!
 
 ### 🔧 Development
 
@@ -176,6 +273,52 @@ A decentralized, incentive-driven credential verification protocol built on Moca
    cd frontend
    npm run dev
    ```
+
+## 📱 Frontend Features & Implementation Status
+
+### ✅ **FULLY IMPLEMENTED PAGES**
+- **🏠 Home Page**: Landing page with protocol overview and call-to-action
+- **📊 Dashboard**: User analytics, credential overview, and reward tracking
+- **🆔 My Identity**: DID management and identity verification status
+- **🏆 My Credentials**: Personal credential portfolio with verification status
+- **✅ Verification**: Credential verification interface for verifiers
+- **💰 Verify & Earn**: Gamified verification process with MOCA rewards
+- **🔐 Access Control**: Role-based access management and permissions
+- **⚙️ Settings**: User preferences, notifications, and account management
+- **ℹ️ About**: Protocol information and team details
+- **💼 Careers**: Job opportunities and team expansion
+- **🔒 Privacy Policy**: Data protection and privacy guidelines
+- **📋 Terms of Service**: Legal terms and conditions
+- **🏅 Credentials**: Public credential marketplace and discovery
+- **👥 Verifiers**: Verifier directory and reputation system
+- **🎁 Rewards**: Reward history and redemption options
+- **🏆 Leaderboard**: Gamification with top users and verifiers
+
+### ✅ **CORE COMPONENTS IMPLEMENTED**
+- **🎨 Modern UI/UX**: TailwindCSS with responsive design and dark mode
+- **🔗 Wallet Integration**: RainbowKit with multi-wallet support
+- **📱 Mobile Responsive**: Optimized for all device sizes
+- **🎭 Animations**: Framer Motion for smooth transitions
+- **🔄 State Management**: Zustand for efficient state handling
+- **🌐 Routing**: React Router with protected routes
+- **📊 Data Visualization**: Charts and analytics dashboards
+- **🔔 Notifications**: Toast notifications and alerts
+- **🎮 Gamification**: Points, badges, and achievement system
+- **🔍 Search & Filter**: Advanced filtering and search capabilities
+
+### ✅ **BLOCKCHAIN INTEGRATION**
+- **⛓️ Moca Chain**: Native integration with testnet deployment
+- **💰 MOCA Token**: Reward distribution and staking mechanisms
+- **📝 Smart Contracts**: Full contract interaction via Wagmi/Viem
+- **🔐 Wallet Connect**: Seamless wallet connection and transaction signing
+- **📊 Real-time Data**: Live blockchain data synchronization
+
+### ✅ **AIR Kit SDK FEATURES**
+- **🆔 DID Management**: Decentralized identity creation and persistence
+- **📜 Credential Lifecycle**: Issue, verify, revoke, and present credentials
+- **🔒 Cryptographic Proofs**: W3C compliant verifiable presentations
+- **📋 Schema Support**: Multiple credential types and formats
+- **🔑 JWT Authentication**: Secure API communication
 
 5. **Access the Application**
    - Open [http://localhost:5173](http://localhost:5173) in your browser
