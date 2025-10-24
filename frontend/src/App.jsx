@@ -12,6 +12,7 @@ import { AuthProvider } from './contexts/AuthContext'
 
 // Pages
 import Home from './pages/Home'
+import RoleSelection from './pages/RoleSelection'
 import Dashboard from './pages/Dashboard'
 import MyIdentity from './pages/MyIdentity'
 import MyCredentials from './pages/MyCredentials'
@@ -54,6 +55,7 @@ function App() {
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
+              <Route path="/role-selection" element={<RoleSelection />} />
               <Route path="/about" element={<About />} />
               <Route path="/careers" element={<Careers />} />
               <Route path="/privacy" element={<Privacy />} />

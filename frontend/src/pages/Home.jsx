@@ -145,10 +145,10 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
               {isConnected ? (
                 <Link
-                  to="/dashboard"
+                  to="/role-selection"
                   className="btn-primary text-lg px-10 py-4 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
                 >
-                  <span>Launch Dashboard</span>
+                  <span>Choose Your Role</span>
                   <ArrowRightIcon className="w-5 h-5" />
                 </Link>
               ) : (
@@ -296,10 +296,10 @@ const Home = () => {
                 )}
                 {isConnected && (
                   <Link
-                    to="/dashboard"
+                    to="/role-selection"
                     className="inline-flex items-center space-x-3 bg-white text-primary-600 font-bold px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
-                    <span>Launch Dashboard</span>
+                    <span>Choose Your Role</span>
                     <ArrowRightIcon className="w-6 h-6" />
                   </Link>
                 )}

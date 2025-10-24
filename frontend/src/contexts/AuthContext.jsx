@@ -79,7 +79,8 @@ const publicRoutes = [
   '/terms',
   '/credentials',
   '/verifiers',
-  '/admin/login'
+  '/admin/login',
+  '/role-selection'
 ]
 
 export const AuthProvider = ({ children }) => {
