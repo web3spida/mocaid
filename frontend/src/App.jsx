@@ -3,8 +3,12 @@ import { Toaster } from 'react-hot-toast'
 import { motion } from 'framer-motion'
 
 // Components
-import Navbar from './components/layout/Navbar'
+import RoleBasedLayout from './components/layout/RoleBasedLayout'
+import ProtectedRoute from './components/ProtectedRoute'
 import Footer from './components/layout/Footer'
+
+// Context
+import { AuthProvider } from './contexts/AuthContext'
 
 // Pages
 import Home from './pages/Home'
@@ -32,55 +36,141 @@ import VerificationRequest from './pages/VerificationRequest'
 import { useAccount } from 'wagmi'
 
 function App() {
-  const { isConnected } = useAccount()
-
   return (
-    <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50">
-        <Navbar />
-        
-        <motion.main
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex-1"
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {isConnected && (
-              <>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/my-identity" element={<MyIdentity />} />
-                <Route path="/my-credentials" element={<MyCredentials />} />
-                <Route path="/verification" element={<Verification />} />
-                <Route path="/verify-and-earn" element={<VerifyAndEarn />} />
-                <Route path="/access-control" element={<AccessControl />} />
-                <Route path="/settings" element={<Settings />} />
-              </>
-            )}
-            <Route path="/about" element={<About />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/credentials" element={<Credentials />} />
-            <Route path="/verifiers" element={<Verifiers />} />
-            <Route path="/rewards" element={<Rewards />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/verifier/dashboard" element={<VerifierDashboard />} />
-            <Route path="/verification/request" element={<VerificationRequest />} />
-            {/* Redirect to home if not connected and trying to access protected routes */}
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </motion.main>
+    <AuthProvider>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <RoleBasedLayout>
+          <motion.main
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex-1"
+          >
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/credentials" element={<Credentials />} />
+              <Route path="/verifiers" element={<Verifiers />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route 
+                path="/admin/dashboard" 
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Verifier Routes */}
+              <Route 
+                path="/verifier/dashboard" 
+                element={
+                  <ProtectedRoute requiredRole="verifier">
+                    <VerifierDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* User Routes (require authentication) */}
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/my-identity" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <MyIdentity />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/my-credentials" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <MyCredentials />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/verification" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <Verification />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/verify-and-earn" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <VerifyAndEarn />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/access-control" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <AccessControl />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/settings" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier', 'admin']}>
+                    <Settings />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/rewards" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <Rewards />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/leaderboard" 
+                element={
+                  <ProtectedRoute allowedRoles={['user', 'verifier']}>
+                    <Leaderboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/verification/request" 
+                element={
+                  <ProtectedRoute allowedRoles={['user']}>
+                    <VerificationRequest />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Redirect to home for unknown routes */}
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </motion.main>
 
-        <Footer />
+          <Footer />
+        </RoleBasedLayout>
         
         {/* Toast notifications */}
         <Toaster
@@ -108,8 +198,8 @@ function App() {
             },
           }}
         />
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   )
 }
 

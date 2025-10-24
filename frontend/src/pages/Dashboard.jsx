@@ -19,9 +19,14 @@ import {
 } from '@heroicons/react/24/outline'
 import { useIdentityRegistry, useCredentialIssuer } from '../hooks/useContracts'
 import { useDID, useVerifiableCredentials } from '../hooks/useAirKit'
+import { useAuth } from '../contexts/AuthContext'
+import UserDashboardLayout from '../components/layout/UserDashboardLayout'
+import VerifierDashboardLayout from '../components/layout/VerifierDashboardLayout'
+import AdminDashboardLayout from '../components/layout/AdminDashboardLayout'
 
 const Dashboard = () => {
   const { address } = useAccount()
+  const { user, userRole, isAdmin, isVerifier } = useAuth()
   const { useGetIdentity, useIsRegistered } = useIdentityRegistry()
   const { useGetUserCredentials } = useCredentialIssuer()
   const { did } = useDID()
@@ -169,301 +174,173 @@ const Dashboard = () => {
     },
   }
 
+  // Prepare data for role-based layouts
+  const dashboardData = {
+    stats,
+    quickActions,
+    recentActivity,
+    credentials,
+    isRegistered,
+    did,
+    address,
+    user,
+    userRole
+  }
+
+  // Admin Dashboard
+  if (isAdmin()) {
+    const adminStats = [
+      {
+        name: 'Total Users',
+        value: '12,847',
+        icon: UserGroupIcon,
+        color: 'text-blue-600',
+        bgColor: 'bg-blue-50',
+        change: '+234 this week',
+        changeType: 'positive'
+      },
+      {
+        name: 'Active Verifiers',
+        value: '89',
+        icon: ShieldCheckIcon,
+        color: 'text-emerald-600',
+        bgColor: 'bg-emerald-50',
+        change: '+5 this week',
+        changeType: 'positive'
+      },
+      {
+        name: 'Pending Applications',
+        value: '23',
+        icon: ClockIcon,
+        color: 'text-amber-600',
+        bgColor: 'bg-amber-50',
+        change: '7 urgent',
+        changeType: 'neutral'
+      },
+      {
+        name: 'System Health',
+        value: '99.8%',
+        icon: CheckCircleIcon,
+        color: 'text-green-600',
+        bgColor: 'bg-green-50',
+        change: 'All systems operational',
+        changeType: 'positive'
+      }
+    ]
+
+    const adminActivity = [
+      {
+        title: 'New verifier approved',
+        description: 'Sarah Johnson has been approved as a verifier',
+        timestamp: '10 minutes ago',
+        icon: ShieldCheckIcon,
+        color: 'text-emerald-600',
+        bgColor: 'bg-emerald-50'
+      },
+      {
+        title: 'System maintenance completed',
+        description: 'Database optimization and security updates applied',
+        timestamp: '2 hours ago',
+        icon: CheckCircleIcon,
+        color: 'text-green-600',
+        bgColor: 'bg-green-50'
+      }
+    ]
+
+    return (
+      <AdminDashboardLayout 
+        systemStats={adminStats}
+        recentActivity={adminActivity}
+        alerts={[]}
+        systemHealth={{}}
+      />
+    )
+  }
+
+  // Verifier Dashboard
+  if (isVerifier()) {
+    const verifierStats = [
+      {
+        name: 'Verifications Today',
+        value: '12',
+        icon: ShieldCheckIcon,
+        color: 'text-emerald-600',
+        bgColor: 'bg-emerald-50',
+        change: '+3 from yesterday',
+        changeType: 'positive'
+      },
+      {
+        name: 'Total Earnings',
+        value: '2,450 VYR',
+        icon: CurrencyDollarIcon,
+        color: 'text-purple-600',
+        bgColor: 'bg-purple-50',
+        change: '+150 VYR today',
+        changeType: 'positive'
+      },
+      {
+        name: 'Success Rate',
+        value: '98.5%',
+        icon: TrophyIcon,
+        color: 'text-amber-600',
+        bgColor: 'bg-amber-50',
+        change: 'Above average',
+        changeType: 'positive'
+      },
+      {
+        name: 'Pending Queue',
+        value: '5',
+        icon: ClockIcon,
+        color: 'text-blue-600',
+        bgColor: 'bg-blue-50',
+        change: '2 urgent',
+        changeType: 'neutral'
+      }
+    ]
+
+    const verifierActivity = [
+      {
+        title: 'Education credential verified',
+        description: 'University degree verification completed for John Doe',
+        timestamp: '15 minutes ago',
+        icon: DocumentCheckIcon,
+        color: 'text-emerald-600',
+        bgColor: 'bg-emerald-50',
+        reward: '+50 VYR'
+      },
+      {
+        title: 'Professional license verified',
+        description: 'Medical license verification for Dr. Smith',
+        timestamp: '1 hour ago',
+        icon: ShieldCheckIcon,
+        color: 'text-blue-600',
+        bgColor: 'bg-blue-50',
+        reward: '+75 VYR'
+      }
+    ]
+
+    return (
+      <VerifierDashboardLayout 
+        verificationStats={verifierStats}
+        recentVerifications={verifierActivity}
+        earnings={{ today: 150, total: 2450, rate: 98.5 }}
+        pendingQueue={5}
+      />
+    )
+  }
+
+  // Regular User Dashboard
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        {/* Enhanced Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-10 lg:mb-12"
-        >
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-            <div className="mb-6 lg:mb-0">
-              <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-                Dashboard
-              </h1>
-              <p className="text-lg text-gray-600 mt-3 max-w-2xl">
-                Welcome to your Veyra Protocol dashboard. Manage your identity, credentials, and earn VYR tokens.
-              </p>
-            </div>
-            
-            {address && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 lg:min-w-[400px]">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-500">Wallet Address</span>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-sm text-green-600 font-medium">Connected</span>
-                    </div>
-                  </div>
-                  <code className="block text-sm bg-gray-50 px-3 py-2 rounded-lg border font-mono">
-                    {address.slice(0, 8)}...{address.slice(-6)}
-                  </code>
-                  {did && (
-                    <>
-                      <div className="border-t pt-3">
-                        <span className="text-sm font-medium text-gray-500 block mb-2">Decentralized ID</span>
-                        <code className="block text-sm bg-blue-50 text-blue-700 px-3 py-2 rounded-lg border border-blue-200 font-mono">
-                          {did.slice(0, 24)}...
-                        </code>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </motion.div>
-
-        {/* Enhanced Stats Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
-        >
-          {stats.map((stat) => {
-            const Icon = stat.icon
-            return (
-              <motion.div
-                key={stat.name}
-                variants={itemVariants}
-                className={`bg-white rounded-2xl border-2 ${stat.borderColor} p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1`}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-xl ${stat.bgColor}`}>
-                    <Icon className={`w-7 h-7 ${stat.color}`} />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">{stat.name}</h3>
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`text-sm font-medium px-2 py-1 rounded-full ${
-                        stat.changeType === 'positive'
-                          ? 'text-green-700 bg-green-100'
-                          : stat.changeType === 'negative'
-                          ? 'text-red-700 bg-red-100'
-                          : 'text-gray-700 bg-gray-100'
-                      }`}
-                    >
-                      {stat.change}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 lg:gap-10">
-          {/* Enhanced Quick Actions */}
-          <motion.div
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-            className="xl:col-span-2"
-          >
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-gray-900">Quick Actions</h2>
-                <ChartBarIcon className="w-6 h-6 text-gray-400" />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {quickActions.map((action) => {
-                  const Icon = action.icon
-                  return (
-                    <Link
-                      key={action.name}
-                      to={action.href}
-                      className={`group relative p-6 rounded-xl text-white transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${
-                        action.disabled
-                          ? 'bg-gray-400 cursor-not-allowed'
-                          : action.color
-                      }`}
-                      onClick={(e) => action.disabled && e.preventDefault()}
-                    >
-                      <div className="flex items-start space-x-4">
-                        <div className="flex-shrink-0">
-                          <Icon className="w-8 h-8" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-lg mb-1">{action.name}</h3>
-                          <p className="text-sm opacity-90 leading-relaxed">{action.description}</p>
-                        </div>
-                      </div>
-                      {action.disabled && (
-                        <div className="absolute inset-0 bg-black bg-opacity-20 rounded-xl flex items-center justify-center">
-                          <CheckCircleIcon className="w-8 h-8 text-white" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300"></div>
-                    </Link>
-                  )
-                })}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Enhanced Recent Activity */}
-          <motion.div
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-gray-900">Recent Activity</h2>
-                <ClockIcon className="w-6 h-6 text-gray-400" />
-              </div>
-              <div className="space-y-6">
-                {recentActivity.map((activity) => {
-                  const Icon = activity.icon
-                  return (
-                    <div key={activity.id} className="flex items-start space-x-4 p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                      <div className="flex-shrink-0">
-                        <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
-                          <Icon className="w-5 h-5 text-gray-600" />
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 mb-1">
-                          {activity.action}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-gray-500 flex items-center">
-                            <ClockIcon className="w-3 h-3 mr-1" />
-                            {activity.timestamp}
-                          </p>
-                          {activity.reward && (
-                            <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                              {activity.reward}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex-shrink-0">
-                        {activity.status === 'completed' && (
-                          <CheckCircleIcon className="w-5 h-5 text-green-500" />
-                        )}
-                        {activity.status === 'pending' && (
-                          <ClockIcon className="w-5 h-5 text-amber-500" />
-                        )}
-                        {activity.status === 'failed' && (
-                          <ExclamationTriangleIcon className="w-5 h-5 text-red-500" />
-                        )}
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-              <div className="mt-8 pt-6 border-t border-gray-100">
-                <Link
-                  to="/activity"
-                  className="text-blue-600 hover:text-blue-700 text-sm font-semibold flex items-center justify-center w-full py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors duration-200"
-                >
-                  View All Activity
-                  <EyeIcon className="w-4 h-4 ml-2" />
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Enhanced Status Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 mt-12"
-        >
-          {/* Enhanced Identity Status */}
-          <motion.div variants={itemVariants} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Identity Overview</h3>
-              <IdentificationIcon className="w-7 h-7 text-blue-600" />
-            </div>
-            {isCheckingRegistration ? (
-              <div className="flex items-center justify-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <span className="text-gray-600 ml-3">Checking registration status...</span>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                  <span className="font-medium text-gray-700">Registration Status</span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      isRegistered
-                        ? 'bg-green-100 text-green-800 border border-green-200'
-                        : 'bg-amber-100 text-amber-800 border border-amber-200'
-                    }`}
-                  >
-                    {isRegistered ? 'Active' : 'Pending'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                  <span className="font-medium text-gray-700">DID Generated</span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      did 
-                        ? 'bg-green-100 text-green-800 border border-green-200' 
-                        : 'bg-gray-100 text-gray-800 border border-gray-200'
-                    }`}
-                  >
-                    {did ? 'Generated' : 'Not Generated'}
-                  </span>
-                </div>
-                {!isRegistered && (
-                  <Link
-                    to="/my-identity"
-                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-center font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105"
-                  >
-                    Complete Registration
-                  </Link>
-                )}
-              </div>
-            )}
-          </motion.div>
-
-          {/* Enhanced Credentials Overview */}
-          <motion.div variants={itemVariants} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Credentials Summary</h3>
-              <DocumentCheckIcon className="w-7 h-7 text-emerald-600" />
-            </div>
-            <div className="space-y-6">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
-                  <div className="text-2xl font-bold text-blue-600">{credentials?.length || 0}</div>
-                  <div className="text-sm text-blue-700 font-medium">Total</div>
-                </div>
-                <div className="text-center p-4 bg-green-50 rounded-xl border border-green-200">
-                  <div className="text-2xl font-bold text-green-600">{credentials?.length || 0}</div>
-                  <div className="text-sm text-green-700 font-medium">Verified</div>
-                </div>
-                <div className="text-center p-4 bg-red-50 rounded-xl border border-red-200">
-                  <div className="text-2xl font-bold text-red-600">0</div>
-                  <div className="text-sm text-red-700 font-medium">Expired</div>
-                </div>
-              </div>
-              <Link
-                to="/my-credentials"
-                className="block w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-center font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105"
-              >
-                Manage Credentials
-              </Link>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-    </div>
+    <UserDashboardLayout 
+      userStats={stats}
+      quickActions={quickActions}
+      recentActivity={recentActivity}
+      identityScore={85}
+      credentials={credentials}
+      isRegistered={isRegistered}
+      did={did}
+      address={address}
+    />
   )
 }
 
