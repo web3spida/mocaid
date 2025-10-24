@@ -40,27 +40,33 @@ const RewardCard = ({
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow"
     >
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between space-y-3 xs:space-y-0 mb-4">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-gray-50 rounded-lg">
-            {getIcon()}
+          <div className={`w-10 h-10 xs:w-12 xs:h-12 rounded-full flex items-center justify-center ${
+            reward.type === 'verification' ? 'bg-green-100' :
+            reward.type === 'staking' ? 'bg-blue-100' :
+            'bg-purple-100'
+          }`}>
+            <Icon className={`w-5 h-5 xs:w-6 xs:h-6 ${
+              reward.type === 'verification' ? 'text-green-600' :
+              reward.type === 'staking' ? 'text-blue-600' :
+              'text-purple-600'
+            }`} />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-gray-600">{title}</h3>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{amount}</p>
+            <h3 className="font-semibold text-gray-900 text-sm xs:text-base">{reward.title}</h3>
+            <p className="text-xs xs:text-sm text-gray-500">{reward.description}</p>
           </div>
         </div>
-        
-        {trend && trendValue && (
-          <div className={`flex items-center space-x-1 text-sm ${getTrendColor()}`}>
-            <span>{getTrendSymbol()}</span>
-            <span>{trendValue}</span>
-          </div>
-        )}
+        <div className="text-right xs:text-left">
+          <div className="text-lg xs:text-xl font-bold text-gray-900">{reward.amount}</div>
+          <div className="text-xs xs:text-sm text-gray-500">{reward.token}</div>
+        </div>
       </div>
       
       {description && (

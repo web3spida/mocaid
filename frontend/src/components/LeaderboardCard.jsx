@@ -53,42 +53,42 @@ const LeaderboardCard = ({
       }`}
     >
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 sm:space-x-4">
           {/* Rank */}
           <div className="flex items-center justify-center w-8 h-8">
             {getRankIcon()}
           </div>
           
           {/* User Info */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-moca-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-semibold text-sm">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-primary-500 to-moca-500 rounded-full flex items-center justify-center">
+              <span className="text-white font-semibold text-xs sm:text-sm">
                 {user.charAt(0).toUpperCase()}
               </span>
             </div>
-            <div>
-              <h3 className="font-medium text-gray-900">
+            <div className="min-w-0">
+              <h3 className="font-medium text-gray-900 text-sm sm:text-base truncate">
                 {user}
                 {isCurrentUser && (
                   <span className="ml-2 text-xs text-primary-600 font-medium">(You)</span>
                 )}
               </h3>
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <ShieldCheckIcon className="w-4 h-4" />
-                <span>{verifications} verifications</span>
+              <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-500">
+                <ShieldCheckIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="truncate">{verifications} verifications</span>
               </div>
             </div>
           </div>
         </div>
         
         {/* Score and Rewards */}
-        <div className="text-right">
-          <div className="flex items-center space-x-2 mb-1">
-            <StarIcon className="w-4 h-4 text-yellow-500" />
-            <span className="font-bold text-gray-900">{score}</span>
+        <div className="text-right flex-shrink-0">
+          <div className="flex items-center space-x-1 sm:space-x-2 mb-1">
+            <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500" />
+            <span className="font-bold text-gray-900 text-sm sm:text-base">{score}</span>
           </div>
-          <div className="flex items-center space-x-1 text-sm text-gray-500">
-            <CurrencyDollarIcon className="w-4 h-4" />
+          <div className="flex items-center space-x-1 text-xs sm:text-sm text-gray-500">
+            <CurrencyDollarIcon className="w-3 h-3 sm:w-4 sm:h-4" />
             <span>{rewards} earned</span>
           </div>
         </div>

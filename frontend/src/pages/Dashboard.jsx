@@ -196,7 +196,7 @@ const Dashboard = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+          className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8"
         >
           {stats.map((stat) => {
             const Icon = stat.icon
@@ -234,7 +234,7 @@ const Dashboard = () => {
           })}
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Quick Actions */}
           <motion.div
             variants={itemVariants}
@@ -244,30 +244,30 @@ const Dashboard = () => {
           >
             <div className="card">
               <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
                 {quickActions.map((action) => {
                   const Icon = action.icon
                   return (
                     <Link
                       key={action.name}
                       to={action.href}
-                      className={`group relative p-6 rounded-xl text-white transition-all duration-200 ${
+                      className={`group relative p-4 sm:p-6 rounded-xl text-white transition-all duration-200 ${
                         action.disabled
                           ? 'bg-gray-400 cursor-not-allowed'
                           : `${action.color} hover:scale-105 hover:shadow-lg`
                       }`}
                       onClick={(e) => action.disabled && e.preventDefault()}
                     >
-                      <div className="flex items-center space-x-4">
-                        <Icon className="w-8 h-8" />
+                      <div className="flex flex-col xs:flex-row items-start xs:items-center space-y-2 xs:space-y-0 xs:space-x-4">
+                        <Icon className="w-6 h-6 xs:w-8 xs:h-8" />
                         <div>
-                          <h3 className="font-semibold">{action.name}</h3>
-                          <p className="text-sm opacity-90">{action.description}</p>
+                          <h3 className="font-semibold text-sm xs:text-base">{action.name}</h3>
+                          <p className="text-xs xs:text-sm opacity-90">{action.description}</p>
                         </div>
                       </div>
                       {action.disabled && (
                         <div className="absolute inset-0 bg-black bg-opacity-20 rounded-xl flex items-center justify-center">
-                          <CheckCircleIcon className="w-8 h-8 text-white" />
+                          <CheckCircleIcon className="w-6 h-6 xs:w-8 xs:h-8 text-white" />
                         </div>
                       )}
                     </Link>
@@ -337,7 +337,7 @@ const Dashboard = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-6 lg:mt-8"
         >
           {/* Identity Status */}
           <motion.div variants={itemVariants} className="card">
