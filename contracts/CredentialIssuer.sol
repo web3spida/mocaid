@@ -4,9 +4,21 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
+interface IRewardManager {
+    function distributeCredentialReward(address user, string memory credentialType) external;
+    function payVerifierFee(address verifier, string memory credentialType) external;
+}
+
+interface IAnalyticsModule {
+    function updateUserStats(address user, uint256 credentialCount, uint256 totalRewards, uint256 reputationPoints) external;
+    function updateVerifierStats(address verifier, uint256 verificationCount, uint256 totalFees, uint256 reputationScore) external;
+    function updateCredentialTypeStats(string memory credentialType, uint256 count, uint256 totalRewards) external;
+    function updateGlobalStats(uint256 totalCredentials, uint256 totalRewardsDistributed, uint256 totalFeesCollected) external;
+}
+
 /**
  * @title CredentialIssuer
- * @dev Handles issuance, verification, and revocation of verifiable credentials
+ * @dev Manages the issuance, verification, and revocation of verifiable credentials with integrated rewards
  */
 contract CredentialIssuer is Ownable, ReentrancyGuard {
     struct Credential {
@@ -20,13 +32,18 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
         bool exists;
     }
 
-    mapping(string => Credential) private credentials;
-    mapping(address => string[]) private holderCredentials;
-    mapping(address => string[]) private issuerCredentials;
+    mapping(string => Credential) public credentials;
+    mapping(address => string[]) public holderCredentials;
+    mapping(address => string[]) public issuerCredentials;
     mapping(address => bool) public authorizedIssuers;
+    mapping(string => uint256) public credentialTypeCounts;
     
     string[] public allCredentials;
     uint256 public totalCredentials;
+    
+    // Integration contracts
+    IRewardManager public rewardManager;
+    IAnalyticsModule public analyticsModule;
 
     event CredentialIssued(
         address indexed issuer,
@@ -43,8 +60,11 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
         uint256 revokedAt
     );
     
-    event IssuerAuthorized(address indexed issuer, uint256 timestamp);
-    event IssuerRevoked(address indexed issuer, uint256 timestamp);
+    event CredentialVerified(address indexed verifier, string credentialHash, uint256 verifiedAt);
+    event IssuerAuthorized(address indexed issuer, uint256 authorizedAt);
+    event IssuerRevoked(address indexed issuer, uint256 revokedAt);
+    event RewardManagerUpdated(address indexed newRewardManager);
+    event AnalyticsModuleUpdated(address indexed newAnalyticsModule);}]}
 
     modifier onlyAuthorizedIssuer() {
         require(authorizedIssuers[msg.sender] || msg.sender == owner(), "Not authorized issuer");
@@ -67,6 +87,26 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
     constructor(address initialOwner) Ownable(initialOwner) {
         // Owner is automatically an authorized issuer
         authorizedIssuers[initialOwner] = true;
+    }
+
+    /**
+     * @dev Set the RewardManager contract address
+     * @param _rewardManager Address of the RewardManager contract
+     */
+    function setRewardManager(address _rewardManager) external onlyOwner {
+        require(_rewardManager != address(0), "Invalid reward manager address");
+        rewardManager = IRewardManager(_rewardManager);
+        emit RewardManagerUpdated(_rewardManager);
+    }
+
+    /**
+     * @dev Set the AnalyticsModule contract address
+     * @param _analyticsModule Address of the AnalyticsModule contract
+     */
+    function setAnalyticsModule(address _analyticsModule) external onlyOwner {
+        require(_analyticsModule != address(0), "Invalid analytics module address");
+        analyticsModule = IAnalyticsModule(_analyticsModule);
+        emit AnalyticsModuleUpdated(_analyticsModule);
     }
 
     /**
@@ -127,6 +167,39 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
         issuerCredentials[msg.sender].push(credentialHash);
         allCredentials.push(credentialHash);
         totalCredentials++;
+        credentialTypeCounts[credentialType]++;
+
+        // Distribute reward to credential holder if RewardManager is set
+        if (address(rewardManager) != address(0)) {
+            try rewardManager.distributeCredentialReward(to, credentialType) {
+                // Reward distributed successfully
+            } catch {
+                // Continue even if reward distribution fails
+            }
+        }
+
+        // Update analytics if AnalyticsModule is set
+        if (address(analyticsModule) != address(0)) {
+            try analyticsModule.updateCredentialTypeStats(
+                credentialType, 
+                credentialTypeCounts[credentialType], 
+                0 // Total rewards will be tracked by RewardManager
+            ) {
+                // Analytics updated successfully
+            } catch {
+                // Continue even if analytics update fails
+            }
+            
+            try analyticsModule.updateGlobalStats(
+                totalCredentials,
+                0, // Total rewards distributed (tracked by RewardManager)
+                0  // Total fees collected (tracked by RewardManager)
+            ) {
+                // Global stats updated successfully
+            } catch {
+                // Continue even if global stats update fails
+            }
+        }
 
         emit CredentialIssued(
             msg.sender,
@@ -139,7 +212,34 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Verify if a credential is valid
+     * @dev Verify a credential by a verifier (for Credora Protocol)
+     * @param credentialHash The credential hash to verify
+     * @return isValid True if credential is valid and not revoked/expired
+     */
+    function verifyCredentialByVerifier(string memory credentialHash) 
+        external 
+        returns (bool isValid) 
+    {
+        isValid = verifyCredential(credentialHash);
+        
+        if (isValid) {
+            // Pay verifier fee if RewardManager is set
+            if (address(rewardManager) != address(0)) {
+                try rewardManager.payVerifierFee(msg.sender, credentials[credentialHash].credentialType) {
+                    // Fee paid successfully
+                } catch {
+                    // Continue even if fee payment fails
+                }
+            }
+            
+            emit CredentialVerified(msg.sender, credentialHash, block.timestamp);
+        }
+        
+        return isValid;
+    }
+
+    /**
+     * @dev Verify if a credential is valid (view function)
      * @param credentialHash The credential hash to verify
      * @return isValid True if credential is valid and not revoked/expired
      */

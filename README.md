@@ -1,53 +1,62 @@
-# MocaID Vault
+# Credora Protocol
 
-A comprehensive decentralized identity management platform built on Moca Chain, featuring verifiable credentials, access control, and seamless wallet integration.
+*"Earn. Verify. Trust. On-Chain."*
+
+A decentralized, incentive-driven credential verification protocol built on Moca Chain. Credora rewards users for acquiring verified credentials and compensates verifiers for validating them, creating a trustless, gamified ecosystem for credential management.
 
 ## 🌟 Features
 
-### Decentralized Identity (DID)
-- **DID Generation**: Create unique decentralized identifiers on Moca Chain
-- **Identity Management**: Register, update, and revoke identities on-chain
-- **DID Resolution**: Resolve and verify DID documents
-- **Cross-chain Compatibility**: Built for Moca Chain with extensible architecture
+### 🎯 User Incentives
+- **Earn Rewards**: Get on-chain rewards and reputation points for verified credentials
+- **Gamified Experience**: Unlock badges, levels, and milestones through credential accumulation
+- **Access Tiers**: Unlock dApp features and premium access based on credential achievements
+- **Leaderboards**: Compete with other users and showcase your credential portfolio
 
-### Verifiable Credentials
-- **Credential Issuance**: Create tamper-proof verifiable credentials
+### 💰 Verifier Economy
+- **Stake & Earn**: Verifiers stake tokens to validate credentials and earn fees
+- **Reputation System**: Build verifier reputation through reliable validation
+- **Slashing Protection**: Fraud detection with automatic slashing for malicious behavior
+- **Fee Distribution**: Transparent fee structure for each credential validation
+
+### 🔐 Credential Management
+- **AIR Kit Integration**: Seamless verifiable credential issuance and presentation
+- **Smart Contract Automation**: Trustless, auditable, and on-chain credential operations
 - **Multi-format Support**: Support for various credential types and schemas
-- **Credential Verification**: Cryptographic verification of credential authenticity
-- **Revocation Management**: Secure credential revocation with on-chain tracking
-- **Template System**: Pre-built templates for common credential types
+- **Verifiable Presentations**: Generate VPs with JWS signatures and challenge verification
 
-### Access Control
-- **Permission Management**: Granular control over data access permissions
-- **Request System**: Structured access request and approval workflow
-- **Time-based Access**: Temporary access permissions with expiration
-- **Audit Trail**: Complete history of access grants and revocations
+### 📊 Protocol Analytics
+- **User Dashboard**: Track earned credentials, badges, reputation, and rewards
+- **Verifier Dashboard**: Monitor staked tokens, verified credentials, fees, and reputation
+- **Privacy-First Analytics**: Aggregate statistics without exposing personal information
+- **Real-time Updates**: Live tracking of protocol activity and user progress
 
-### Modern UI/UX
+### 🔗 Modern Integration
+- **QR & Deep Links**: Easy sharing and verification through QR codes and deep links
 - **Responsive Design**: Mobile-first design with TailwindCSS
 - **Smooth Animations**: Framer Motion animations for enhanced user experience
-- **Dark/Light Mode**: Theme switching with user preferences
 - **Wallet Integration**: Seamless connection with RainbowKit and Wagmi
 
 ## Architecture
 
 ### Smart Contracts
-- **IdentityRegistry.sol**: Core identity management and DID operations
-- **CredentialIssuer.sol**: Verifiable credential issuance and verification
-- **AccessControl.sol**: Permission management and access control
+- **CredentialRegistry**: Stores credential hashes, owners, and verification status
+- **RewardManager**: Calculates and distributes rewards for users and fees for verifiers
+- **VerifierRegistry**: Manages verifier staking, reputation, and slashing logic
+- **AnalyticsModule**: Aggregates credential statistics for dashboards and leaderboards
+- **AccessControl**: Permission management and access control (legacy support)
 
 ### Frontend Stack
-- **React 18**: Modern React with hooks and context
+- **React 18**: Modern React with hooks and context for state management
 - **Vite**: Fast build tool and development server
-- **TailwindCSS**: Utility-first CSS framework
-- **Framer Motion**: Animation library for smooth interactions
-- **Wagmi**: React hooks for Ethereum
-- **RainbowKit**: Wallet connection interface
+- **TailwindCSS**: Utility-first CSS framework for responsive design
+- **Framer Motion**: Animation library for smooth, gamified interactions
+- **Wagmi**: React hooks for Ethereum and Moca Chain integration
+- **RainbowKit**: Wallet connection interface with multi-wallet support
 
 ### Integration
-- **AIR Kit SDK**: Moca's identity and credential management SDK
-- **Moca Chain**: Layer 1 blockchain for identity operations
-- **IPFS**: Decentralized storage for credential metadata
+- **AIR Kit SDK**: Moca's identity and credential management SDK for issuance and verification
+- **Moca Chain**: Layer 1 blockchain optimized for identity and credential operations
+- **Incentive Layer**: On-chain reward distribution and reputation tracking system
 
 ## Quick Start
 
@@ -130,9 +139,9 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
    VITE_AIRKIT_ENVIRONMENT=sandbox
 
    # Application Configuration
-   VITE_APP_NAME=MocaID Vault
-   VITE_APP_DESCRIPTION=Decentralized Identity Management on Moca Chain
-   VITE_APP_URL=https://mocaid.network
+   VITE_APP_NAME=Credora Protocol
+   VITE_APP_DESCRIPTION=Incentivized Credential Verification Protocol
+   VITE_APP_URL=https://credora.network
 
    # WalletConnect Project ID
    VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id_here
@@ -168,7 +177,7 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
 5. **Access the Application**
    - Open [http://localhost:5173](http://localhost:5173) in your browser
    - Connect your wallet (MetaMask recommended)
-   - Start managing your decentralized identity!
+   - Start earning rewards through credential verification!
 
 ## 🌐 Deployment
 
@@ -211,54 +220,63 @@ A comprehensive decentralized identity management platform built on Moca Chain, 
 
 ## 📖 Usage Guide
 
-### 🆔 Managing Your Identity
+### 🎯 Earning Rewards as a User
 
-1. **Generate DID**
-   - Navigate to "My Identity"
-   - Click "Generate DID"
-   - Confirm the transaction in your wallet
+1. **Connect Wallet**
+   - Navigate to the Credora Protocol dashboard
+   - Connect your Moca Chain compatible wallet
+   - View your current reputation and reward balance
 
-2. **Register Identity**
-   - Fill in your identity information
-   - Click "Register Identity"
-   - Wait for blockchain confirmation
+2. **Acquire Credentials**
+   - Browse available credential types
+   - Request credential issuance through AIR Kit
+   - Submit credentials for verification by staked verifiers
 
-3. **Update Identity**
-   - Modify your information
-   - Click "Update Identity"
-   - Confirm the update transaction
+3. **Track Progress**
+   - Monitor your credential portfolio
+   - View earned badges and milestones
+   - Check your position on the leaderboard
 
-### 🏆 Working with Credentials
+### 💰 Becoming a Verifier
 
-1. **Create Credential**
-   - Go to "My Credentials"
-   - Click "Create New Credential"
-   - Fill in credential details
-   - Submit and sign the credential
+1. **Stake Tokens**
+   - Navigate to "Become a Verifier"
+   - Stake the required MOCA tokens
+   - Confirm your verifier registration
 
-2. **Verify Credential**
-   - Navigate to "Verification"
-   - Paste credential JSON or scan QR code
-   - View verification results
+2. **Verify Credentials**
+   - Review submitted credentials in your verifier dashboard
+   - Validate credentials using AIR Kit integration
+   - Earn fees for each successful verification
 
-3. **Share Credential**
-   - Select credential from your list
-   - Click "Share"
-   - Generate QR code or copy link
+3. **Build Reputation**
+   - Maintain high accuracy in verification
+   - Build your verifier reputation score
+   - Earn higher fees with better reputation
 
-### 🔒 Access Control
+### 🏆 Gamification Features
 
-1. **Grant Access**
-   - Go to "Access Control"
-   - Click "Grant Access"
-   - Specify permissions and duration
-   - Confirm the transaction
+1. **Badges & Achievements**
+   - Unlock badges for credential milestones
+   - Complete achievement challenges
+   - Showcase your accomplishments
 
-2. **Request Access**
-   - Click "Request Access"
-   - Specify what data you need
-   - Submit the request
-   - Wait for approval
+2. **Leaderboards**
+   - Compete with other users
+   - View top verifiers by reputation
+   - Track protocol-wide statistics
+
+### 📊 Analytics Dashboard
+
+1. **User Analytics**
+   - View your credential acquisition history
+   - Track reward earnings over time
+   - Monitor reputation growth
+
+2. **Verifier Analytics**
+   - Review verification statistics
+   - Track fee earnings and staking rewards
+   - Monitor reputation trends
 
 ## 🧪 Testing
 
@@ -282,10 +300,11 @@ npm test
 ### Test Coverage
 
 The project includes comprehensive tests for:
-- ✅ Smart contract functionality
-- ✅ Identity registration and management
-- ✅ Credential issuance and verification
-- ✅ Access control permissions
+- ✅ Smart contract functionality (CredentialRegistry, RewardManager, VerifierRegistry)
+- ✅ Incentive mechanisms and reward distribution
+- ✅ Verifier staking and slashing logic
+- ✅ Credential verification workflows
+- ✅ Gamification features and analytics
 - ✅ Frontend component interactions
 
 ## 🔧 Configuration
@@ -349,45 +368,45 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Issues
 If you encounter any issues, please:
-1. Check existing [GitHub Issues](https://github.com/your-username/mocaid-vault/issues)
+1. Check existing [GitHub Issues](https://github.com/your-username/credora-protocol/issues)
 2. Create a new issue with detailed information
 3. Include error messages and steps to reproduce
 
 ## 🔮 Roadmap
 
+### Current Phase: Credora Protocol Launch
+
+- **Incentive System**: Implement reward distribution and verifier fee mechanisms
+- **Staking & Slashing**: Complete verifier staking logic with fraud protection
+- **Gamification**: Build badges, leaderboards, and achievement systems
+- **Analytics Dashboard**: Create comprehensive user and verifier analytics
+- **AIR Kit Integration**: Full integration with credential issuance and verification
+
 ### Next Up (Short-Term Enhancements)
 
-- On-chain DID persistence in UI: wire `MyIdentity` to `IdentityRegistry` register/update/revoke and display on-chain state/history.
-- Issuer authorization UX: surface `authorizeIssuer`, check `authorizedIssuers` before issuing, and improve error messaging.
-- Deterministic credential IDs & signing: use a cryptographic hash of credential payload and sign with the connected wallet; store proof metadata accordingly.
-- Indexed credential loading: paginate `getHolderCredentials`/`getIssuerCredentials`, listen to events, and add live watchers with optimistic updates.
-- Robust multi-network handling: single source of truth from `.env`, automatic add/switch with graceful fallbacks and helpful toasts.
-- Access Control upgrades: implement request flows on-chain (request/grant/revoke), show event-driven history, expiry warnings, and renewals.
-- Verifiable Presentations: generate VP with challenge/domain, sign (JWS) via wallet, and add a verification pipeline and UI.
-- QR sharing & deep links: generate/scan QR for VCs/VPs and add shareable deep-link routes.
-- Notifications: in-app feed for actions and optional push/email integrations (configurable in Settings).
-- Privacy and storage hardening: encrypt sensitive local storage and add selective disclosure UX for subjects.
-- Testing & CI: vitest for hooks, MSW for RPC, contract unit tests, E2E (Playwright/Cypress), and a GitHub Actions pipeline.
-- UX polish: compact header sizing, skeleton loaders, better empty/error states, and accessibility improvements.
-- Documentation: ABI/contract references, API shapes for hooks, environment setup matrix, and troubleshooting.
+- **Advanced Reputation**: Multi-dimensional reputation scoring for verifiers
+- **Dynamic Rewards**: Adaptive reward algorithms based on credential rarity and demand
+- **Mobile App**: Native mobile application for iOS and Android
+- **Cross-chain Support**: Expand to other EVM-compatible chains
+- **API Marketplace**: Public APIs for third-party integrations
 
-### Phase 1 (Current)
-- ✅ Core identity management
-- ✅ Verifiable credentials
-- ✅ Access control system
-- ✅ Web interface
+### Phase 1 (Q2 2024)
+- ✅ Core credential verification protocol
+- ✅ Basic incentive mechanisms
+- ✅ Web interface with wallet integration
+- 🔄 Verifier economy implementation
 
-### Phase 2 (Q2 2024)
-- 🔄 Mobile application
-- 🔄 Advanced credential templates
-- 🔄 Multi-chain support
-- 🔄 Enterprise features
+### Phase 2 (Q3 2024)
+- 🔄 Advanced gamification features
+- 🔄 Mobile application launch
+- 🔄 Enterprise verifier partnerships
+- 🔄 Cross-chain credential portability
 
-### Phase 3 (Q3 2024)
-- 🔄 Credential marketplace
-- 🔄 Advanced analytics
-- 🔄 API integrations
-- 🔄 Governance features
+### Phase 3 (Q4 2024)
+- 🔄 Credential marketplace and trading
+- 🔄 Advanced analytics and insights
+- 🔄 Governance token and DAO features
+- 🔄 Institutional adoption tools
 
 ## 🙏 Acknowledgments
 
@@ -399,6 +418,6 @@ If you encounter any issues, please:
 
 ---
 
-**Built with ❤️ for the decentralized future**
+**Built with ❤️ for the incentivized future of credentials**
 
-For more information, visit [mocaid.network](https://mocaid.network)
+For more information, visit [credora.network](https://credora.network)

@@ -1,0 +1,66 @@
+MocaID Vault – Current Updates (as of 2025-10-16)
+
+Summary
+- Strengthened network handling and credential issuance reliability, improved DID persistence, refined navbar layout, added wallet info to Settings header, and documented upcoming short-term enhancements in the README.
+
+Detailed Changes
+
+1) Network / Chain Configuration
+- Unified chain ID handling to prefer `VITE_MOCA_CHAIN_ID` with a default of `5151`:
+  - Updated: `frontend/src/hooks/useContracts.js` (default fallback changed from '7001' to '5151').
+  - Confirmed: `frontend/src/main.jsx` reads `VITE_MOCA_CHAIN_ID` for the configured chain.
+- Enhanced chain detection and switching in credential issuance (`frontend/src/hooks/useAirKit.js`):
+  - Checks both viem’s `walletClient.getChainId()` and `window.ethereum.chainId` (hex) and only switches if neither equals the configured chain.
+  - Attempts `walletClient.switchChain({ id: CHAIN_ID })` first, then falls back to `wallet_switchEthereumChain` if needed.
+  - Error messages now reference the configured chain ID dynamically.
+- Aligned Verifiable Presentations hook chain config to `5151` to prevent cross-network mismatches.
+
+2) Credential Issuance Reliability
+- `issueCredential` now waits for the transaction receipt before updating local state (prevents phantom credentials on failed txs):
+  - File: `frontend/src/hooks/useAirKit.js`
+  - Behavior: Only appends the new credential to state after a successful receipt; returns `null` on failure and sets an error.
+- UI handler updated to honor the return value:
+  - File: `frontend/src/pages/MyCredentials.jsx`
+  - Behavior: Shows success toast only when issuance returns a credential; otherwise displays a helpful error about being on the wrong network or a failed transaction.
+
+3) DID Persistence & Identity
+- DID and public key are now persisted across page refreshes:
+  - File: `frontend/src/hooks/useAirKit.js` (useDID)
+  - Behavior: Loads from `localStorage` on mount (`mocaid-did`, `mocaid-public-key`) and saves on generation to prevent losing identity on refresh.
+
+4) UI / UX Improvements
+- Navbar (desktop & mobile):
+  - Placed the RainbowKit `ConnectButton` inside the 3rd grid column and aligned it flush-right (no absolute overlay).
+  - Reduced brand text to `text-lg`; desktop nav link text to `text-xs` with smaller icons (`w-3 h-3`).
+  - Reduced mobile menu icon sizes and mobile nav item sizes (`text-sm`, `w-4 h-4`).
+  - File: `frontend/src/components/layout/Navbar.jsx`.
+- Settings Header:
+  - Added right-aligned wallet info block (truncated address and MOCA balance) to the header’s top-right area.
+  - Preserves the “Connected Account” section in the sidebar; improves at-a-glance status.
+  - File: `frontend/src/pages/Settings.jsx`.
+
+5) Contracts Hooks & Config
+- `frontend/src/hooks/useContracts.js`:
+  - Default `CHAIN_ID` fallback changed to `5151` for consistency.
+  - Existing wagmi contract reads/writes left intact; identity update/write hooks already respect `VITE_MOCA_CHAIN_ID` (via explicit `chainId` where used).
+
+6) Documentation
+- README updated with a new “Next Up (Short-Term Enhancements)” section under the Roadmap:
+  - On-chain DID persistence wiring, issuer authorization UX, deterministic credential IDs & signing, indexed credential loading and watchers, robust multi-network handling, Access Control flows, Verifiable Presentations with JWS, QR & deep links, notifications, privacy/storage hardening, testing/CI, UX polish, and documentation improvements.
+  - File: `README.md`.
+
+7) Dev Server & Preview
+- Verified the dev server (`vite`) at `http://localhost:3000/` and opened preview to check Navbar alignment and Settings header updates. No browser errors observed during preview sessions.
+
+Environment Considerations
+- Ensure `.env` alignment across root and frontend:
+  - `VITE_MOCA_CHAIN_ID` matches your current MOCA network (e.g., `5151`).
+  - `VITE_MOCA_RPC_URL` (or `VITE_MOCA_TESTNET_RPC_URL`) points to the correct RPC.
+  - Contracts (`VITE_IDENTITY_REGISTRY_ADDRESS`, `VITE_CREDENTIAL_ISSUER_ADDRESS`, `VITE_ACCESS_CONTROL_ADDRESS`) are deployed on the same chain.
+
+Known Caveats / Next Actions
+- Credential IDs currently use a pseudo-random string; replace with a cryptographic hash of a canonicalized credential payload and include a wallet-based signature in `proof`.
+- `revokeCredential` in `useAirKit.js` does not wait for a transaction receipt; consider mirroring the issuance pattern to ensure state reflects on-chain success.
+- Access Control flows: move remaining UI paths to fully on-chain event handling (request, grant, revoke) and add event-driven histories with pagination.
+- Add error boundary and more granular toasts for chain-switch failures / user cancellations.
+- Consider reducing navbar height (`h-16` to `h-14`/`h-12`) if further compaction is desired.

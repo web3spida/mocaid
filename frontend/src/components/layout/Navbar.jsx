@@ -8,12 +8,14 @@ import {
   Bars3Icon,
   XMarkIcon,
   HomeIcon,
-  IdentificationIcon,
+  ChartBarIcon,
   DocumentCheckIcon,
   ShieldCheckIcon,
-  KeyIcon,
+  CurrencyDollarIcon,
+  TrophyIcon,
+  UserGroupIcon,
   Cog6ToothIcon,
-  ChartBarIcon,
+  StarIcon,
 } from '@heroicons/react/24/outline'
 
 const Navbar = () => {
@@ -24,10 +26,11 @@ const Navbar = () => {
   const navigation = [
     { name: 'Home', href: '/', icon: HomeIcon, public: true },
     { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon, public: false },
-    { name: 'My Identity', href: '/identity', icon: IdentificationIcon, public: false },
     { name: 'Credentials', href: '/credentials', icon: DocumentCheckIcon, public: false },
-    { name: 'Verification', href: '/verification', icon: ShieldCheckIcon, public: false },
-    { name: 'Access Control', href: '/access-control', icon: KeyIcon, public: false },
+    { name: 'Verify & Earn', href: '/verification', icon: ShieldCheckIcon, public: false },
+    { name: 'Rewards', href: '/rewards', icon: CurrencyDollarIcon, public: false },
+    { name: 'Leaderboard', href: '/leaderboard', icon: TrophyIcon, public: false },
+    { name: 'Verifiers', href: '/verifiers', icon: UserGroupIcon, public: false },
     { name: 'Settings', href: '/settings', icon: Cog6ToothIcon, public: false },
   ]
 
@@ -45,7 +48,7 @@ const Navbar = () => {
           <div className="flex items-center justify-self-start">
             <Link to="/" className="inline-flex items-center space-x-2 whitespace-nowrap">
               <Logo />
-              <span className="text-lg leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle">MocaID Vault</span>
+              <span className="text-lg leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle">Credora Protocol</span>
             </Link>
           </div>
 

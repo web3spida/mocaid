@@ -1,7 +1,7 @@
 {
-  "name": "mocaid-vault",
+  "name": "credora-protocol",
   "version": "1.0.0",
-  "description": "Decentralized identity and credentials manager built on Moca Chain",
+  "description": "Incentivized credential verification protocol built on Moca Chain",
   "main": "index.js",
   "scripts": {
     "dev": "cd frontend && npm run dev",
@@ -15,11 +15,14 @@
   "keywords": [
     "moca",
     "blockchain",
-    "identity",
     "credentials",
+    "verification",
+    "incentives",
+    "rewards",
+    "staking",
     "defi"
   ],
-  "author": "MocaID Team",
+  "author": "Credora Protocol Team",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
