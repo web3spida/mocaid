@@ -10,7 +10,7 @@ const Logo = ({ className = 'w-8 h-8' }) => (
     {/* Shield background with reward elements */}
     <path
       d="M16 2L28 6v10c0 8.837-7.163 16-16 16S4 24.837 4 16V6L16 2z"
-      fill="url(#credora-gradient)"
+      fill="url(# Verya-gradient)"
     />
     {/* Credential badge */}
     <rect x="8" y="9" width="16" height="10" rx="2" fill="#fff" fillOpacity="0.95" />
@@ -23,7 +23,7 @@ const Logo = ({ className = 'w-8 h-8' }) => (
     <line x1="15" y1="16" x2="21" y2="16" stroke="#6B7280" strokeWidth="1" strokeLinecap="round" />
     <line x1="15" y1="18" x2="19" y2="18" stroke="#6B7280" strokeWidth="1" strokeLinecap="round" />
     <defs>
-      <linearGradient id="credora-gradient" x1="6" y1="2" x2="26" y2="30" gradientUnits="userSpaceOnUse">
+      <linearGradient id=" Verya-gradient" x1="6" y1="2" x2="26" y2="30" gradientUnits="userSpaceOnUse">
         <stop stopColor="#8B5CF6" />
         <stop offset="0.5" stopColor="#0EA5E9" />
         <stop offset="1" stopColor="#10B981" />

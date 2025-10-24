@@ -24,19 +24,19 @@ const Footer = () => {
     {
       title: 'Resources',
       links: [
-        { name: 'Documentation', href: 'https://docs.credora.network' },
-        { name: 'API Reference', href: 'https://api.credora.network' },
-        { name: 'Support', href: 'https://support.credora.network' },
-        { name: 'Whitepaper', href: 'https://credora.network/whitepaper' },
+        { name: 'Documentation', href: 'https://docs. Verya.network' },
+        { name: 'API Reference', href: 'https://api. Verya.network' },
+        { name: 'Support', href: 'https://support. Verya.network' },
+        { name: 'Whitepaper', href: 'https:// Verya.network/whitepaper' },
       ],
     },
     {
       title: 'Community',
       links: [
-        { name: 'Discord', href: 'https://discord.gg/credora' },
-        { name: 'Twitter', href: 'https://twitter.com/credoraprotocol' },
-        { name: 'GitHub', href: 'https://github.com/credora-protocol' },
-        { name: 'Telegram', href: 'https://t.me/credoraprotocol' },
+        { name: 'Discord', href: 'https://discord.gg/ Verya' },
+        { name: 'Twitter', href: 'https://twitter.com/ Veryaprotocol' },
+        { name: 'GitHub', href: 'https://github.com/ Verya Protocol' },
+        { name: 'Telegram', href: 'https://t.me/ Veryaprotocol' },
       ],
     },
   ]
@@ -51,7 +51,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-moca-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">C</span>
               </div>
-              <span className="text-xl font-bold">Credora Protocol</span>
+              <span className="text-xl font-bold"> Verya Protocol</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
               Incentivized credential verification protocol built on Moca Chain. 
@@ -107,7 +107,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4 text-sm text-gray-400">
-              <span>© {currentYear} Credora Protocol. All rights reserved.</span>
+              <span>© {currentYear}  Verya Protocol. All rights reserved.</span>
               <span>•</span>
               <Link to="/privacy" className="hover:text-white transition-colors duration-200">
                 Privacy Policy

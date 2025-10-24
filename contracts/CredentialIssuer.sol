@@ -212,7 +212,7 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Verify a credential by a verifier (for Credora Protocol)
+     * @dev Verify a credential by a verifier (for  Verya Protocol)
      * @param credentialHash The credential hash to verify
      * @return isValid True if credential is valid and not revoked/expired
      */

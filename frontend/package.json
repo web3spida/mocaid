@@ -1,16 +1,16 @@
 {
-  "name": "credora-protocol-frontend",
+  "name": " Verya Protocol-frontend",
   "private": true,
   "version": "1.0.0",
-  "description": "Frontend for Credora Protocol - Incentivized credential verification on Moca Chain",
+  "description": "Frontend for  Verya Protocol - Incentivized credential verification on Moca Chain",
   "type": "module",
-  "homepage": "https://credora.network",
+  "homepage": "https:// Verya.network",
   "repository": {
     "type": "git",
-    "url": "https://github.com/credora-protocol/credora-protocol"
+    "url": "https://github.com/ Verya Protocol/ Verya Protocol"
   },
   "keywords": [
-    "credora",
+    " Verya",
     "protocol",
     "moca",
     "blockchain",
@@ -23,7 +23,7 @@
     "react",
     "vite"
   ],
-  "author": "Credora Protocol Team",
+  "author": " Verya Protocol Team",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

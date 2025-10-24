@@ -48,7 +48,7 @@ const Navbar = () => {
           <div className="flex items-center justify-self-start">
             <Link to="/" className="inline-flex items-center space-x-2 whitespace-nowrap">
               <Logo />
-              <span className="text-lg leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle">Credora Protocol</span>
+              <span className="text-lg leading-none font-bold bg-gradient-to-r from-primary-600 to-moca-600 bg-clip-text text-transparent align-middle"> Verya Protocol</span>
             </Link>
           </div>
 

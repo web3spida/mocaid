@@ -1,8 +1,8 @@
-# Credora Protocol
+#  Verya Protocol
 
 *"Earn. Verify. Trust. On-Chain."*
 
-A decentralized, incentive-driven credential verification protocol built on Moca Chain. Credora rewards users for acquiring verified credentials and compensates verifiers for validating them, creating a trustless, gamified ecosystem for credential management.
+A decentralized, incentive-driven credential verification protocol built on Moca Chain.  Verya rewards users for acquiring verified credentials and compensates verifiers for validating them, creating a trustless, gamified ecosystem for credential management.
 
 ## 🌟 Features
 
@@ -142,9 +142,9 @@ A decentralized, incentive-driven credential verification protocol built on Moca
    VITE_AIRKIT_ENVIRONMENT=sandbox
 
    # Application Configuration
-   VITE_APP_NAME=Credora Protocol
+   VITE_APP_NAME= Verya Protocol
    VITE_APP_DESCRIPTION=Incentivized Credential Verification Protocol
-   VITE_APP_URL=https://credora.network
+   VITE_APP_URL=https:// Verya.network
 
    # WalletConnect Project ID
    VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id_here
@@ -226,7 +226,7 @@ A decentralized, incentive-driven credential verification protocol built on Moca
 ### 🎯 Earning Rewards as a User
 
 1. **Connect Wallet**
-   - Navigate to the Credora Protocol dashboard
+   - Navigate to the  Verya Protocol dashboard
    - Connect your Moca Chain compatible wallet
    - View your current reputation and reward balance
 
@@ -371,13 +371,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Issues
 If you encounter any issues, please:
-1. Check existing [GitHub Issues](https://github.com/your-username/credora-protocol/issues)
+1. Check existing [GitHub Issues](https://github.com/your-username/ Verya Protocol/issues)
 2. Create a new issue with detailed information
 3. Include error messages and steps to reproduce
 
 ## 🔮 Roadmap
 
-### Current Phase: Credora Protocol Launch
+### Current Phase:  Verya Protocol Launch
 
 - **Incentive System**: Implement reward distribution and verifier fee mechanisms
 - **Staking & Slashing**: Complete verifier staking logic with fraud protection
@@ -423,4 +423,4 @@ If you encounter any issues, please:
 
 **Built with ❤️ for the incentivized future of credentials**
 
-For more information, visit [credora.network](https://credora.network)
+For more information, visit [ Verya.network](https:// Verya.network)

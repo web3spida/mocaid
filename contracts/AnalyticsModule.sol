@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title AnalyticsModule
- * @dev Aggregates credential statistics for dashboards and leaderboards in Credora Protocol
+ * @dev Aggregates credential statistics for dashboards and leaderboards in  Verya Protocol
  */
 contract AnalyticsModule is Ownable {
     

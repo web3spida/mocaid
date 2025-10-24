@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * @title VerifierRegistry
- * @dev Manages verifier staking, reputation, and slashing logic for Credora Protocol
+ * @dev Manages verifier staking, reputation, and slashing logic for  Verya Protocol
  */
 contract VerifierRegistry is Ownable, ReentrancyGuard {
     
