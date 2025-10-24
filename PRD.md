@@ -1,13 +1,13 @@
-#  Verya Protocol - Product Requirements Document (PRD)
+# Veyra Protocol - Product Requirements Document (PRD)
 
 ## Executive Summary
 
-**Product Name**:  Verya Protocol  
+**Product Name**: Veyra Protocol  
 **Version**: 1.0.0  
 **Date**: October 2025  
-**Team**:  Verya Protocol Team  
+**Team**: Veyra Protocol Team  
 
- Verya Protocol is a decentralized, incentive-driven credential verification system built on Moca Chain. It transforms traditional credential verification into a gamified, rewarding experience where users earn tokens and reputation for acquiring verified credentials, while verifiers stake tokens to validate credentials and earn fees.
+Veyra Protocol is a decentralized, incentive-driven credential verification system built on Moca Chain. It transforms traditional credential verification into a gamified, rewarding experience where users earn tokens and reputation for acquiring verified credentials, while verifiers stake tokens to validate credentials and earn fees.
 
 ## 1. Product Vision & Mission
 
@@ -104,7 +104,7 @@ Democratize access to verifiable credentials while building a sustainable econom
 ### 4.2 User Journey Mapping
 
 #### New User Onboarding
-1. **Discovery**: User learns about  Verya through marketing or referrals
+1. **Discovery**: User learns about Veyra through marketing or referrals
 2. **Registration**: Connect wallet and create profile
 3. **First Verification**: Complete initial credential verification
 4. **Reward Receipt**: Receive first tokens and badges
@@ -219,7 +219,7 @@ App
 ├── Layout Components
 │   ├── Navbar (Navigation & Branding)
 │   ├── Footer (Links & Information)
-│   └── Logo ( Verya Protocol Branding)
+│   └── Logo (Veyra Protocol Branding)
 ├── Dashboard Components
 │   ├── UserDashboard (Credential Portfolio)
 │   ├── VerifierDashboard (Staking Interface)
@@ -255,7 +255,7 @@ App
 
 #### Visual Design
 - **Modern & Clean**: Minimalist interface with clear information hierarchy
-- ** Verya Branding**: Consistent use of protocol colors and typography
+- **Veyra Branding**: Consistent use of protocol colors and typography
 - **Responsive Design**: Mobile-first approach with desktop optimization
 - **Accessibility**: WCAG 2.1 AA compliance for inclusive design
 
@@ -456,9 +456,9 @@ App
 
 ## 12. Conclusion
 
- Verya Protocol represents a paradigm shift in credential verification, transforming a traditionally costly and complex process into an engaging, rewarding experience. By aligning incentives for all participants—users, verifiers, and issuers—the protocol creates a sustainable ecosystem that grows stronger with each verification.
+Veyra Protocol represents a paradigm shift in credential verification, transforming a traditionally costly and complex process into an engaging, rewarding experience. By aligning incentives for all participants—users, verifiers, and issuers—the protocol creates a sustainable ecosystem that grows stronger with each verification.
 
-The combination of proven blockchain technology, innovative economic incentives, and user-centric design positions  Verya Protocol to become the leading platform for decentralized credential verification. With careful execution of this product roadmap,  Verya Protocol will establish itself as an essential infrastructure component of the Web3 identity ecosystem.
+The combination of proven blockchain technology, innovative economic incentives, and user-centric design positions Veyra Protocol to become the leading platform for decentralized credential verification. With careful execution of this product roadmap, Veyra Protocol will establish itself as an essential infrastructure component of the Web3 identity ecosystem.
 
 ### Next Steps
 1. **Team Assembly**: Recruit core development team and advisors

@@ -12,12 +12,33 @@ async function main() {
   console.log("Deploying contracts with account:", deployer.address);
   console.log("Account balance:", (await hre.ethers.provider.getBalance(deployer.address)).toString());
 
-  // Deploy IdentityRegistry
-  console.log("\n📋 Deploying IdentityRegistry...");
-  const IdentityRegistry = await hre.ethers.getContractFactory("IdentityRegistry");
-  const identityRegistry = await IdentityRegistry.deploy(deployer.address);
-  await identityRegistry.waitForDeployment();
-  console.log("✅ IdentityRegistry deployed to:", await identityRegistry.getAddress());
+  // Deploy CredentialRegistry
+  console.log("\n📋 Deploying CredentialRegistry...");
+  const CredentialRegistry = await hre.ethers.getContractFactory("CredentialRegistry");
+  const credentialRegistry = await CredentialRegistry.deploy(deployer.address);
+  await credentialRegistry.waitForDeployment();
+  console.log("✅ CredentialRegistry deployed to:", await credentialRegistry.getAddress());
+
+  // Deploy RewardManager
+  console.log("\n💰 Deploying RewardManager...");
+  const RewardManager = await hre.ethers.getContractFactory("RewardManager");
+  const rewardManager = await RewardManager.deploy("0x0000000000000000000000000000000000000000"); // Placeholder token address
+  await rewardManager.waitForDeployment();
+  console.log("✅ RewardManager deployed to:", await rewardManager.getAddress());
+
+  // Deploy VerifierRegistry
+  console.log("\n👥 Deploying VerifierRegistry...");
+  const VerifierRegistry = await hre.ethers.getContractFactory("VerifierRegistry");
+  const verifierRegistry = await VerifierRegistry.deploy("0x0000000000000000000000000000000000000000"); // Placeholder token address
+  await verifierRegistry.waitForDeployment();
+  console.log("✅ VerifierRegistry deployed to:", await verifierRegistry.getAddress());
+
+  // Deploy AnalyticsModule
+  console.log("\n📊 Deploying AnalyticsModule...");
+  const AnalyticsModule = await hre.ethers.getContractFactory("AnalyticsModule");
+  const analyticsModule = await AnalyticsModule.deploy();
+  await analyticsModule.waitForDeployment();
+  console.log("✅ AnalyticsModule deployed to:", await analyticsModule.getAddress());
 
   // Deploy CredentialIssuer
   console.log("\n🎫 Deploying CredentialIssuer...");
@@ -39,12 +60,42 @@ async function main() {
     
     try {
       await hre.run("verify:verify", {
-        address: await identityRegistry.getAddress(),
+        address: await credentialRegistry.getAddress(),
         constructorArguments: [deployer.address],
       });
-      console.log("✅ IdentityRegistry verified");
+      console.log("✅ CredentialRegistry verified");
     } catch (error) {
-      console.log("❌ IdentityRegistry verification failed:", error.message);
+      console.log("❌ CredentialRegistry verification failed:", error.message);
+    }
+
+    try {
+      await hre.run("verify:verify", {
+        address: await rewardManager.getAddress(),
+        constructorArguments: ["0x0000000000000000000000000000000000000000"],
+      });
+      console.log("✅ RewardManager verified");
+    } catch (error) {
+      console.log("❌ RewardManager verification failed:", error.message);
+    }
+
+    try {
+      await hre.run("verify:verify", {
+        address: await verifierRegistry.getAddress(),
+        constructorArguments: ["0x0000000000000000000000000000000000000000"],
+      });
+      console.log("✅ VerifierRegistry verified");
+    } catch (error) {
+      console.log("❌ VerifierRegistry verification failed:", error.message);
+    }
+
+    try {
+      await hre.run("verify:verify", {
+        address: await analyticsModule.getAddress(),
+        constructorArguments: [],
+      });
+      console.log("✅ AnalyticsModule verified");
+    } catch (error) {
+      console.log("❌ AnalyticsModule verification failed:", error.message);
     }
 
     try {
@@ -74,7 +125,10 @@ async function main() {
     chainId: hre.network.config.chainId,
     deployer: deployer.address,
     contracts: {
-      IdentityRegistry: await identityRegistry.getAddress(),
+      CredentialRegistry: await credentialRegistry.getAddress(),
+      RewardManager: await rewardManager.getAddress(),
+      VerifierRegistry: await verifierRegistry.getAddress(),
+      AnalyticsModule: await analyticsModule.getAddress(),
       CredentialIssuer: await credentialIssuer.getAddress(),
       AccessControl: await accessControl.getAddress(),
     },
@@ -101,7 +155,10 @@ async function main() {
   console.log(`Network: ${hre.network.name}`);
   console.log(`Chain ID: ${hre.network.config.chainId}`);
   console.log(`Deployer: ${deployer.address}`);
-  console.log(`IdentityRegistry: ${await identityRegistry.getAddress()}`);
+  console.log(`CredentialRegistry: ${await credentialRegistry.getAddress()}`);
+  console.log(`RewardManager: ${await rewardManager.getAddress()}`);
+  console.log(`VerifierRegistry: ${await verifierRegistry.getAddress()}`);
+  console.log(`AnalyticsModule: ${await analyticsModule.getAddress()}`);
   console.log(`CredentialIssuer: ${await credentialIssuer.getAddress()}`);
   console.log(`AccessControl: ${await accessControl.getAddress()}`);
   console.log("=".repeat(50));

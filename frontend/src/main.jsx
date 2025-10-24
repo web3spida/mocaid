@@ -43,7 +43,7 @@ const connectors = connectorsForWallets([
       injectedWallet({ chains }),
       metaMaskWallet({ projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'demo-project-id-for-development', chains }),
       walletConnectWallet({ projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'demo-project-id-for-development', chains }),
-      coinbaseWallet({ appName: import.meta.env.VITE_APP_NAME || 'MocaID Vault', chains }),
+      coinbaseWallet({ appName: import.meta.env.VITE_APP_NAME || ' Veyra Vault', chains }),
     ],
   },
 ])

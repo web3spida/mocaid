@@ -59,7 +59,7 @@ const Settings = () => {
 
   // Load settings from localStorage on mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem('mocaid-settings')
+    const savedSettings = localStorage.getItem(' Veyra-settings')
     if (savedSettings) {
       setSettings(prev => ({ ...prev, ...JSON.parse(savedSettings) }))
     }
@@ -68,7 +68,7 @@ const Settings = () => {
   // Save settings to localStorage
   const saveSettings = (newSettings) => {
     setSettings(newSettings)
-    localStorage.setItem('mocaid-settings', JSON.stringify(newSettings))
+    localStorage.setItem(' Veyra-settings', JSON.stringify(newSettings))
     toast.success('Settings saved successfully!')
   }
 
@@ -102,7 +102,7 @@ const Settings = () => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `mocaid-data-${address?.slice(0, 8)}.json`
+    a.download = ` Veyra-data-${address?.slice(0, 8)}.json`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

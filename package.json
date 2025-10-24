@@ -1,5 +1,5 @@
 {
-  "name": " Verya Protocol",
+  "name": "Veyra Protocol",
   "version": "1.0.0",
   "description": "Incentivized credential verification protocol built on Moca Chain",
   "main": "index.js",
@@ -22,7 +22,7 @@
     "staking",
     "defi"
   ],
-  "author": " Verya Protocol Team",
+  "author": "Veyra Protocol Team",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",

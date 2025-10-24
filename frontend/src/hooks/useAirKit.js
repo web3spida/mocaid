@@ -25,8 +25,8 @@ export const useDID = () => {
   // Load persisted DID on mount
   useEffect(() => {
     try {
-      const savedDid = typeof window !== 'undefined' ? localStorage.getItem('mocaid-did') : null
-      const savedKey = typeof window !== 'undefined' ? localStorage.getItem('mocaid-public-key') : null
+      const savedDid = typeof window !== 'undefined' ? localStorage.getItem(' Veyra-did') : null
+      const savedKey = typeof window !== 'undefined' ? localStorage.getItem(' Veyra-public-key') : null
       if (savedDid) setDid(savedDid)
       if (savedKey) setPublicKey(savedKey)
     } catch (_) {
@@ -51,8 +51,8 @@ export const useDID = () => {
       setDid(didURI)
       setPublicKey(newPublicKey)
       try {
-        localStorage.setItem('mocaid-did', didURI)
-        localStorage.setItem('mocaid-public-key', newPublicKey)
+        localStorage.setItem(' Veyra-did', didURI)
+        localStorage.setItem(' Veyra-public-key', newPublicKey)
       } catch (_) {
         // ignore storage errors
       }
@@ -501,7 +501,7 @@ export const useVerifiablePresentations = () => {
           type: 'EcdsaSecp256k1Signature2019',
           created: new Date().toISOString(),
           challenge: options.challenge || `challenge_${Math.random().toString(36).substr(2, 16)}`,
-          domain: options.domain || 'mocaid.network',
+          domain: options.domain || ' Veyra.network',
           proofPurpose: 'authentication',
           verificationMethod: `did:moca:${address}#keys-1`,
           jws: null // In production, generate proper cryptographic signature

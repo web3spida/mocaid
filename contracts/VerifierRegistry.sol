@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * @title VerifierRegistry
- * @dev Manages verifier staking, reputation, and slashing logic for  Verya Protocol
+ * @dev Manages verifier staking, reputation, and slashing logic for Veyra Protocol
  */
 contract VerifierRegistry is Ownable, ReentrancyGuard {
     
@@ -178,7 +178,14 @@ contract VerifierRegistry is Ownable, ReentrancyGuard {
     /**
      * @dev Get verifier information
      * @param verifier Address of the verifier
-     * @return Verifier struct data
+     * @return stakedAmount Amount of tokens staked by the verifier
+     * @return reputationScore Current reputation score of the verifier
+     * @return verificationCount Number of verifications performed
+     * @return successfulVerifications Number of successful verifications
+     * @return slashedAmount Amount of tokens slashed from the verifier
+     * @return registeredAt Timestamp when verifier was registered
+     * @return isActive Whether the verifier is currently active
+     * @return exists Whether the verifier exists in the registry
      */
     function getVerifier(address verifier) external view returns (
         uint256 stakedAmount,

@@ -1,16 +1,16 @@
 {
-  "name": " Verya Protocol-frontend",
+  "name": "Veyra Protocol-frontend",
   "private": true,
   "version": "1.0.0",
-  "description": "Frontend for  Verya Protocol - Incentivized credential verification on Moca Chain",
+  "description": "Frontend for Veyra Protocol - Incentivized credential verification on Moca Chain",
   "type": "module",
-  "homepage": "https:// Verya.network",
+  "homepage": "https://Veyra.network",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ Verya Protocol/ Verya Protocol"
+    "url": "https://github.com/Veyra Protocol/Veyra Protocol"
   },
   "keywords": [
-    " Verya",
+    "Veyra",
     "protocol",
     "moca",
     "blockchain",
@@ -23,7 +23,7 @@
     "react",
     "vite"
   ],
-  "author": " Verya Protocol Team",
+  "author": "Veyra Protocol Team",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

@@ -1,4 +1,4 @@
-MocaID Vault – Current Updates (as of 2025-10-16)
+ Veyra Vault – Current Updates (as of 2025-10-16)
 
 Summary
 - Strengthened network handling and credential issuance reliability, improved DID persistence, refined navbar layout, added wallet info to Settings header, and documented upcoming short-term enhancements in the README.
@@ -26,7 +26,7 @@ Detailed Changes
 3) DID Persistence & Identity
 - DID and public key are now persisted across page refreshes:
   - File: `frontend/src/hooks/useAirKit.js` (useDID)
-  - Behavior: Loads from `localStorage` on mount (`mocaid-did`, `mocaid-public-key`) and saves on generation to prevent losing identity on refresh.
+  - Behavior: Loads from `localStorage` on mount (` Veyra-did`, ` Veyra-public-key`) and saves on generation to prevent losing identity on refresh.
 
 4) UI / UX Improvements
 - Navbar (desktop & mobile):

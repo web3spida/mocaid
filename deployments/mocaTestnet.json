@@ -3,9 +3,12 @@
   "chainId": 5151,
   "deployer": "0x5CbD1ABe5029c5c717038f86C31B706f027640AB",
   "contracts": {
-    "IdentityRegistry": "0xB6EE67F0c15f949433d0e484F60f70f1828458e3",
-    "CredentialIssuer": "0x72CA2541A705468368F9474fB419Defd002EC8af",
-    "AccessControl": "0xF565086417Bf8ba76e4FaFC9F0088818eA027539"
+    "CredentialRegistry": "0x634b3cD5db670b9f104D4242621c4E200c6aDb4F",
+    "RewardManager": "0x4212f573e7F456974e018001B2311f4402d2711B",
+    "VerifierRegistry": "0x62f4eDAA371B5895ADA5fA2e5733f0447433b4C3",
+    "AnalyticsModule": "0x9CC47525a6C2f3e915D44cA785c7B11dE164AF07",
+    "CredentialIssuer": "0x4bC5D734A7BfDF126A9C076E7Ac5633173Cb3C92",
+    "AccessControl": "0x2BAC3b9AAFdcEde12F7a7601E2A87FdE72CAdfF1"
   },
-  "deployedAt": "2025-10-13T17:18:34.629Z"
+  "deployedAt": "2025-10-24T10:42:09.218Z"
 }

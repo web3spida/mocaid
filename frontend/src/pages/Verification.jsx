@@ -27,7 +27,7 @@ const Verification = () => {
         isValid,
         credential: {
           type: 'Identity Credential',
-          issuer: 'MocaID Authority',
+          issuer: ' Veyra Authority',
           holder: '0x1234...5678',
           issuedAt: new Date().toISOString(),
           expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()

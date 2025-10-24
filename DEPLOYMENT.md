@@ -1,17 +1,17 @@
-# MocaID Deployment Guide - Netlify
+#  Veyra Deployment Guide - Netlify
 
-This guide provides step-by-step instructions for deploying the MocaID application to Netlify.
+This guide provides step-by-step instructions for deploying the  Veyra application to Netlify.
 
 ## Prerequisites
 
 - A Netlify account (free tier available)
-- GitHub repository with your MocaID code
+- GitHub repository with your  Veyra code
 - Deployed smart contracts on Moca Testnet
 - WalletConnect Project ID
 
 ## Quick Deploy
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/mocaid)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/ Veyra)
 
 ## Manual Deployment Steps
 
@@ -27,7 +27,7 @@ Ensure your repository contains:
 1. Log in to [Netlify](https://app.netlify.com/)
 2. Click "New site from Git"
 3. Choose your Git provider (GitHub, GitLab, Bitbucket)
-4. Select your MocaID repository
+4. Select your  Veyra repository
 5. Configure build settings:
    - **Base directory**: `frontend`
    - **Build command**: `npm run build`
@@ -56,7 +56,7 @@ VITE_AIRKIT_API_URL=https://developers.sandbox.air3.com
 VITE_AIRKIT_WIDGET_URL=https://widget.moca.network
 
 # App Configuration
-VITE_APP_NAME=MocaID
+VITE_APP_NAME= Veyra
 VITE_APP_DESCRIPTION=Decentralized Identity Management on Moca Chain
 VITE_APP_URL=https://your-site-name.netlify.app
 

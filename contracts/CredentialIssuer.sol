@@ -64,7 +64,7 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
     event IssuerAuthorized(address indexed issuer, uint256 authorizedAt);
     event IssuerRevoked(address indexed issuer, uint256 revokedAt);
     event RewardManagerUpdated(address indexed newRewardManager);
-    event AnalyticsModuleUpdated(address indexed newAnalyticsModule);}]}
+    event AnalyticsModuleUpdated(address indexed newAnalyticsModule);
 
     modifier onlyAuthorizedIssuer() {
         require(authorizedIssuers[msg.sender] || msg.sender == owner(), "Not authorized issuer");
@@ -212,7 +212,7 @@ contract CredentialIssuer is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @dev Verify a credential by a verifier (for  Verya Protocol)
+     * @dev Verify a credential by a verifier (for Veyra Protocol)
      * @param credentialHash The credential hash to verify
      * @return isValid True if credential is valid and not revoked/expired
      */

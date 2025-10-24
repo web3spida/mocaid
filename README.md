@@ -1,8 +1,8 @@
-#  Verya Protocol
+# Veyra Protocol
 
 *"Earn. Verify. Trust. On-Chain."*
 
-A decentralized, incentive-driven credential verification protocol built on Moca Chain.  Verya rewards users for acquiring verified credentials and compensates verifiers for validating them, creating a trustless, gamified ecosystem for credential management.
+A decentralized, incentive-driven credential verification protocol built on Moca Chain. Veyra rewards users for acquiring verified credentials and compensates verifiers for validating them, creating a trustless, gamified ecosystem for credential management.
 
 ## 🌟 Features
 
@@ -125,13 +125,13 @@ A decentralized, incentive-driven credential verification protocol built on Moca
    VITE_MOCA_RPC_URL=https://devnet-rpc.mocachain.org
    VITE_MOCA_EXPLORER=https://devnet-scan.mocachain.org
 
-   # Smart Contract Addresses (Update after deployment)
-   VITE_CREDENTIAL_ISSUER_ADDRESS=0x...
-   VITE_CREDENTIAL_REGISTRY_ADDRESS=0x...
-   VITE_REWARD_MANAGER_ADDRESS=0x...
-   VITE_VERIFIER_REGISTRY_ADDRESS=0x...
-   VITE_ANALYTICS_MODULE_ADDRESS=0x...
-   VITE_ACCESS_CONTROL_ADDRESS=0x...
+   # Smart Contract Addresses (Deployed on Moca Testnet)
+   VITE_CREDENTIAL_ISSUER_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
+   VITE_CREDENTIAL_REGISTRY_ADDRESS=0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+   VITE_REWARD_MANAGER_ADDRESS=0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+   VITE_VERIFIER_REGISTRY_ADDRESS=0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+   VITE_ANALYTICS_MODULE_ADDRESS=0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+   VITE_ACCESS_CONTROL_ADDRESS=0x5FC8d32690cc91D4c39d9d3abcBD16989F875707
 
    # AIR Kit SDK Configuration (Frontend)
    VITE_AIRKIT_PARTNER_ID=your_partner_id_here
@@ -142,9 +142,9 @@ A decentralized, incentive-driven credential verification protocol built on Moca
    VITE_AIRKIT_ENVIRONMENT=sandbox
 
    # Application Configuration
-   VITE_APP_NAME= Verya Protocol
+   VITE_APP_NAME=Veyra Protocol
    VITE_APP_DESCRIPTION=Incentivized Credential Verification Protocol
-   VITE_APP_URL=https:// Verya.network
+   VITE_APP_URL=https://Veyra.network
 
    # WalletConnect Project ID
    VITE_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id_here
@@ -186,6 +186,19 @@ A decentralized, incentive-driven credential verification protocol built on Moca
 
 ### Smart Contract Deployment
 
+**✅ Current Deployment Status (Moca Testnet)**
+
+The Credora Protocol contracts have been successfully deployed to Moca Testnet (Chain ID: 5151):
+
+- **CredentialRegistry**: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
+- **RewardManager**: `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0`
+- **VerifierRegistry**: `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9`
+- **AnalyticsModule**: `0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9`
+- **CredentialIssuer**: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+- **AccessControl**: `0x5FC8d32690cc91D4c39d9d3abcBD16989F875707`
+
+**Deployment Commands:**
+
 1. **Deploy to Moca Testnet**
    ```bash
    npx hardhat run scripts/deploy.js --network moca-testnet
@@ -226,7 +239,7 @@ A decentralized, incentive-driven credential verification protocol built on Moca
 ### 🎯 Earning Rewards as a User
 
 1. **Connect Wallet**
-   - Navigate to the  Verya Protocol dashboard
+   - Navigate to the Veyra Protocol dashboard
    - Connect your Moca Chain compatible wallet
    - View your current reputation and reward balance
 
@@ -371,13 +384,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Issues
 If you encounter any issues, please:
-1. Check existing [GitHub Issues](https://github.com/your-username/ Verya Protocol/issues)
+1. Check existing [GitHub Issues](https://github.com/your-username/Veyra Protocol/issues)
 2. Create a new issue with detailed information
 3. Include error messages and steps to reproduce
 
 ## 🔮 Roadmap
 
-### Current Phase:  Verya Protocol Launch
+### Current Phase: Veyra Protocol Launch
 
 - **Incentive System**: Implement reward distribution and verifier fee mechanisms
 - **Staking & Slashing**: Complete verifier staking logic with fraud protection
@@ -423,4 +436,4 @@ If you encounter any issues, please:
 
 **Built with ❤️ for the incentivized future of credentials**
 
-For more information, visit [ Verya.network](https:// Verya.network)
+For more information, visit [Veyra.network](https://Veyra.network)

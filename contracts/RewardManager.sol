@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * @title RewardManager
- * @dev Manages reward distribution for users and fee collection for verifiers in  Verya Protocol
+ * @dev Manages reward distribution for users and fee collection for verifiers in Veyra Protocol
  */
 contract RewardManager is Ownable, ReentrancyGuard {
     

@@ -102,7 +102,7 @@ const Home = () => {
               <span className="text-gradient">Decentralized</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Take control of your digital identity and credentials with MocaID Vault. 
+              Take control of your digital identity and credentials with  Veyra Vault. 
               Secure, private, and interoperable identity management on Moca Chain.
             </p>
             
@@ -208,10 +208,10 @@ const Home = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose MocaID Vault?
+                Why Choose  Veyra Vault?
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                Built on the cutting-edge Moca Chain, MocaID Vault provides 
+                Built on the cutting-edge Moca Chain,  Veyra Vault provides 
                 enterprise-grade security with user-friendly design.
               </p>
               
